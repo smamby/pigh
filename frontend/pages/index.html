@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking MVP - Alojamientos</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Encuentra tu Próximo Alojamiento en Latinoamérica</h1>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="login.html" id="nav-login">Login</a>
+    <a href="register.html" id="nav-register">Registro</a>
+    <a href="mis_reservas.html" id="nav-mis-reservas" style="display:none;">Mis Reservas</a>
+    <a href="#" id="nav-logout" style="display:none;">Cerrar Sesión</a>
+   </nav>
+    </header>
+
+    <main>
+        <section class="filtros-busqueda">
+            <h2>Buscar Alojamientos</h2>
+            <div>
+                <label for="filtro-ciudad">Ciudad:</label>
+                <input type="text" id="filtro-ciudad" placeholder="Ej: Buenos Aires">
+            </div>
+            <div>
+                <label for="filtro-pais">País:</label>
+                <input type="text" id="filtro-pais" placeholder="Ej: Argentina">
+            </div>
+            <div>
+                <label for="filtro-tipo">Tipo de Alojamiento:</label>
+                <select id="filtro-tipo">
+                    <option value="">Todos</option>
+                    <option value="Hotel">Hotel</option>
+                    <option value="Departamento">Departamento</option>
+                    <option value="Cabaña">Cabaña</option>
+                    <option value="Hostal">Hostal</option>
+                    <option value="Posada">Posada</option>
+                </select>
+            </div>
+            <button id="aplicar-filtros" class="btn">Aplicar Filtros</button>
+        </section>
+
+        <h2>Alojamientos Disponibles</h2>
+        <div id="alojamientos-container" class="grid-alojamientos">
+            <p>Cargando alojamientos...</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="currentYear"></span> Booking MVP Latam. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="../js/catalogo.js"></script>
+</body>
+</html>

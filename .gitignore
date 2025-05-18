@@ -1,0 +1,14 @@
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# MacOS
+.DS_Store
+
+# Visual Studio Code
+.vscode/
+
+# Archivos del sistema
+Thumbs.db

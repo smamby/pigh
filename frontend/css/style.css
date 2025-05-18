@@ -1,0 +1,336 @@
+/* frontend/css/style.css */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    padding-bottom: 100px;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    padding-bottom: 0.5rem;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.filtros-busqueda {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.filtros-busqueda div {
+    margin-bottom: 10px;
+}
+
+.filtros-busqueda label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.filtros-busqueda input[type="text"],
+.filtros-busqueda select,
+input[type="date"] { /* Estilo general para input date */
+    width: calc(100% - 22px); /* Ajustar por padding y borde */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Para que el padding no aumente el width total */
+}
+
+.btn, button {
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+}
+
+.btn:hover, button:hover {
+    background-color: #4cae4c;
+}
+
+
+.grid-alojamientos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.alojamiento-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex; /* Flex para mejor control interno */
+    flex-direction: column; /* Contenido apilado */
+}
+
+.alojamiento-card h3 {
+    margin-top: 0;
+    color: #337ab7;
+}
+
+.alojamiento-card p {
+    margin-bottom: 0.5em; /* Espaciado entre párrafos */
+}
+
+.alojamiento-card .disponible {
+    color: green;
+    font-weight: bold;
+}
+
+.alojamiento-card .no-disponible {
+    color: red;
+    font-weight: bold;
+}
+
+.alojamiento-card .acciones-card {
+    margin-top: auto; /* Empuja las acciones hacia abajo */
+    padding-top: 10px; /* Espacio antes de las acciones */
+    /* display: flex; ya lo tenías, puede ser útil si quieres alinear botones */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+}
+
+.btn-ver-detalles {
+    background-color: #337ab7;
+    margin-right: 5px; /* Pequeño margen si están en línea */
+}
+.btn-ver-detalles:hover {
+    background-color: #286090;
+}
+
+.btn-reservar {
+    background-color: #f0ad4e;
+}
+.btn-reservar:hover {
+    background-color: #ec971f;
+}
+
+
+#alojamiento-individual-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#alojamiento-individual-container h2 {
+    margin-top: 0;
+    color: #337ab7;
+}
+
+#alojamiento-individual-container .disponible {
+    color: green;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+#alojamiento-individual-container .no-disponible {
+    color: red;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.btn-reservar-grande {
+    padding: 12px 25px;
+    font-size: 1.2em;
+    margin-top: 15px;
+    background-color: #5cb85c; /* Hereda de .btn pero puedes sobreescribir */
+}
+.btn-reservar-grande:hover {
+    background-color: #4cae4c;
+}
+
+.btn-volver {
+    margin-top: 20px;
+    background-color: #777;
+}
+.btn-volver:hover {
+    background-color: #555;
+}
+
+.error { /* Clase general para errores de carga, etc. */
+    color: #d9534f; 
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #d9534f;
+    background-color: #f2dede;
+    border-radius: 4px;
+}
+
+/* Estilos para el popup de reserva y sus mensajes específicos */
+.form-reserva-popup {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-top: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.form-reserva-popup h4, .form-reserva-popup h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.form-reserva-popup label {
+    display: block; /* Para que el label esté encima del input */
+    margin-bottom: 3px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.form-reserva-popup input[type="date"] {
+    width: calc(100% - 20px); /* Ajuste por padding, un poco menos que el global */
+    margin-bottom: 10px;
+}
+
+.form-reserva-popup .btn-confirmar-reserva,
+.form-reserva-popup .btn-cancelar-popup {
+    margin-top: 10px;
+    padding: 8px 12px; /* Un poco más pequeños que los botones principales */
+}
+
+.form-reserva-popup .btn-confirmar-reserva {
+    background-color: #5cb85c; /* Verde (como .btn) */
+}
+.form-reserva-popup .btn-confirmar-reserva:hover {
+    background-color: #4cae4c;
+}
+
+.form-reserva-popup .btn-cancelar-popup {
+    background-color: #d9534f; /* Rojo para cancelar */
+    margin-left: 5px;
+}
+.form-reserva-popup .btn-cancelar-popup:hover {
+    background-color: #c9302c;
+}
+
+/* Mensajes dentro del popup de reserva */
+.mensaje-exito-popup {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.mensaje-error-popup {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+/* Estilos para la página Mis Reservas */
+#mis-reservas-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+#mis-reservas-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.reservas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Hace que sea responsive */
+    gap: 1.5rem;
+}
+
+.reserva-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+.reserva-card:hover {
+    transform: translateY(-5px);
+}
+
+.reserva-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color); /* Asumiendo que tienes --primary-color definido */
+}
+
+.reserva-card p {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.reserva-card p strong {
+    color: #555;
+}
+
+#mensaje-reservas {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #666;
+    padding: 1rem;
+    grid-column: 1 / -1; /* Para que ocupe todo el ancho del grid si se muestra */
+}
+
+/* Para el enlace de Cerrar Sesión que se añade con JS */
+#logout-link {
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+    padding: 5px;
+    margin-top: 5px;
+    background: #333;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}

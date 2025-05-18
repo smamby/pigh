@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Alojamiento - Booking MVP</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Detalle del Alojamiento</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+    <a href="login.html" id="nav-login">Login</a>
+    <a href="register.html" id="nav-register">Registro</a>
+    <a href="mis_reservas.html" id="nav-mis-reservas" style="display:none;">Mis Reservas</a>
+    <a href="#" id="nav-logout" style="display:none;">Cerrar Sesión</a>
+    </header>
+
+    <main>
+        <div id="alojamiento-individual-container">
+            <p>Cargando detalle del alojamiento...</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="currentYear"></span> Booking MVP Latam. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="../js/catalogo.js"></script>
+</body>
+</html>

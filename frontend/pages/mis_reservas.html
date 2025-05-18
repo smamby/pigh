@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Reservas - Booking MVP</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Mis Reservas</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            </nav>
+    </header>
+
+    <main>
+        <section id="mis-reservas-container">
+            <h2>Historial de Reservas</h2>
+            <div id="reservas-list" class="reservas-grid">
+                <p id="mensaje-reservas">Cargando tus reservas...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="currentYear"></span> Booking MVP Latam. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="../js/mis_reservas.js"></script>
+</body>
+</html>
