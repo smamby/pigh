@@ -12,3 +12,5 @@ node_modules/
 
 # Archivos del sistema
 Thumbs.db
+
+.env
