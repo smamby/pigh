@@ -1,4 +1,4 @@
-// backend/models/usuario.model.js
+// models/usuario.model.js
 
 const db = require('../db'); // Importa la conexión a la BD (el pool.promise())
 const bcrypt = require('bcryptjs');
@@ -7,7 +7,13 @@ const Usuario = {};
 
 // Crear un nuevo usuario
 Usuario.create = async (nuevoUsuario) => {
-  const { nombre, apellido, email, password, es_admin } = nuevoUsuario;
+  const { 
+    nombre, 
+    apellido, 
+    email, 
+    password, 
+    es_admin 
+  } = nuevoUsuario;
 
   // Hashear la contraseña antes de guardarla
   const salt = await bcrypt.genSalt(10);

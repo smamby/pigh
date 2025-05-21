@@ -60,7 +60,8 @@ CREATE INDEX idx_reserva_alojamiento ON reservas(alojamiento_id);
 
 -- Insertar un usuario administrador por defecto (opcional)
 INSERT INTO usuarios (nombre, apellido, email, password, es_admin) VALUES
-('Admin', 'Principal', 'admin@example.com', 'admin123', TRUE); -- IMPORTANTE: La contraseña debe ser hasheada en la aplicación real
+('admin', 'Principal', 'admin@email.com', 'admini', TRUE); 
+('Juan', 'Perez', 'juan@email.com', '123123', FALSE); -- IMPORTANTE: La contraseña debe ser hasheada en la aplicación real
 
 -- Insertar algunos países y ciudades de ejemplo para alojamientos (Latinoamérica)
 -- (Estos son solo ejemplos, se pueden agregar más según sea necesario)

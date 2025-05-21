@@ -1,4 +1,4 @@
-// backend/routes/auth.routes.js
+// routes/auth.routes.js
 
 const express = require('express');
 const router = express.Router();

@@ -1,4 +1,4 @@
-// frontend/js/catalogo.js
+// public/js/catalogo.js
 
 document.addEventListener('DOMContentLoaded', () => {
 

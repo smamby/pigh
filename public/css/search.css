@@ -1,0 +1,313 @@
+/* Basic Reset & Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6; /* Light gray background */
+    color: #333;
+}
+
+.container {
+    max-width: 1200px; /* Adjust as needed */
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Header Styling */
+.header {
+    background-color: #fff;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3f51b5; /* A blue reminiscent of the logo */
+}
+
+.header .main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 25px;
+}
+
+.header .main-nav a {
+    text-decoration: none;
+    color: #555;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.header .main-nav a:hover {
+    color: #3f51b5;
+}
+
+.header .user-profile {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Search Bar Section */
+.search-bar-section {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.search-inputs {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.search-inputs select,
+.search-inputs input[type="date"] {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 15px;
+    flex: 1; /* Allow inputs to grow */
+    min-width: 150px; /* Minimum width before wrapping */
+}
+
+.search-button {
+    background-color: #3f51b5; /* Blue search button */
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #3041a0;
+}
+
+/* Main Content Layout (Sidebar + Results) */
+.content-area {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* Allow columns to stack on smaller screens */
+}
+
+/* Sidebar Filters */
+.filters-sidebar {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex: 0 0 250px; /* Fixed width sidebar, won't grow */
+    /* On smaller screens, you might want this to be 100% width */
+}
+
+.filters-sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 20px;
+}
+
+.filters-sidebar h4 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.filters-sidebar label {
+    display: block; /* Each radio button on a new line */
+    margin-bottom: 8px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.filters-sidebar input[type="radio"] {
+    margin-right: 8px;
+}
+
+/* Main Results Area */
+.results-main {
+    flex: 1; /* Take up remaining space */
+    min-width: 400px; /* Ensure it doesn't get too narrow */
+}
+
+.results-main h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.results-main .sort-options select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+/* Accommodation Card Styling */
+.accommodation-list {
+    display: grid;
+    gap: 20px;
+    /* Responsive grid: 1 column by default, 2 on larger screens */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.accommodation-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex; /* For internal card layout (image, details, rating) */
+    flex-direction: column; /* Stack image and details vertically */
+    overflow: hidden; /* Ensures image corners are rounded if card has border-radius */
+}
+
+.accommodation-card img {
+    width: 100%;
+    height: 200px; /* Fixed height for images */
+    object-fit: cover; /* Cover the area, cropping if necessary */
+    border-bottom: 1px solid #eee;
+}
+
+.accommodation-card .card-details {
+    padding: 15px;
+    flex-grow: 1; /* Allows details section to take up space */
+}
+
+.accommodation-card h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: #3f51b5; /* Title color */
+}
+
+.accommodation-card .stars {
+    color: #fbc02d; /* Yellow for stars */
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.accommodation-card .location {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.accommodation-card .tags span {
+    display: inline-block;
+    background-color: #e8eaf6; /* Light blue background for tags */
+    color: #3f51b5;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.accommodation-card .card-rating-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-top: 1px solid #eee;
+    background-color: #f9f9f9;
+}
+
+.card-rating-price .rating-score {
+    text-align: center;
+}
+
+.card-rating-price .score {
+    background-color: #8bc34a; /* Green for good score */
+    color: white;
+    font-weight: bold;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.card-rating-price .text {
+    font-size: 12px;
+    color: #555;
+}
+
+.card-rating-price .price-info {
+    text-align: right;
+}
+
+.card-rating-price .price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+}
+
+.card-rating-price .per-night {
+    font-size: 12px;
+    color: #777;
+}
+
+.card-rating-price .book-button {
+    background-color: #ff5722; /* Orange book button */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.card-rating-price .book-button:hover {
+    background-color: #e64a19;
+}
+
+/* Basic Responsiveness */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .header .main-nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-inputs {
+        flex-direction: column;
+    }
+
+    .search-inputs select,
+    .search-inputs input[type="date"],
+    .search-button {
+        width: 100%;
+    }
+
+    .content-area {
+        flex-direction: column;
+    }
+
+    .filters-sidebar {
+        flex: 0 0 100%; /* Full width sidebar */
+    }
+
+    .accommodation-list {
+        grid-template-columns: 1fr; /* Single column on small screens */
+    }
+}

@@ -1,4 +1,4 @@
-// backend/models/reserva.model.js
+// models/reserva.model.js
 
 const db = require('../db');
 const Alojamiento = require('./alojamiento.model'); // Para verificar precio y disponibilidad
@@ -7,7 +7,17 @@ const Reserva = {};
 
 // Crear una nueva reserva
 Reserva.create = async (nuevaReserva) => {
-  const { usuario_id, alojamiento_id, fecha_inicio, fecha_fin, precio_total, estado = 'Pendiente' } = nuevaReserva;
+  const { 
+    reserva_id,
+    usuario_id, 
+    alojamiento_id, 
+    fecha_inicio, 
+    fecha_fin, 
+    tipo_habitación,
+    numero_habitacion,
+    precio_total, 
+    estado = 'Pendiente' 
+  } = nuevaReserva;
 
   // Validar que las fechas sean lógicas (aunque ya tengamos un CHECK en la BD, es bueno validar aquí)
   if (new Date(fecha_inicio) >= new Date(fecha_fin)) {
@@ -30,10 +40,12 @@ Reserva.create = async (nuevaReserva) => {
       const [reservasSuperpuestas] = await connection.query(
         `SELECT id FROM reservas
          WHERE alojamiento_id = ?
+           AND tipo_habitación = ?
+           AND numero_habitacion = ?
            AND estado IN ('Pendiente', 'Confirmada') -- Solo considerar reservas activas
            AND fecha_inicio < ?
            AND fecha_fin > ?`,
-        [alojamiento_id, fecha_fin, fecha_inicio]
+        [alojamiento_id, tipo_habitación, numero_habitacion, fecha_fin, fecha_inicio]
       );
 
       if (reservasSuperpuestas.length > 0) {
@@ -76,8 +88,8 @@ Reserva.create = async (nuevaReserva) => {
 
       // 3. Insertar la reserva
       const [result] = await connection.query(
-        'INSERT INTO reservas (usuario_id, alojamiento_id, fecha_inicio, fecha_fin, precio_total, estado) VALUES (?, ?, ?, ?, ?, ?)',
-        [usuario_id, alojamiento_id, fecha_inicio, fecha_fin, precioFinalParaGuardar, estado]
+        'INSERT INTO reservas (usuario_id, alojamiento_id, fecha_inicio, fecha_fin, tipo_habitación, numero_habitacion, precio_total, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        [usuario_id, alojamiento_id, fecha_inicio, fecha_fin, tipo_habitación, numero_habitacion, precioFinalParaGuardar, estado]
       );
 
       await connection.commit(); // Confirmar transacción

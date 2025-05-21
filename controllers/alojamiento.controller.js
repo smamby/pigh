@@ -1,4 +1,4 @@
-// backend/controllers/alojamiento.controller.js
+// controllers/alojamiento.controller.js
 
 const Alojamiento = require('../models/alojamiento.model');
 
@@ -86,6 +86,18 @@ exports.getAlojamientoById = async (req, res) => {
     res.status(200).json(alojamiento);
   } catch (error) {
     console.error('Error al obtener alojamiento por ID:', error);
+    res.status(500).json({ message: 'Error interno del servidor.', error: error.message });
+  }
+};
+
+// Obtener lista de destinos (ciudades) disponibles
+exports.destinos = async (req, res) => {
+  try {
+    const destinos = await Alojamiento.getDestinos();
+    
+    res.status(200).json(destinos);
+  } catch (error) {
+    console.error('Error al obtener datos', error);
     res.status(500).json({ message: 'Error interno del servidor.', error: error.message });
   }
 };

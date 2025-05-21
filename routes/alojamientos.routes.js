@@ -1,4 +1,4 @@
-// backend/routes/alojamientos.routes.js
+// routes/alojamientos.routes.js
 const express = require('express');
 const router = express.Router();
 const alojamientoController = require('../controllers/alojamiento.controller');
@@ -7,6 +7,9 @@ const { authenticateToken, isAdmin } = require('../middleware/auth.middleware');
 // --- Rutas Públicas (o para usuarios autenticados en general) ---
 // GET /api/alojamientos - Listar todos los alojamientos (con filtros opcionales por query params)
 router.get('/', alojamientoController.getAllAlojamientos);
+
+// GET /api/alojamientos/destinations - Obtener lista de destinos (ciudades) disponibles
+router.get('/destinos', alojamientoController.destinos);
 
 // GET /api/alojamientos/:id - Obtener un alojamiento específico por ID
 router.get('/:id', alojamientoController.getAlojamientoById);

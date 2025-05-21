@@ -1,4 +1,4 @@
-// backend/models/alojamiento.model.js
+// models/alojamiento.model.js
 
 const db = require('../db');
 
@@ -86,6 +86,18 @@ Alojamiento.findById = async (id) => {
     return null; // Retorna null si no se encuentra el alojamiento
   } catch (error) {
     console.error("Error al buscar alojamiento por ID en BD:", error);
+    throw error;
+  }
+};
+
+// Obtener lista de destinos (ciudades) disponibles
+Alojamiento.getDestinos = async () => {
+  try {
+    const [rows] = await db.query('SELECT distinct ciudad FROM alojamientos ORDER BY RAND() LIMIT 6');
+    const ciudades = rows.map(row => row.ciudad); // Retorna un array de ciudades únicas
+    return ciudades;
+  } catch (error) {
+    console.error("Error al obtener destinos de BD:", error);
     throw error;
   }
 };

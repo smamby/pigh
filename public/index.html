@@ -3,52 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking MVP - Alojamientos</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Check INN - Encuentra tu próximo destino</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
+    <base href="/">
+    <script src="./js/preload.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Encuentra tu Próximo Alojamiento en Latinoamérica</h1>
-  <nav>
-    <a href="index.html">Inicio</a>
-    <a href="login.html" id="nav-login">Login</a>
-    <a href="register.html" id="nav-register">Registro</a>
-    <a href="mis_reservas.html" id="nav-mis-reservas" style="display:none;">Mis Reservas</a>
-    <a href="#" id="nav-logout" style="display:none;">Cerrar Sesión</a>
-   </nav>
+
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <img src="assets/logo-check-inn.png" alt="Check-inn" class="logo-image">
+            </div>
+            <nav class="nav-links">
+                <a href="./page/register.html" class="nav-link">Registra tu alojamiento</a>
+                <a href="./pages/login.html" class="nav-link">Sing in / Sing up</a>
+                <div class="currency-selector">
+                    <span>Ars</span>
+                    <img src="./assets/leng_sp_arg.png" alt="leng_icon" class="leng_icon"> </div>
+                <a href="#" class="nav-link">Help</a>
+            </nav>
+            <div class="md-hidden">
+                <button class="mobile-menu-button">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <section class="filtros-busqueda">
-            <h2>Buscar Alojamientos</h2>
-            <div>
-                <label for="filtro-ciudad">Ciudad:</label>
-                <input type="text" id="filtro-ciudad" placeholder="Ej: Buenos Aires">
-            </div>
-            <div>
-                <label for="filtro-pais">País:</label>
-                <input type="text" id="filtro-pais" placeholder="Ej: Argentina">
-            </div>
-            <div>
-                <label for="filtro-tipo">Tipo de Alojamiento:</label>
-                <select id="filtro-tipo">
-                    <option value="">Todos</option>
-                    <option value="Hotel">Hotel</option>
-                    <option value="Departamento">Departamento</option>
-                    <option value="Cabaña">Cabaña</option>
-                    <option value="Hostal">Hostal</option>
-                    <option value="Posada">Posada</option>
-                </select>
-            </div>
-            <button id="aplicar-filtros" class="btn">Aplicar Filtros</button>
-        </section>
+    <section class="hero-background">
+        <div class="Box-hero-background">
 
-        <h2>Alojamientos Disponibles</h2>
-        <div id="alojamientos-container" class="grid-alojamientos">
-            <p>Cargando alojamientos...</p>
         </div>
-    </main>
+            <div class="container hero-content">
+                <h1 class="hero-title">Encuentra tu próximo destino</h1>
+                <p class="hero-subtitle">Accede a ofertas en alojamientos</p>
+            </div>
+            <div class="search-form-wrapper">
+                <div class="search-form-container">
+                    <form class="search-form">
+                        <div class="form-group">
+                            <label for="destination">Destino</label>
+                            <select id="destination" autofocus>
+                                <option>Buenos Aires</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkin">Check-in</label>
+                            <input type="date" id="checkin">
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout">Check-out</label>
+                            <input type="date" id="checkout" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="guestsDisplay">Huéspedes</label>
+                            <div id="guestsDisplay" class="custom-select">2 adultos, 0 menores, 1 habitación</div>
+                            <input type="hidden" id="adultsInput" value="2">
+                            <input type="hidden" id="childrenInput" value="0">
+                            <input type="hidden" id="roomsInput" value="1">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="search-button">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        
+    </section>
 
+    <section class="browse-section">
+        <div class="container">
+            <h2 class="browse-title">Busca por tipo de alojamiento</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <img src="./assets/pic/menton-hd.jpg" alt="Hoteles" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Hoteles</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/pic/apartamentos.jpg" alt="Apartamentos" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Apartamentos</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/pic/resort.jpg" alt="Resorts" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Resorts</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/pic/villas.jpg" alt="Villas" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Villas</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="search-results-section">
+        <div class="container">
+            <h2 class="search-results-title">Resultados de tu búsqueda</h2>
+            <div id="searchResultsGrid" class="card-grid">
+                </div>
+        </div>
+    </section>
+
+    <div id="guestsModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close-button" id="closeModalBtn">&times;</span>
+            <h2>Seleccionar Huéspedes y Habitaciones</h2>
+            <div class="modal-input-group">
+                <label for="modalAdults">Adultos:</label>
+                <input type="number" id="modalAdults" value="2" min="1">
+            </div>
+            <div class="modal-input-group">
+                <label for="modalChildren">Menores:</label>
+                <input type="number" id="modalChildren" value="0" min="0">
+            </div>
+            <div class="modal-input-group">
+                <label for="modalRooms">Habitaciones:</label>
+                <input type="number" id="modalRooms" value="1" min="1">
+            </div>
+            <div class="modal-actions">
+                <button id="saveGuestsBtn">Guardar</button>
+            </div>
+        </div>
+    </div>
     <footer>
         <p>&copy; <span id="currentYear"></span> Booking MVP Latam. Todos los derechos reservados.</p>
     </footer>
@@ -56,6 +142,7 @@
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
-    <script src="../js/catalogo.js"></script>
+    <script src="./js/search.js" defer></script>
+    <!-- <script src="../js/catalogo.js"></script> -->
 </body>
 </html>
