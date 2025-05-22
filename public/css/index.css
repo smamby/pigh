@@ -101,16 +101,21 @@ body {
         }
         
         .hero-background {
-            transition: height 1s ease, background-size 2s ease;
+            transition: height 1s ease, background-size 2s ease, background-position-y 0.5s ease;
         }
 
         .hero-background.achicarse {
             height: 400px; /* 700px * 0.7 = 490px */
             scale: 1;
+            background-size: 120%; /* Imagen más grande = efecto zoom-out */
         }
 
-        .hero-background.achicarse {
-            background-size: 120%; /* Imagen más grande = efecto zoom-out */
+        .hero-background.busqueda {
+            height: 150px;
+            background-position-y: -41rem;
+        }
+        .container.hero-content.busqueda {
+            display: none;
         }
 
         .hero-content {
@@ -328,9 +333,15 @@ body {
             }
         }
 
+        /* search results */
+        .search-results-section {
+            display: none; /* hidden */
+            padding-top: 6rem;;
+        }
+
         /* Browse by Type Section styles */
         .browse-section { 
-            padding-bottom: 3rem; 
+            padding-bottom: 8rem; 
             background-color: #f3f4f6; 
             /* Adjusted padding to account for the overlapping search form */
             padding-top: 12rem; /* overlap-section-padding - adjust this value if the search form height changes */

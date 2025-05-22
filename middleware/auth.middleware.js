@@ -1,4 +1,4 @@
-// backend/middleware/auth.middleware.js
+// middleware/auth.middleware.js
 
 const jwt = require('jsonwebtoken');
 require('dotenv').config(); // Para acceder a JWT_SECRET

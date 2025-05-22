@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const searchForm = document.getElementById('searchForm');
+    const searchForm = document.getElementById('search-form');
     const searchResultsGrid = document.getElementById('searchResultsGrid');
 
     searchForm.addEventListener('submit', async (event) => {
         event.preventDefault(); // Prevent default form submission
 
-        const destination = destinationSelect.value;
+        const destination = document.getElementById('destination').value;
         const checkin = document.getElementById('checkin').value;
         const checkout = document.getElementById('checkout').value;
-        const adults = parseInt(adultsHiddenInput.value) || 1;
-        const children = parseInt(childrenHiddenInput.value) || 0;
-        const rooms = parseInt(roomsHiddenInput.value) || 1;
-
+        const adults = parseInt(document.getElementById('adultsInput').value) || 1;
+        const children = parseInt(document.getElementById('childrenInput').value) || 0;
+        const rooms = parseInt(document.getElementById('roomsInput').value) || 1;
+    
         // Basic validation
         if (!destination || !checkin || !checkout) {
             alert('Por favor, completa todos los campos de búsqueda.');
@@ -27,21 +27,33 @@ document.addEventListener('DOMContentLoaded', () => {
             rooms
         };
 
-        console.log('Parámetros de búsqueda:', searchParams);
+        const queryString = new URLSearchParams(searchParams).toString();
+        console.log('Parámetros de búsqueda:', queryString);
 
         try {
-            const response = await fetch('https://localhost:3001/api/alojamientos/', {
-                method: 'POST',
+            const response = await fetch(`http://localhost:3001/api/alojamientos?${queryString}`, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(searchParams)
             });
             const data = await response.json(); // Assuming the API returns JSON
+            console.log('Response data:', data);
+            const busqueda = document.querySelector('.search-results-section');
+            const browser = document.querySelector('.browse-section');
+            busqueda.style.display = 'block'; // Show the search results section
+            browser.style.display = 'none'; // Hide the browse section
+            const accommodations = data; // Assuming the API returns an array of accommodations
+            const estadoBusqueda = document.querySelector('.hero-background');
+            const container = document.querySelector('.container.hero-content');
+            estadoBusqueda.classList.add('busqueda');
+            container.classList.add('busqueda');
+            window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+            });
 
-        
-
-            //renderSearchResults(accommodations);
+            renderSearchResults(accommodations);
 
         } catch (error) {
             console.error('Error searching accommodations:', error);
@@ -115,6 +127,7 @@ function renderSearchResults(results) {
 
         const scrollY = window.scrollY;
         const screenHeight = window.innerHeight;
+        console.log(scrollY);
 
         // Si se ha hecho scroll de al menos el 10% de la pantalla
         if (scrollY > screenHeight * 0.1) {
@@ -125,5 +138,20 @@ function renderSearchResults(results) {
             hero.classList.remove('achicarse');
             browseSection.classList.remove('achicar');
             moduloBuscador.classList.remove('achicar');
+            
+            
+
         }
+        let hasSnapped = false;
+        if (scrollY < screenHeight * 0.05  && !hasSnapped) {
+            hasSnapped = true;
+            window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+            });
+        }
+        // Evita múltiples disparos
+        setTimeout(() => {
+        hasSnapped = false;
+        }, 500);
     });

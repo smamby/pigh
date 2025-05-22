@@ -1,0 +1,645 @@
+/* General Resets & Variables */
+:root {
+    --primary-blue: #3f51b5; /* A deeper blue for branding */
+    --secondary-blue: #2196f3; /* Lighter blue for accents */
+    --accent-orange: #ff5722; /* Orange for 'Reservar' button */
+    --green-rating: #8bc34a; /* Green for good rating scores */
+    --text-dark: #333;
+    --text-medium: #555;
+    --text-light: #777;
+    --border-light: #ddd;
+    --bg-light: #f4f7f6;
+    --bg-white: #fff;
+    --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-medium: 0 4px 8px rgba(0,0,0,0.1);
+    --border-radius: 6px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-blue);
+}
+
+a:hover {
+    color: var(--secondary-blue);
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: var(--bg-white);
+    box-shadow: var(--shadow-light);
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.logo--accent {
+    color: var(--primary-blue);
+}
+
+.header__nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.header__nav a {
+    color: var(--text-medium);
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.header__nav a:hover {
+    color: var(--primary-blue);
+}
+
+.header__user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-name {
+    font-weight: 500;
+    color: var(--text-dark);
+    font-size: 15px;
+}
+
+.user-icon {
+    font-size: 24px;
+    color: var(--text-medium);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    max-width: 1200px;
+    margin: 20px auto 10px;
+    padding: 0 20px;
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+.breadcrumb a {
+    color: var(--primary-blue);
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content Layout */
+.main-content {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Search Section */
+.search-section {
+    background-color: var(--bg-white);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    margin-bottom: 25px;
+}
+
+.search-form {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 15px;
+    align-items: center;
+}
+
+.search-field {
+    position: relative;
+    flex: 1; /* Allows fields to grow */
+    min-width: 150px; /* Minimum width before stacking */
+}
+
+.search-field select,
+.search-field input[type="text"],
+.search-field input[type="date"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius);
+    font-size: 15px;
+    color: var(--text-dark);
+    appearance: none; /* Remove default select arrow */
+    background-color: var(--bg-white);
+}
+
+.search-field select {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23555" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 35px; /* Make space for the custom arrow */
+}
+
+
+.search-field input[type="text"]:focus,
+.search-field input[type="date"]:focus,
+.search-field select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+}
+
+.calendar-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-medium);
+    pointer-events: none; /* Make icon unclickable */
+}
+
+.search-button {
+    background-color: var(--secondary-blue);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.search-button:hover {
+    background-color: #1976d2; /* Darker blue on hover */
+}
+
+/* Results Layout (Sidebar + Main) */
+.results-layout {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start; /* Align top of sidebar and results */
+    flex-wrap: wrap; /* Allow columns to stack on smaller screens */
+}
+
+/* Filters Sidebar */
+.filters-sidebar {
+    background-color: var(--bg-white);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    flex: 0 0 280px; /* Fixed width sidebar */
+    min-width: 250px; /* Ensure it doesn't get too small */
+}
+
+.filters-sidebar__title {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee; /* Subtle separator */
+    padding-bottom: 15px;
+}
+
+.filter-section {
+    margin-bottom: 25px;
+}
+
+.filter-section__title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-medium);
+    margin-bottom: 15px;
+}
+
+.price-range {
+    margin-bottom: 10px;
+}
+
+.price-slider {
+    width: 100%;
+    -webkit-appearance: none; /* Remove default styling for WebKit browsers */
+    appearance: none;
+    height: 6px;
+    border-radius: 5px;
+    background: #e0e0e0;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+.price-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-blue);
+    cursor: grab;
+    box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.3);
+    margin-top: -7px; /* Center thumb on track */
+}
+
+.price-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-blue);
+    cursor: grab;
+    box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.3);
+}
+
+.price-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.filter-button {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--primary-blue);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-white);
+    color: var(--primary-blue);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-button.active {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+.filter-button:not(.active):hover {
+    background-color: #e8eaf6; /* Lighter blue on hover */
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: var(--text-medium);
+    cursor: pointer;
+}
+
+.radio-label input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-light);
+    border-radius: 50%;
+    margin-right: 10px;
+    display: grid;
+    place-content: center;
+    transition: all 0.2s ease;
+}
+
+.radio-label input[type="radio"]::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+    box-shadow: inset 1em 1em var(--primary-blue);
+}
+
+.radio-label input[type="radio"]:checked {
+    border-color: var(--primary-blue);
+}
+
+.radio-label input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+/* Accommodation Results */
+.accommodation-results {
+    flex: 1; /* Takes remaining space */
+    min-width: 400px; /* Minimum width for the results section */
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-white);
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    margin-bottom: 25px;
+}
+
+.results-header__title {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.results-header__sort {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: var(--text-medium);
+}
+
+.sort-dropdown {
+    padding: 8px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius);
+    font-size: 15px;
+    color: var(--text-dark);
+    appearance: none; /* Remove default select arrow */
+    background-color: var(--bg-white);
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23555" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 35px;
+}
+
+/* Accommodation List Grid */
+.accommodation-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Responsive grid */
+    gap: 25px;
+}
+
+/* Accommodation Card */
+.accommodation-card {
+    background-color: var(--bg-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Stack image and details vertically */
+    transition: transform 0.2s ease;
+}
+
+.accommodation-card:hover {
+    transform: translateY(-5px);
+}
+
+.accommodation-card__image {
+    width: 100%;
+    height: 200px; /* Fixed height for consistent image size */
+    overflow: hidden;
+}
+
+.accommodation-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the area, cropping if necessary */
+}
+
+.accommodation-card__details {
+    padding: 15px;
+    flex-grow: 1; /* Allow details section to push pricing/rating to bottom */
+}
+
+.accommodation-card__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary-blue);
+    margin-bottom: 5px;
+}
+
+.accommodation-card__stars {
+    color: #fbc02d; /* Gold color for stars */
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.accommodation-card__location {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 12px;
+}
+
+.accommodation-card__amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.amenity-tag {
+    background-color: #e8eaf6; /* Light blue background */
+    color: var(--primary-blue);
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.accommodation-card__pricing-rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-top: 1px solid #eee;
+    background-color: #f9f9f9; /* Slightly different background for this section */
+}
+
+.rating-box {
+    text-align: center;
+    min-width: 60px; /* Ensure consistent width */
+}
+
+.rating-score {
+    display: block;
+    background-color: var(--green-rating);
+    color: white;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+
+.rating-text {
+    font-size: 12px;
+    color: var(--text-medium);
+}
+
+.price-info {
+    text-align: right;
+    flex-grow: 1; /* Allow price to take up space */
+    padding-right: 10px; /* Spacing before button */
+}
+
+.price {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dark);
+    display: block;
+}
+
+.guests-info {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.book-button {
+    background-color: var(--accent-orange);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.book-button:hover {
+    background-color: #e64a19; /* Darker orange on hover */
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .results-layout {
+        flex-direction: column; /* Stack sidebar and main content */
+    }
+
+    .filters-sidebar {
+        flex: 0 0 100%; /* Sidebar takes full width */
+        margin-bottom: 25px; /* Add space below sidebar */
+    }
+
+    .accommodation-results {
+        min-width: unset; /* Remove min-width to allow shrinking */
+        width: 100%; /* Take full width */
+    }
+
+    .accommodation-list {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Adjust card size */
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+    }
+
+    .header__nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .header__user-profile {
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+
+    .search-form {
+        flex-direction: column;
+    }
+
+    .search-field, .search-button {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .main-content {
+        padding: 0 15px;
+    }
+
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .results-header__sort {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .sort-dropdown {
+        flex-grow: 1;
+    }
+
+    .accommodation-card__pricing-rating {
+        flex-wrap: wrap; /* Allow pricing/rating elements to stack */
+        justify-content: center;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .price-info {
+        padding-right: 0;
+    }
+
+    .book-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .header .logo {
+        font-size: 22px;
+    }
+
+    .header__nav a {
+        font-size: 14px;
+    }
+
+    .user-name {
+        font-size: 14px;
+    }
+
+    .results-header__title {
+        font-size: 20px;
+    }
+
+    .accommodation-list {
+        grid-template-columns: 1fr; /* Single column layout for very small screens */
+    }
+}

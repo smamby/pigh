@@ -39,31 +39,33 @@ Alojamiento.create = async (nuevoAlojamiento) => {
 Alojamiento.getAll = async (filtros = {}) => {
   let query = 'SELECT * FROM alojamientos WHERE 1=1';
   const params = [];
+  console.log('params getAll:', filtros);
 
-  if (filtros.ciudad) {
+  // Construir la query con filtros opcionales
+  if (filtros.destination) {
     query += ' AND ciudad LIKE ?';
-    params.push(`%${filtros.ciudad}%`);
+    params.push(`%${filtros.destination}%`);
   }
-  if (filtros.pais) {
-    query += ' AND pais LIKE ?';
-    params.push(`%${filtros.pais}%`);
-  }
-  if (filtros.tipo_alojamiento) {
-    query += ' AND tipo_alojamiento = ?';
-    params.push(filtros.tipo_alojamiento);
-  }
-  if (filtros.disponible !== undefined) {
-    query += ' AND disponible = ?';
-    params.push(filtros.disponible);
-  }
-  if (filtros.precio_max) {
-    query += ' AND precio_por_noche <= ?';
-    params.push(filtros.precio_max);
-  }
-  if (filtros.capacidad_min) {
-    query += ' AND capacidad >= ?';
-    params.push(filtros.capacidad_min);
-  }
+  // if (filtros.checkin) {
+  //   query += ' AND pais LIKE ?';
+  //   params.push(`%${filtros.pais}%`);
+  // }
+  // if (filtros.checkout !== undefined) {
+  //   query += ' AND disponible = ?';
+  //   params.push(filtros.disponible);
+  // }
+  // if (filtros.tipo_alojamiento) {
+  //   query += ' AND tipo_alojamiento = ?';
+  //   params.push(filtros.tipo_alojamiento);
+  // }
+  // if (filtros.precio_max) {
+  //   query += ' AND precio_por_noche <= ?';
+  //   params.push(filtros.precio_max);
+  // }
+  // if (filtros.capacidad_min) {
+  //   query += ' AND capacidad >= ?';
+  //   params.push(filtros.capacidad_min);
+  // }
 
   // Aquí se podrían añadir más filtros como rango de fechas de disponibilidad (más complejo, para la etapa de reservas)
 
