@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-            const destinationSelect = document.getElementById('destination');
+            
             //const searchForm = document.getElementById('searchForm');
             //const searchResultsGrid = document.getElementById('searchResultsGrid');
             const guestsDisplay = document.getElementById('guestsDisplay');
@@ -13,38 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const childrenHiddenInput = document.getElementById('childrenInput');
             const roomsHiddenInput = document.getElementById('roomsInput');
 
-            // --- 1) Cargar destinos dinámicamente ---
-            async function loadDestinations() {
-                try {
-                    const response = await fetch('http://localhost:3001/api/alojamientos/destinos');
-                    const data = await response.json(); // Assuming the API returns JSON
-                    const destinations = data;
-                    
-                     //data.ciudad || ['Buenos Aires', 'Córdoba', 'Mendoza', 'Bariloche', 'Salta']; // Fallback
-
-                    destinationSelect.innerHTML = ''; // Clear existing options
-                    destinations.forEach(destination => {
-                        const option = document.createElement('option');
-                        option.value = destination;
-                        option.textContent = destination;
-                        destinationSelect.appendChild(option);
-                    });
-                } catch (error) {
-                    console.error('Error loading destinations:', error);
-                    // Fallback to default options if API fails
-                    const defaultDestinations = ['Buenos Aires', 'Córdoba', 'Mendoza', 'Bariloche', 'Salta'];
-                    destinationSelect.innerHTML = '';
-                    defaultDestinations.forEach(destination => {
-                        const option = document.createElement('option');
-                        option.value = destination;
-                        option.textContent = destination;
-                        destinationSelect.appendChild(option);
-                    });
-                }
-            }
+            
 
             // Initial load
-            loadDestinations();
+            //loadDestinations();
 
             
             // --- 3) Lógica del popup de Huéspedes ---

@@ -92,8 +92,9 @@ exports.getAlojamientoById = async (req, res) => {
 
 // Obtener lista de destinos (ciudades) disponibles
 exports.destinos = async (req, res) => {
+  const params = req.query.ciudad || '';
   try {
-    const destinos = await Alojamiento.getDestinos();
+    const destinos = await Alojamiento.getDestinos(params);
     
     res.status(200).json(destinos);
   } catch (error) {

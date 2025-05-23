@@ -8,7 +8,7 @@ const { authenticateToken, isAdmin } = require('../middleware/auth.middleware');
 // GET /api/alojamientos - Listar todos los alojamientos (con filtros opcionales por query params)
 router.get('/', alojamientoController.getAllAlojamientos);
 
-// GET /api/alojamientos/destinations - Obtener lista de destinos (ciudades) disponibles
+// GET /api/alojamientos/destinations - Obtener lista de destinos (ciudades) disponibles (con filtros opcionales por query params)
 router.get('/destinos', alojamientoController.destinos);
 
 // GET /api/alojamientos/:id - Obtener un alojamiento específico por ID

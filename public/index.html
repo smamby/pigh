@@ -45,10 +45,20 @@
                 <div class="search-form-container">
                     <form class="search-form" id="search-form">
                         <div class="form-group">
-                            <label for="destination">Destino</label>
-                            <select id="destination" autofocus>
+                            <label for="destinations">Destino</label>
+                            <!-- <input type="text" name="ciudad" id="destinations" placeholder="A donde vas?" required>
+                            <div class="suggestions" id="suggestions"></div> -->
+                            <input id="destinationSelect" list="cityOptions" placeholder="A donde vas?" autofocus autocomplete="off"/>
+                            <datalist id="ciudad"></datalist>
+                            <!-- <input list="ciudades" id="destinations" autofocus name="ciudad" placeholder="A donde vas?" />
+                            <datalist id="ciudades">
+                            <option value="Bariloche">
+                            <option value="Buenos Aires">
+                            <option value="Mendoza">
+                            </datalist> -->
+                            <!-- <select id="destination" autofocus>
                                 <option>Buenos Aires</option>
-                            </select>
+                            </select> -->
                         </div>
                         <div class="form-group">
                             <label for="checkin">Check-in</label>

@@ -37,7 +37,16 @@ Alojamiento.create = async (nuevoAlojamiento) => {
 
 // Obtener todos los alojamientos (con filtros básicos opcionales)
 Alojamiento.getAll = async (filtros = {}) => {
+  // let query = 'SELECT * FROM alojamientos WHERE 1=1';
+  // const ciudad = req.query.ciudad;
+
+  // const [rows] = await db.query(
+  //   'SELECT * FROM alojamientos WHERE LOWER(ciudad) LIKE LOWER ?',
+  //   [`%${ciudad}%`]
+  // );
+
   let query = 'SELECT * FROM alojamientos WHERE 1=1';
+
   const params = [];
   console.log('params getAll:', filtros);
 
@@ -93,9 +102,11 @@ Alojamiento.findById = async (id) => {
 };
 
 // Obtener lista de destinos (ciudades) disponibles
-Alojamiento.getDestinos = async () => {
+Alojamiento.getDestinos = async (texto) => {
   try {
-    const [rows] = await db.query('SELECT distinct ciudad FROM alojamientos ORDER BY RAND() LIMIT 6');
+    const [rows] = await db.query(`SELECT DISTINCT ciudad FROM alojamientos WHERE LOWER(ciudad) LIKE LOWER(?) LIMIT 5`,
+      [`%${texto}%`]);
+      console.log('after query:', texto);
     const ciudades = rows.map(row => row.ciudad); // Retorna un array de ciudades únicas
     return ciudades;
   } catch (error) {

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchForm.addEventListener('submit', async (event) => {
         event.preventDefault(); // Prevent default form submission
 
-        const destination = document.getElementById('destination').value;
+        const destination = document.getElementById('destinationSelect').value;
         const checkin = document.getElementById('checkin').value;
         const checkout = document.getElementById('checkout').value;
         const adults = parseInt(document.getElementById('adultsInput').value) || 1;
@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const browser = document.querySelector('.browse-section');
             busqueda.style.display = 'block'; // Show the search results section
             browser.style.display = 'none'; // Hide the browse section
+            console.log('data/acommodations', data);
             const accommodations = data; // Assuming the API returns an array of accommodations
             const estadoBusqueda = document.querySelector('.hero-background');
             const container = document.querySelector('.container.hero-content');
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
 function renderSearchResults(results) {
     searchResultsGrid.innerHTML = ''; // Clear previous results
 
@@ -71,7 +73,7 @@ function renderSearchResults(results) {
         searchResultsGrid.innerHTML = '<p style="text-align: center; width: 100%;">No se encontraron alojamientos para tu búsqueda.</p>';
         return;
     }
-
+    console.log('results:', results);
     results.forEach(accommodation => {
         const card = document.createElement('div');
         card.classList.add('card');
@@ -155,3 +157,63 @@ function renderSearchResults(results) {
         hasSnapped = false;
         }, 500);
     });
+
+const destinationSelect = document.getElementById('destinationSelect');
+const datalist = document.getElementById('ciudad');
+let lastQuery = '';
+let optID = '';
+
+// --- 1) Cargar destinos dinámicamente ---
+destinationSelect.addEventListener('input', async () => {
+    console.log('prueba event listener input')
+    const query = destinationSelect.value.trim();
+    console.log('query:', query);
+    if (query.length < 2) {
+        datalist.classList.remove('expandido'); // Hide the datalist
+        return;
+    }
+    if (query.length < 2 || query === lastQuery) return;
+    lastQuery = query;
+    try {
+        const response = await fetch(`http://localhost:3001/api/alojamientos/destinos?ciudad=${query}`);
+        const destinations = await response.json(); // Assuming the API returns JSON
+        console.log('Destinos [search]:', destinations);
+
+        datalist.innerHTML = ''; // Clear existing options
+        datalist.classList.add('expandido'); // Show the datalist
+        destinations.slice(0, 5).forEach(destination => {
+            const option = document.createElement('div');
+            option.value = destination;
+            option.textContent = destination;
+            option.className = 'opt-ciudad';
+            option.id =   `ciudad-${destination}`;
+            datalist.appendChild(option);
+            
+            option.addEventListener('click', () => {
+                console.log('click en ciudadInput', option.value);
+                datalist.classList.remove('expandido'); // Hide the datalist
+                destinationSelect.value = option.value;
+                destinationSelect.focus();
+            });
+        });
+    } catch (error) {
+        console.error('Error loading destinations:', error);
+        // Fallback to default options if API fails
+        const defaultDestinations = ['Buenos Aires', 'Córdoba', 'Mendoza', 'Bariloche', 'Salta'];
+        destinationSelect.innerHTML = '';
+        // defaultDestinations.forEach(destination => {
+        //     const option = document.createElement('option');
+        //     option.value = destination;
+        //     option.textContent = destination;
+        //     destinationSelect.appendChild(option);
+        // });
+    }
+});
+
+
+// const ciudadInput = document.getElementById(optID);
+// ciudadInput.addEventListener('click', () => {
+//     console.log('click en ciudadInput');
+//     datalist.classList.remove('expandido'); // Hide the datalist
+//     destinationSelect.value = ciudadInput.value; // Clear the input value
+// });
