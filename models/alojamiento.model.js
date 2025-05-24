@@ -37,19 +37,30 @@ Alojamiento.create = async (nuevoAlojamiento) => {
 
 // Obtener todos los alojamientos (con filtros básicos opcionales)
 Alojamiento.getAll = async (filtros = {}) => {
-  // let query = 'SELECT * FROM alojamientos WHERE 1=1';
-  // const ciudad = req.query.ciudad;
+  
 
-  // const [rows] = await db.query(
-  //   'SELECT * FROM alojamientos WHERE LOWER(ciudad) LIKE LOWER ?',
-  //   [`%${ciudad}%`]
-  // );
+  let query = `SELECT DISTINCT a.*
+              FROM alojamientos a
+              JOIN habitaciones h ON h.id_alojamiento = a.id_alojamiento
+              WHERE 1=1`; // 1=1 para facilitar concatenación de condiciones
 
-  let query = 'SELECT * FROM alojamientos WHERE 1=1';
+
 
   const params = [];
   console.log('params getAll:', filtros);
 
+  // Filtro por fechas de disponibilidad (obligatorias)
+  if (filtros.checkin && filtros.checkout) {
+    query += ` AND h.id_habitacion NOT IN (
+              SELECT r.id_habitacion
+              FROM reservas r
+              WHERE r.checkin < ?
+                AND r.checkout > ?
+              )`;
+    params.push(filtros.checkout, filtros.checkin);
+  }
+  
+  
   // Construir la query con filtros opcionales
   if (filtros.destination) {
     query += ' AND ciudad LIKE ?';
@@ -62,7 +73,7 @@ Alojamiento.getAll = async (filtros = {}) => {
   // if (filtros.checkout !== undefined) {
   //   query += ' AND disponible = ?';
   //   params.push(filtros.disponible);
-  // }
+  
   // if (filtros.tipo_alojamiento) {
   //   query += ' AND tipo_alojamiento = ?';
   //   params.push(filtros.tipo_alojamiento);

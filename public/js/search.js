@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('search-form');
     const searchResultsGrid = document.getElementById('searchResultsGrid');
 
+    // --- 1) Sumit del buscador ---
     searchForm.addEventListener('submit', async (event) => {
         event.preventDefault(); // Prevent default form submission
 
