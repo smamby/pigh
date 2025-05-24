@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
-                window.location.href = 'index.html'; // O a login.html
+                window.location.href = '/index.html'; // O a login.html
             });
         }
     } else {

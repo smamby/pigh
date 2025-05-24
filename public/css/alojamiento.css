@@ -83,6 +83,7 @@ body {
             cursor: pointer;
             outline: none;
         }
+        
         #nav-register.loged, #nav-login.loged, #nav-mis-reservas.unloged, 
         #nav-alojamiento.unloged, #nav-logout.unloged {
             display: none;
@@ -92,14 +93,11 @@ body {
         #nav-alojamiento.loged, #nav-logout.loged{
             display: visible;
         }
-        /* #avatar-img.loged {
-            display: visible;
-            src: url('../assets/pic/avatar1.png');
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        #avatar-img.unloged {
-            display: visible;
-            src: url('../assets/pic/avatar0.png');
-        } */
 
         /* Hero Section styles */
         .hero-background {

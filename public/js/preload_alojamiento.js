@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 navmis.classList.add('loged')
                 navlogout.classList.add('loged')
                 // navavatar.classList.add('loged')
-                navavatar.src = './assets/pic/avatar1.png'
+                navavatar.src = '../assets/pic/avatar1.png'
                 console.log(user.nombre + " loged");
             } else {
                 navregister.classList.remove('loged')
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 navmis.classList.add('unloged')
                 navlogout.classList.add('unloged')
                 // navavatar.classList.add('unloged')
-                navavatar.src = './assets/pic/avatar0.png'
+                navavatar.src = '../assets/pic/avatar0.png'
                 console.log("unloged");
             }
 
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem('user');
 
                 // Redirige manualmente
-                window.location.href = "../index.html";
+                //window.location.href = "../index.html";
             });
 
             

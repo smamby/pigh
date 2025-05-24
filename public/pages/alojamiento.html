@@ -4,17 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle del Alojamiento - Booking MVP</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/alojamiento.css">
+    <script src="../js/preload_alojamiento.js"></script>
 </head>
 <body>
-    <header>
+    <!-- <header>
         <h1>Detalle del Alojamiento</h1>
         <nav>
             <a href="index.html">Inicio</a>
-    <a href="login.html" id="nav-login">Login</a>
-    <a href="register.html" id="nav-register">Registro</a>
-    <a href="mis_reservas.html" id="nav-mis-reservas" style="display:none;">Mis Reservas</a>
-    <a href="#" id="nav-logout" style="display:none;">Cerrar Sesión</a>
+            <a href="login.html" id="nav-login">Login</a>
+            <a href="register.html" id="nav-register">Registro</a>
+            <a href="mis_reservas.html" id="nav-mis-reservas" style="display:none;">Mis Reservas</a>
+            <a href="#" id="nav-logout" style="display:none;">Cerrar Sesión</a>
+    </header> -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <img src="../assets/logo-check-inn.png" alt="Check-inn" class="logo-image">
+            </div>
+            <nav class="nav-links">
+                <a href="register.html" class="nav-link" id="nav-register">Registra tu alojamiento</a>
+                <a href="login.html" class="nav-link" id="nav-login">Sing in / Sing up</a>
+                <a href="mis_reservas.html" class="nav-link" id="nav-mis-reservas">Mis Reservas</a>
+                <a href="#" class="nav-link" id="nav-logout">Cerrar Sesión</a>
+                <div class="currency-selector">
+                    <span>Ars</span>
+                    <img src="../assets/leng_sp_arg.png" alt="leng_icon" class="leng_icon"> </div>
+                <a href="#" class="nav-link">Help</a>
+            </nav>
+            <div class="hideloging">
+                <img id="avatar-img" src="../assets/pic/avatar0.png" alt="">
+                <p id="username"></p>
+            </div>
+            <div class="md-hidden">
+                <button class="mobile-menu-button">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
     </header>
 
     <main>
