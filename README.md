@@ -9,6 +9,7 @@ git clone https://github.com/smamby/pigh.git
    
 3)  - Instalar las librerias
 npm install  
+npm start
    
 4)  - Abrir navegador
 http://localhost:3001/

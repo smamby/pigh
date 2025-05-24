@@ -1,0 +1,244 @@
+/* ========== Reset y tipografías ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f3f4f6; /* gris claro de fondo */
+  color: #1f2937;             /* gris oscuro para texto */
+  line-height: 1.6;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+a {
+  color: #02b5e2;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* ========== Header ========== */
+header {
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+header nav a {
+  margin-left: 1rem;
+  font-weight: 500;
+}
+
+.header {
+    background-color: #ffffff; /* bg-white */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+    padding-top: 1rem; /* py-4 */
+    padding-bottom: 1rem; /* py-4 */
+    width: 100vw; /* w-full */
+    justify-content: center;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.container {
+    display: flex;
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* space-x-6 */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+.logo-image {
+    width: 16rem; /* w-8 */
+        /* h-8 */
+    margin-right: 0.5rem; /* mr-2 */
+}
+
+.leng_icon {
+    width: 2rem; /* w-6 */
+    height: 2rem; /* h-6 */
+    margin-right: 0.25rem; /* mr-1 */
+}
+
+.nav-links {
+    display: none; /* hidden */
+    align-items: center;
+    gap: 1.5rem; /* space-x-6 */
+}
+
+.nav-link {
+    color: #4b5563; /* text-gray-600 */
+    transition: color 0.2s ease-in-out; /* transition */
+}
+
+.nav-link:hover {
+    color: #2563eb; /* hover:text-blue-600 */
+}
+
+.currency-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem; /* space-x-1 */
+    color: #4b5563; /* text-gray-600 */
+}
+
+.mobile-menu-button {
+    display: block; /* md:hidden */
+    color: #4b5563; /* text-gray-600 */
+    font-size: 1.25rem; /* text-xl */
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+/* ========== Main / Form ========== */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#register-form, #login-form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+#register-form h2, #login-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  color: #1f2937;
+}
+
+#register-form .error-message,
+#register-form .success-message,
+#login-form .error-message,
+#login-form .success-message {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.error-message{
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.success-message {
+  background-color: #daf5e4;
+  color: #166534;
+}
+
+/* Campos del formulario */
+#register-form div ,
+#login-form div {
+  margin-bottom: 1rem;
+}
+
+#register-form label ,
+#login-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+#register-form input ,
+#login-form input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+#register-form input:focus ,
+#login-form input:focus {
+  border-color: #02b5e2;
+  box-shadow: 0 0 0 2px rgba(2,181,226,0.3);
+}
+
+/* Botón */
+#register-form .btn , #login-form .btn {
+  width: 100%;
+  background-color: #02b5e2;
+  color: #ffffff;
+  padding: 0.75rem;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#btn-inicio , #btn-register, #btn-login {
+    width: 100%;
+    background-color: #b6e4f0;
+    color: cadetblue;
+    margin-top: 16px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#register-form .btn:hover, #login-form .btn:hover {
+  background-color: #0191bd;
+}
+
+/* ========== Footer ========== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  header nav {
+    margin-top: 0.5rem;
+  }
+}

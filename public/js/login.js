@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Redirigir después de un breve momento para que el usuario vea el mensaje
                     setTimeout(() => {
-                        window.location.href = 'index.html'; // Ajusta la URL de redirección si es necesario
-                    }, 2000); // 2 segundos de espera
+                        window.location.href = '../index.html'; // Ajusta la URL de redirección si es necesario
+                    }, 1000); // 1,3 segundos de espera
 
                 } else {
                     mostrarMensajeUI(errorMessageDiv, data.message || `Error: ${response.status}`, 'error-message');
