@@ -215,8 +215,20 @@ body {
             background-color: #ffffff;
             color: #1f2937;
             position: absolute;
+            height: auto;
             cursor: pointer;
+            z-index: 10;
         }
+        .opt-ciudad {
+            height: 28px;
+            padding: 8px;
+        }
+        .opt-ciudad:hover {
+            background-color: #cff1fa; /* bg-gray-100 */
+            box-shadow: 0 0 0 1px #02b5e2, 0 0 0 1px rgba(59, 130, 246, 0.5); /* focus:ring-blue-500 focus:ring-opacity-50 */
+            color: #1f2937; /* text-gray-800 */
+        }
+        
 
         .form-group select:focus,
         .form-group input[type="date"]:focus {
@@ -249,7 +261,7 @@ body {
         }
 
         .search-button:focus {
-            box-shadow: 0 0 0 2px #3b82f6, 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 */
+            box-shadow: 0 0 0 2px #3b82f6, 0 0 0 2px rgba(59, 130, 246, 0.5); /* focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 */
         }
 
         
@@ -434,4 +446,9 @@ body {
             .card-grid {
                 grid-template-columns: repeat(4, minmax(0, 1fr)); /* md:grid-cols-4 */
             }
+        }
+
+        footer {
+            margin: 2rem auto;
+            max-width: 1200px;
         }
