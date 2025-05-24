@@ -13,7 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const childrenHiddenInput = document.getElementById('childrenInput');
             const roomsHiddenInput = document.getElementById('roomsInput');
 
-            
+            if (localStorage.getItem('user') !== null) {
+                const user = JSON.parse(localStorage.getItem('user'));
+                const userName = document.getElementById('username');
+                userName.textContent = `${user.nombre} ${user.apellido}`;
+            }
 
             // Initial load
             //loadDestinations();

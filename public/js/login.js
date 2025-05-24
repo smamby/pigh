@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Mostrar mensaje de éxito en el div
                     mostrarMensajeUI(successMessageDiv, 'Inicio de sesión exitoso. Redirigiendo...', 'success-message');
                     
+                    
                     // Redirigir después de un breve momento para que el usuario vea el mensaje
                     setTimeout(() => {
                         window.location.href = '../index.html'; // Ajusta la URL de redirección si es necesario
