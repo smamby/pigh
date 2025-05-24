@@ -398,6 +398,16 @@ body {
                 grid-column: span 1 / span 1; /* md:col-span-1 */
             }
         }
+        .cont-result-filter {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem; /* px-4 */
+        }
+        #filters {
+            display: grid;
+            width: 250px;
+        }
 
         /* search results */
         .search-results-section {
@@ -405,6 +415,13 @@ body {
             padding-top: 6rem;;
         }
 
+        #searchResultsGrid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr)); /* grid-cols-1 */
+            gap: 1.5rem; /* gap-6 */
+            width: 950px;
+            
+        }
         /* Browse by Type Section styles */
         .browse-section { 
             padding-bottom: 8rem; 
@@ -435,6 +452,7 @@ body {
             background-color: #ffffff; /* bg-white */
             border-radius: 0.5rem; /* rounded-lg */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            padding: 16px;
             overflow: hidden;
             cursor: pointer;
         }

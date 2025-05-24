@@ -7,6 +7,7 @@ const db = require('./db');
 
 // Importar rutas
 const alojamientosRoutes = require('./routes/alojamientos.routes');
+const tipo_alojamientosRoutes = require('./routes/tipo_alojamientos.routes');
 const authRoutes = require('./routes/auth.routes');
 const reservasRoutes = require('./routes/reservas.routes'); // Nueva línea
 
@@ -23,6 +24,7 @@ app.use(express.static('public'));
 // Rutas de la API
 app.use('/api/auth', authRoutes);
 app.use('/api/alojamientos', alojamientosRoutes);
+app.use('/api/tipo_alojamientos', tipo_alojamientosRoutes);
 app.use('/api/reservas', reservasRoutes); // Nueva línea: montar las rutas de reservas
 
 app.get('/api/test-db', async (req, res) => {

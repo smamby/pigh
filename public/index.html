@@ -19,9 +19,9 @@
             </div>
             <nav class="nav-links">
                 <a href="./pages/register.html" class="nav-link" id="nav-register">Registra tu alojamiento</a>
-                <a href="./pages/login.html" class="nav-link" id="nav-login">Sing in / Sing up</a>
                 <a href="./pages/mis_reservas.html" class="nav-link" id="nav-mis-reservas">Mis Reservas</a>
                 <a href="../index.html" class="nav-link" id="nav-logout">Cerrar Sesión</a>
+                <a href="./pages/login.html" class="nav-link" id="nav-login">Sing in / Sing up</a>
                 <div class="currency-selector">
                     <span>Ars</span>
                     <img src="./assets/leng_sp_arg.png" alt="leng_icon" class="leng_icon"> </div>
@@ -112,9 +112,38 @@
     </section>
 
     <section class="search-results-section">
-        <div class="container">
-            <h2 class="search-results-title">Resultados de tu búsqueda</h2>
-            <div id="searchResultsGrid" class="card-grid">
+        <div class="cont-result-filter">
+
+            <aside id="filters" class="filters-sidebar">
+                <h3>Filtrar</h3>
+                <div class="price-filter">
+                    <h4>Precio</h4>
+                    <input type="range" min="0" max="1000" value="500">
+                    <div class="price-range-display">$ 0 - $ 500</div>
+                </div>
+
+                <div class="rating-filter">
+                    <h4>Calificación</h4>
+                    <label><input type="radio" name="rating" value="excelente"> Excelente</label>
+                    <label><input type="radio" name="rating" value="muy-bueno"> Muy Bueno</label>
+                    <label><input type="radio" name="rating" value="bueno"> Bueno</label>
+                    <label><input type="radio" name="rating" value="aceptable"> Aceptable</label>
+                </div>
+
+                <div class="accommodation-type-filter">
+                    <h4>Tipo de alojamiento</h4>
+                    <label><input type="radio" name="accommodation-type" value="hoteles"> Hoteles</label>
+                    <label><input type="radio" name="accommodation-type" value="resorts"> Resorts</label>
+                    <label><input type="radio" name="accommodation-type" value="casa-huespedes"> Casa de huéspedes</label>
+                    <label><input type="radio" name="accommodation-type" value="aparthotel"> ApartHotel</label>
+                </div>
+            </aside>
+
+
+            <div class="container">
+                <h2 class="search-results-title">Resultados de tu búsqueda</h2>
+                <div id="searchResultsGrid" class="card-grid">
+                </div>
             </div>
         </div>
     </section>

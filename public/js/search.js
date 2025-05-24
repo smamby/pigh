@@ -74,18 +74,51 @@ function renderSearchResults(results) {
         return;
     }
     console.log('results:', results);
-    results.forEach(accommodation => {
+    results.forEach(async alojamiento => {
         const card = document.createElement('div');
         card.classList.add('card');
+        const IDtipoAlojam = alojamiento.id_tipo_alojamiento;
+
+        const response = await fetch(`http://localhost:3001/api/tipo_alojamientos/${IDtipoAlojam}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+        });
+        const tipoAlojamiento = await response.json(); // Assuming the API returns JSON
+        console.log('Response data:', tipoAlojamiento);
+
         card.innerHTML = `
-            <img src="${accommodation.imageUrl}" alt="${accommodation.name}" class="card-image">
-            <div class="card-content">
-                <h3 class="card-title">${accommodation.name}</h3>
-                <p>${accommodation.destination}</p>
-                <p>Precio por noche: $${accommodation.price}</p>
-                <p>${accommodation.description}</p>
-            </div>
-        `;
+                <h3>${alojamiento.nombre}</h3>
+                <p><strong>Tipo:</strong> ${tipoAlojamiento.nombre}</p>
+                <p><strong>Ubicación:</strong> ${alojamiento.ciudad}, ${alojamiento.pais}</p>
+                <p><strong>Capacidad:</strong> ${alojamiento.capacidad} personas</p>
+                <p><strong>Precio por noche:</strong> $${parseFloat(alojamiento.precio).toFixed(2)}</p>
+                <p class="${alojamiento.activo ? 'disponible' : 'no-disponible'}">
+                    ${alojamiento.activo ? 'Disponible' : 'No Disponible'}
+                </p>
+                <div class="acciones-card">
+                    <a href="pages/alojamiento.html?id=${alojamiento.id_alojamiento}" class="btn btn-ver-detalles">Ver Detalles</a>
+                    ${alojamiento.disponible ? `<button class="btn btn-reservar" data-id="${alojamiento.id_alojamiento}">Reservar</button>` : ''}
+                    
+                    <div id="form-reserva-tarjeta-${alojamiento.id_alojamiento}" class="form-reserva-popup" style="display:none;">
+                        <h4>Reservar: ${alojamiento.nombre}</h4>
+                        <div>
+                            <label for="fecha-inicio-tarjeta-${alojamiento.id_alojamiento}">Check-in:</label>
+                            <input type="date" id="fecha-inicio-tarjeta-${alojamiento.id_alojamiento}" name="fecha-inicio">
+                        </div>
+                        <div>
+                            <label for="fecha-fin-tarjeta-${alojamiento.id_alojamiento}">Check-out:</label>
+                            <input type="date" id="fecha-fin-tarjeta-${alojamiento.id_alojamiento}" name="fecha-fin">
+                        </div>
+                        <div>
+                            <button class="btn btn-confirmar-reserva" data-alojamiento-id="${alojamiento.id_alojamiento}">Confirmar Reserva</button>
+                            <button class="btn btn-cancelar-popup" data-form-id="form-reserva-tarjeta-${alojamiento.id_alojamiento}">Cancelar</button>
+                        </div>
+                        <div id="mensaje-form-tarjeta-${alojamiento.id_alojamiento}" style="margin-top:10px;"></div>
+                    </div>
+                </div>
+            `;
         searchResultsGrid.appendChild(card);
     });
 }
