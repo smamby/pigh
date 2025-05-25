@@ -8,6 +8,7 @@ const db = require('./db');
 // Importar rutas
 const alojamientosRoutes = require('./routes/alojamientos.routes');
 const tipo_alojamientosRoutes = require('./routes/tipo_alojamientos.routes');
+const img_alojamientosRoutes = require('./routes/img_alojamientos.routes');
 const authRoutes = require('./routes/auth.routes');
 const reservasRoutes = require('./routes/reservas.routes'); // Nueva línea
 
@@ -16,7 +17,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+app.use(cors('*'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -26,6 +27,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/alojamientos', alojamientosRoutes);
 app.use('/api/tipo_alojamientos', tipo_alojamientosRoutes);
 app.use('/api/reservas', reservasRoutes); // Nueva línea: montar las rutas de reservas
+app.use('/api/img_alojamientos', img_alojamientosRoutes); // Nueva línea: montar las rutas de imágenes de alojamientos
 
 app.get('/api/test-db', async (req, res) => {
   try {

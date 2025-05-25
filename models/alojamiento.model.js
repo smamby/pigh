@@ -101,7 +101,7 @@ Alojamiento.getAll = async (filtros = {}) => {
 // Obtener un alojamiento por su ID
 Alojamiento.findById = async (id) => {
   try {
-    const [rows] = await db.query('SELECT * FROM alojamientos WHERE id = ?', [id]);
+    const [rows] = await db.query('SELECT * FROM alojamientos WHERE id_alojamiento = ?', [id]);
     if (rows.length > 0) {
       return rows[0];
     }

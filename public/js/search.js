@@ -79,51 +79,33 @@ function renderSearchResults(results) {
         const card = document.createElement('div');
         card.classList.add('card');
         const IDtipoAlojam = alojamiento.id_tipo_alojamiento;
+        const IdAlojamiento = alojamiento.id_alojamiento;
 
-        const response = await fetch(`http://localhost:3001/api/tipo_alojamientos/${IDtipoAlojam}`, {
+        const resIdTipo = await fetch(`http://localhost:3001/api/tipo_alojamientos/${IDtipoAlojam}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 },
         });
-        const tipoAlojamiento = await response.json(); // Assuming the API returns JSON
-        console.log('Response data:', tipoAlojamiento);
+        const tipoAlojamiento = await resIdTipo.json(); // Assuming the API returns JSON
+        console.log('[[Response data]]:', IdAlojamiento);
 
-        // card.innerHTML = `
-        //         <h3>${alojamiento.nombre}</h3>
-        //         <p><strong>Tipo:</strong> ${tipoAlojamiento.nombre}</p>
-        //         <p><strong>Ubicación:</strong> ${alojamiento.ciudad}, ${alojamiento.pais}</p>
-        //         <p><strong>Capacidad:</strong> ${alojamiento.capacidad} personas</p>
-        //         <p><strong>Precio por noche:</strong> $${parseFloat(alojamiento.precio).toFixed(2)}</p>
-        //         <p class="${alojamiento.activo ? 'disponible' : 'no-disponible'}">
-        //             ${alojamiento.activo ? 'Disponible' : 'No Disponible'}
-        //         </p>
-        //         <div class="acciones-card">
-        //             <a href="pages/alojamiento.html?id=${alojamiento.id_alojamiento}" class="btn btn-ver-detalles">Ver Detalles</a>
-        //             ${alojamiento.disponible ? `<button class="btn btn-reservar" data-id="${alojamiento.id_alojamiento}">Reservar</button>` : ''}
-                    
-        //             <div id="form-reserva-tarjeta-${alojamiento.id_alojamiento}" class="form-reserva-popup" style="display:none;">
-        //                 <h4>Reservar: ${alojamiento.nombre}</h4>
-        //                 <div>
-        //                     <label for="fecha-inicio-tarjeta-${alojamiento.id_alojamiento}">Check-in:</label>
-        //                     <input type="date" id="fecha-inicio-tarjeta-${alojamiento.id_alojamiento}" name="fecha-inicio">
-        //                 </div>
-        //                 <div>
-        //                     <label for="fecha-fin-tarjeta-${alojamiento.id_alojamiento}">Check-out:</label>
-        //                     <input type="date" id="fecha-fin-tarjeta-${alojamiento.id_alojamiento}" name="fecha-fin">
-        //                 </div>
-        //                 <div>
-        //                     <button class="btn btn-confirmar-reserva" data-alojamiento-id="${alojamiento.id_alojamiento}">Confirmar Reserva</button>
-        //                     <button class="btn btn-cancelar-popup" data-form-id="form-reserva-tarjeta-${alojamiento.id_alojamiento}">Cancelar</button>
-        //                 </div>
-        //                 <div id="mensaje-form-tarjeta-${alojamiento.id_alojamiento}" style="margin-top:10px;"></div>
-        //             </div>
-        //         </div>
-        //     `;
+        const resImgAloj = await fetch(`http://localhost:3001/api/img_alojamientos/${IdAlojamiento}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+        });
+        const imgAlojamiento = await resImgAloj.json(); // Assuming the API returns JSON
+        console.log('Response data img aloj:', imgAlojamiento);
+        console.log('Response data img aloj URL:', imgAlojamiento[0].url_imagen);
+
+        card.dataset.idAlojamiento = IdAlojamiento;
+        // Render the accommodation card
             card.innerHTML =`
             <div class="accommodation-card">
                         <div class="accommodation-card__image">
-                            <img src="/assets/pic/apartamentos.jpg" alt="${alojamiento.nombre}">
+                            <img src="${imgAlojamiento[0].url_imagen}" alt="${alojamiento.nombre}">
                         </div>
                         <div class="accommodation-cont-data">
                             <div class="accommodation-card__details">
@@ -153,11 +135,21 @@ function renderSearchResults(results) {
                     </div>
             `;
         searchResultsGrid.appendChild(card);
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                //const idAlojamiento = card.getAttribute('data-id');
+                const id = card.dataset.idAlojamiento;
+                console.log('Click en card, ID:', id);
+                window.location.href = `/pages/alojamiento.html?id=${id}`;
+            });
+        })
     });
 }
 
 
-// Logica de checkin checkout
+
+// Logica de calendarios para checkin checkout
 // Establecer mínimo para hoy
   const today = new Date().toISOString().split('T')[0];
   checkin.min = today;
