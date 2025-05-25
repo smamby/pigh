@@ -89,36 +89,68 @@ function renderSearchResults(results) {
         const tipoAlojamiento = await response.json(); // Assuming the API returns JSON
         console.log('Response data:', tipoAlojamiento);
 
-        card.innerHTML = `
-                <h3>${alojamiento.nombre}</h3>
-                <p><strong>Tipo:</strong> ${tipoAlojamiento.nombre}</p>
-                <p><strong>Ubicación:</strong> ${alojamiento.ciudad}, ${alojamiento.pais}</p>
-                <p><strong>Capacidad:</strong> ${alojamiento.capacidad} personas</p>
-                <p><strong>Precio por noche:</strong> $${parseFloat(alojamiento.precio).toFixed(2)}</p>
-                <p class="${alojamiento.activo ? 'disponible' : 'no-disponible'}">
-                    ${alojamiento.activo ? 'Disponible' : 'No Disponible'}
-                </p>
-                <div class="acciones-card">
-                    <a href="pages/alojamiento.html?id=${alojamiento.id_alojamiento}" class="btn btn-ver-detalles">Ver Detalles</a>
-                    ${alojamiento.disponible ? `<button class="btn btn-reservar" data-id="${alojamiento.id_alojamiento}">Reservar</button>` : ''}
+        // card.innerHTML = `
+        //         <h3>${alojamiento.nombre}</h3>
+        //         <p><strong>Tipo:</strong> ${tipoAlojamiento.nombre}</p>
+        //         <p><strong>Ubicación:</strong> ${alojamiento.ciudad}, ${alojamiento.pais}</p>
+        //         <p><strong>Capacidad:</strong> ${alojamiento.capacidad} personas</p>
+        //         <p><strong>Precio por noche:</strong> $${parseFloat(alojamiento.precio).toFixed(2)}</p>
+        //         <p class="${alojamiento.activo ? 'disponible' : 'no-disponible'}">
+        //             ${alojamiento.activo ? 'Disponible' : 'No Disponible'}
+        //         </p>
+        //         <div class="acciones-card">
+        //             <a href="pages/alojamiento.html?id=${alojamiento.id_alojamiento}" class="btn btn-ver-detalles">Ver Detalles</a>
+        //             ${alojamiento.disponible ? `<button class="btn btn-reservar" data-id="${alojamiento.id_alojamiento}">Reservar</button>` : ''}
                     
-                    <div id="form-reserva-tarjeta-${alojamiento.id_alojamiento}" class="form-reserva-popup" style="display:none;">
-                        <h4>Reservar: ${alojamiento.nombre}</h4>
-                        <div>
-                            <label for="fecha-inicio-tarjeta-${alojamiento.id_alojamiento}">Check-in:</label>
-                            <input type="date" id="fecha-inicio-tarjeta-${alojamiento.id_alojamiento}" name="fecha-inicio">
+        //             <div id="form-reserva-tarjeta-${alojamiento.id_alojamiento}" class="form-reserva-popup" style="display:none;">
+        //                 <h4>Reservar: ${alojamiento.nombre}</h4>
+        //                 <div>
+        //                     <label for="fecha-inicio-tarjeta-${alojamiento.id_alojamiento}">Check-in:</label>
+        //                     <input type="date" id="fecha-inicio-tarjeta-${alojamiento.id_alojamiento}" name="fecha-inicio">
+        //                 </div>
+        //                 <div>
+        //                     <label for="fecha-fin-tarjeta-${alojamiento.id_alojamiento}">Check-out:</label>
+        //                     <input type="date" id="fecha-fin-tarjeta-${alojamiento.id_alojamiento}" name="fecha-fin">
+        //                 </div>
+        //                 <div>
+        //                     <button class="btn btn-confirmar-reserva" data-alojamiento-id="${alojamiento.id_alojamiento}">Confirmar Reserva</button>
+        //                     <button class="btn btn-cancelar-popup" data-form-id="form-reserva-tarjeta-${alojamiento.id_alojamiento}">Cancelar</button>
+        //                 </div>
+        //                 <div id="mensaje-form-tarjeta-${alojamiento.id_alojamiento}" style="margin-top:10px;"></div>
+        //             </div>
+        //         </div>
+        //     `;
+            card.innerHTML =`
+            <div class="accommodation-card">
+                        <div class="accommodation-card__image">
+                            <img src="/assets/pic/apartamentos.jpg" alt="${alojamiento.nombre}">
                         </div>
-                        <div>
-                            <label for="fecha-fin-tarjeta-${alojamiento.id_alojamiento}">Check-out:</label>
-                            <input type="date" id="fecha-fin-tarjeta-${alojamiento.id_alojamiento}" name="fecha-fin">
+                        <div class="accommodation-cont-data">
+                            <div class="accommodation-card__details">
+                                <h3 class="accommodation-card__title">${alojamiento.nombre}</h3>
+                                <div class="accommodation-card__stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="accommodation-card__location">${alojamiento.ciudad}, ${alojamiento.pais}</p>
+                                <div class="accommodation-card__amenities">
+                                    <span class="amenity-tag">Pileta</span>
+                                    <span class="amenity-tag">Desayuno</span>
+                                    <span class="amenity-tag">Estacionamiento</span>
+                                    <span class="amenity-tag">Wifi</span>
+                                </div>
+                            </div>
+                            <div class="accommodation-card__pricing-rating">
+                                <div class="rating-box">
+                                    <span class="rating-text">Muy Bueno</span>
+                                    <span class="rating-score">8.5</span>
+                                </div>
+                                <div class="price-info">
+                                    <span class="price">$ ${alojamiento.precio}</span>
+                                    <span class="guests-info">2 adultos - 0 menores</span>
+                                </div>
+                            </div>                        
                         </div>
-                        <div>
-                            <button class="btn btn-confirmar-reserva" data-alojamiento-id="${alojamiento.id_alojamiento}">Confirmar Reserva</button>
-                            <button class="btn btn-cancelar-popup" data-form-id="form-reserva-tarjeta-${alojamiento.id_alojamiento}">Cancelar</button>
-                        </div>
-                        <div id="mensaje-form-tarjeta-${alojamiento.id_alojamiento}" style="margin-top:10px;"></div>
                     </div>
-                </div>
             `;
         searchResultsGrid.appendChild(card);
     });
