@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Content-Type': 'application/json'
                 },
             });
-            const data = await response.json(); // Assuming the API returns JSON
+            const data = await response.json(); 
             console.log('Response data:', data);
             const busqueda = document.querySelector('.search-results-section');
             const browser = document.querySelector('.browse-section');
@@ -48,14 +48,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const accommodations = data; // Assuming the API returns an array of accommodations
             const estadoBusqueda = document.querySelector('.hero-background');
             const container = document.querySelector('.container.hero-content');
+            const searchForm = document.querySelector('.search-form-container');
             estadoBusqueda.classList.add('busqueda');
             container.classList.add('busqueda');
+            searchForm.classList.add('busqueda');
+            searchForm.classList.remove('achicar');
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+            renderSearchResults(accommodations);
+
             window.scrollTo({
             top: 0,
             behavior: "smooth"
             });
-
-            renderSearchResults(accommodations);
 
         } catch (error) {
             console.error('Error searching accommodations:', error);
@@ -144,6 +152,7 @@ function renderSearchResults(results) {
                 window.location.href = `/pages/alojamiento.html?id=${id}`;
             });
         })
+
     });
 }
 
@@ -190,7 +199,7 @@ function renderSearchResults(results) {
         console.log(scrollY);
 
         // Si se ha hecho scroll de al menos el 10% de la pantalla
-        if (scrollY > screenHeight * 0.1) {
+        if (scrollY > screenHeight * 0.1 && !moduloBuscador.classList.contains('busqueda')) {
             hero.classList.add('achicarse');
             browseSection.classList.add('achicar');
             moduloBuscador.classList.add('achicar');
@@ -198,22 +207,19 @@ function renderSearchResults(results) {
             hero.classList.remove('achicarse');
             browseSection.classList.remove('achicar');
             moduloBuscador.classList.remove('achicar');
-            
-            
-
         }
-        let hasSnapped = false;
-        if (scrollY < screenHeight * 0.05  && !hasSnapped) {
-            hasSnapped = true;
-            window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-            });
-        }
-        // Evita múltiples disparos
-        setTimeout(() => {
-        hasSnapped = false;
-        }, 500);
+        // let hasSnapped = false;
+        // if (scrollY < screenHeight * 0.04  && !hasSnapped) {
+        //     hasSnapped = true;
+        //     window.scrollTo({
+        //     top: 0,
+        //     behavior: "smooth"
+        //     });
+        // }
+        // // Evita múltiples disparos
+        // setTimeout(() => {
+        // hasSnapped = false;
+        // }, 500);
     });
 
 const destinationSelect = document.getElementById('destinationSelect');

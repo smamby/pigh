@@ -140,6 +140,7 @@ body {
         .hero-background.busqueda {
             height: 150px;
             background-position-y: -41rem;
+            background-size: 100%
         }
         .container.hero-content.busqueda {
             display: none;
@@ -187,6 +188,10 @@ body {
         .search-form-container.achicar {
             scale: 1.1; /* scale-110 */
         }
+        .search-form-container.busqueda {
+            scale: 1; /* scale-110 */
+        }
+
 
         .search-form {
             display: grid;
