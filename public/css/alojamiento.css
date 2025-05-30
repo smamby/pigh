@@ -99,66 +99,7 @@ body {
             margin: 0 auto;
         }
 
-        /* Hero Section styles */
-        .hero-background {
-            background-image: url('../assets/pic/156fcfcde94d-Villefranche-sur-mer_AdobeStock_228175643.jpg'); /* Placeholder image */
-            background-size: 100%;
-            background-position: center;
-            transition: background-size 0.8s ease;
-            position: relative;
-            height: 700px; /* h-[500px] */
-            scale: 1; /* scale-150 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            z-index: 1;
-        }
-
-        .hero-background::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.3); /* Overlay for text readability */
-        }
-        
-        .hero-background {
-            transition: height 1s ease, background-size 2s ease, background-position-y 3s ease;
-        }
-
-        .hero-background.achicarse {
-            height: 400px; /* 700px * 0.7 = 490px */
-            scale: 1;
-            background-size: 120%; /* Imagen más grande = efecto zoom-out */
-        }
-
-        .hero-background.busqueda {
-            height: 150px;
-            background-position-y: -41rem;
-        }
-        .container.hero-content.busqueda {
-            display: none;
-        }
-
-        .hero-content {
-            text-align: center;
-            position: relative;
-            z-index: 10; /* z-10 */
-        }
-
-        .hero-title {
-            font-size: 2.25rem; /* text-4xl */
-            font-weight: 700; /* font-bold */
-            margin-bottom: 1rem; /* mb-4 */
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem; /* text-xl */
-            margin-bottom: 2rem; /* mb-8 */
-        }
+    
 
         /* Search Form styles */
         .search-form-wrapper {
@@ -397,81 +338,11 @@ body {
             }
         }
 
-        /* search results */
-        .search-results-section {
-            display: none; /* hidden */
-            padding-top: 6rem;;
-        }
+       
 
-        /* Browse by Type Section styles */
-        .browse-section { 
-            padding-bottom: 8rem; 
-            background-color: #f3f4f6; 
-            /* Adjusted padding to account for the overlapping search form */
-            padding-top: 12rem; /* overlap-section-padding - adjust this value if the search form height changes */
-        }
-        .browse-section.achicar {
-            padding-top: 8rem; /* overlap-section-padding - adjust this value if the search form height changes */
-            transition: padding-top 0.5s ease;
-        }
+ /* poner aca main alojamiento y resto de etiquetas */
 
-        .browse-title {
-            font-size: 1.5rem; /* text-2xl */
-            font-weight: 700; /* font-bold */
-            color: #1f2937; /* text-gray-800 */
-            margin-bottom: 1.5rem; /* mb-6 */
-            text-align: center;
-        }
 
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(1, minmax(0, 1fr)); /* grid-cols-1 */
-            gap: 1.5rem; /* gap-6 */
-        }
-
-        .card {
-            background-color: #ffffff; /* bg-white */
-            border-radius: 0.5rem; /* rounded-lg */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .card-image {
-            width: 100%;
-            height: 10rem; /* h-40 */
-            object-fit: cover;
-        }
-
-        .card-content {
-            padding: 1rem; /* p-4 */
-            text-align: center;
-        }
-
-        .card-title {
-            font-size: 1.125rem; /* text-lg */
-            font-weight: 600; /* font-semibold */
-            color: #1f2937; /* text-gray-800 */
-        }
-
-        /* Responsive adjustments for cards */
-        @media (min-width: 640px) { /* sm breakpoint */
-            .card-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr)); /* sm:grid-cols-2 */
-            }
-        }
-
-        @media (min-width: 768px) { /* md breakpoint */
-            .hero-title {
-                font-size: 3rem; /* md:text-5xl */
-            }
-            .hero-subtitle {
-                font-size: 1.5rem; /* md:text-2xl */
-            }
-            .card-grid {
-                grid-template-columns: repeat(4, minmax(0, 1fr)); /* md:grid-cols-4 */
-            }
-        }
 
         footer {
             margin: 2rem auto;
