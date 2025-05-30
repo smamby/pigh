@@ -45,6 +45,34 @@
     </header>
 
     <main>
+         <div class="search-form-container">
+                    <form class="search-form" id="search-form">
+                        <div class="form-group">
+                            <label for="destinations">Destino</label>
+                            <input id="destinationSelect" list="cityOptions" placeholder="A donde vas?" autofocus autocomplete="off"/>
+                            <datalist id="ciudad"></datalist>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkin">Check-in</label>
+                            <input type="date" id="checkin">
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout">Check-out</label>
+                            <input type="date" id="checkout" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="guestsDisplay">Huéspedes</label>
+                            <div id="guestsDisplay" class="custom-select">2 adultos, 0 menores, 1 habitación</div>
+                            <input type="hidden" id="adultsInput" value="2">
+                            <input type="hidden" id="childrenInput" value="0">
+                            <input type="hidden" id="roomsInput" value="1">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="search-button">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+
         <div id="botonera">
             <button class="boton">Vista General</button>
             <button class="boton">Info y precios</button>

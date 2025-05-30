@@ -341,7 +341,83 @@ body {
        
 
  /* poner aca main alojamiento y resto de etiquetas */
-            /  * Estilo para el contenedor principal */
+
+ /* Search Bar Section */
+#register-form h2, #login-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  color: #1f2937;
+}
+
+#register-form .error-message,
+#register-form .success-message,
+#login-form .error-message,
+#login-form .success-message {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.error-message{
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.success-message {
+  background-color: #daf5e4;
+  color: #166534;
+}
+
+/* Campos del formulario */
+#register-form div ,
+#login-form div {
+  margin-bottom: 1rem;
+}
+
+#register-form label ,
+#login-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+#register-form input ,
+#login-form input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+#register-form input:focus ,
+#login-form input:focus {
+  border-color: #02b5e2;
+  box-shadow: 0 0 0 2px rgba(2,181,226,0.3);
+}
+
+/* Botón */
+#register-form .btn , #login-form .btn {
+  width: 100%;
+  background-color: #02b5e2;
+  color: #ffffff;
+  padding: 0.75rem;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+
+
+/* Estilo para el contenedor principal */
     .botonera   {
                 position: absolute;
                 width: 1269px;
