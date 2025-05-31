@@ -733,7 +733,59 @@ body {
     line-height: 1.5;
 }
 
-    
+ .search-form-dispo-wrapper {
+            /*position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 33.33%); /* -translate-x-1/2 translate-y-1/3 */
+            width: 100%;
+            max-width: 900px; /* max-w-4xl (approximate) */
+            padding-left: 1rem; /* px-4 */
+            padding-right: 1rem; /* px-4 */
+            z-index: 20; /* z-20 */
+        }
+
+        .search-form-container-dispo {
+            background-color: #ffffff; /* bg-white */
+            padding: 1.5rem; /* p-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            color: #1f2937; /* text-gray-800 */
+            transition: scale 1s ease;
+            margin-top: 2rem; 
+        }
+
+/* Responsive: en pantallas medianas, ocupa casi todo el ancho y se centra 
+@media (max-width: 1100px) {
+    .search-form-dispo-wrapper {
+        justify-content: center;
+        max-width: 100%;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .search-form-container-dispo {
+        max-width: 98%;
+        padding: 1.2rem 1rem;
+        margin-top: 1.5rem;
+    }
+} NO SE SI FUNCIONA */ 
+
+/* Responsive: en pantallas chicas, ocupa todo el ancho y se apila 
+@media (max-width: 700px) {
+    .search-form-dispo-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .search-form-container-dispo {
+        max-width: 100%;
+        padding: 1rem 0.5rem;
+        margin-top: 1rem;
+    }
+}    NO SE SI FUNCIONA */ 
+
+
 footer {
             margin: 2rem auto;
             max-width: 1200px;
