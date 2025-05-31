@@ -786,6 +786,137 @@ body {
 }    NO SE SI FUNCIONA */ 
 
 
+.tabla-habitaciones-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    margin: 2rem auto;
+}
+
+.tabla-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.btn-reservar-ahora {
+    background: #16B0DA;
+    color: #fff;
+    border: none;
+    border-radius: 18px;
+    padding: 0.7rem 2rem;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.btn-reservar-ahora:hover {
+    background: #0191bd;
+}
+
+.tabla-habitaciones {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    font-family: 'Inter', sans-serif;
+}
+
+.tabla-habitaciones th,
+.tabla-habitaciones td {
+    padding: 1rem 0.75rem;
+    text-align: left;
+    border-bottom: 1.5px solid #e5e7eb;
+}
+
+.tabla-habitaciones th {
+    background: #f3f4f6;
+    color: #16B0DA;
+    font-weight: bold;
+    font-size: 1rem;
+    border-bottom: 2.5px solid #16B0DA;
+}
+
+.tabla-habitaciones tr:last-child td {
+    border-bottom: none;
+}
+
+.select-cantidad {
+    padding: 0.4rem 1rem;
+    border-radius: 12px;
+    border: 1px solid #b0b0b0;
+    font-size: 1rem;
+    background: #f8fafc;
+    color: #1f2937;
+    min-width: 60px;
+    cursor: pointer;
+}
+
+.titulo-comentarios-clientes{
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.box-puntuacion {
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem 0 1.5rem 0;
+    background: #f3f4f6;
+    border-radius: 14px;
+    padding: 1.5rem 2rem;
+    min-height: 4.5em; /* Aproximadamente 3 líneas */
+    display: flex;
+    align-items: center;
+}
+
+.box-comentarios {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 0 2rem 0;
+    background: #f3f4f6;
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    min-height: 9em; /* Aproximadamente 6 líneas */
+    display: flex;
+    align-items: center;
+}
+
+.texto-placeholder {
+    color: #9A9A9A;
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+.titulo-normas {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 2.5rem 0 1.5rem 0;
+    color: #1f2937;
+}
+
+.box-normas {
+    width: 100%;
+    max-width: 900px;
+    background: #f3f4f6;
+    border-radius: 14px;
+    padding: 1.5rem 2rem;
+    min-height: 4.5em; /* Aproximadamente 3 líneas */
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.box-puntuacion,
+.box-comentarios,
+.box-normas {
+    background: #e5e7eb; /* Gris más oscuro que #f3f4f6 */
+    border: 1.5px solid #d1d5db;
+    box-shadow: 0 2px 8px rgba(22,176,218,0.06);
+}
+
 footer {
             margin: 2rem auto;
             max-width: 1200px;
