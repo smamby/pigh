@@ -723,7 +723,7 @@ body {
 /* Texto descriptivo de experiencia */
 .texto-descriptivo {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 24px;
     margin-bottom: 10px;
 }
 
@@ -891,7 +891,7 @@ body {
 }
 
 .titulo-normas {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     margin: 2.5rem 0 1.5rem 0;
     color: #1f2937;
