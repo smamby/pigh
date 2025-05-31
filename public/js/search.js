@@ -95,7 +95,7 @@ function renderSearchResults(results) {
                     'Content-Type': 'application/json'
                 },
         });
-        const tipoAlojamiento = await resIdTipo.json(); // Assuming the API returns JSON
+        const tipoAlojamiento = await resIdTipo.json();
         console.log('[[Response data]]:', IdAlojamiento);
 
         const resImgAloj = await fetch(`http://localhost:3001/api/img_alojamientos/${IdAlojamiento}`, {
@@ -104,9 +104,18 @@ function renderSearchResults(results) {
                     'Content-Type': 'application/json'
                 },
         });
-        const imgAlojamiento = await resImgAloj.json(); // Assuming the API returns JSON
+        const imgAlojamiento = await resImgAloj.json();
         console.log('Response data img aloj:', imgAlojamiento);
         console.log('Response data img aloj URL:', imgAlojamiento[0].url_imagen);
+
+        const resServices = await fetch(`http://localhost:3001/api/caracteristicas/search/${IdAlojamiento}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+        });
+        const services = await resServices.json();
+        console.log('servicios:', services);
 
         card.dataset.idAlojamiento = IdAlojamiento;
         // Render the accommodation card
@@ -119,7 +128,7 @@ function renderSearchResults(results) {
                             <div class="accommodation-card__details">
                                 <h3 class="accommodation-card__title">${alojamiento.nombre}</h3>
                                 <div class="accommodation-card__stars">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                    ${'<i class="fas fa-star"></i>'.repeat(alojamiento.estrellas)}
                                 </div>
                                 <p class="accommodation-card__location">${alojamiento.ciudad}, ${alojamiento.pais}</p>
                                 <div class="accommodation-card__amenities">

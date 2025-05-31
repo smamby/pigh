@@ -10,7 +10,8 @@ const alojamientosRoutes = require('./routes/alojamientos.routes');
 const tipo_alojamientosRoutes = require('./routes/tipo_alojamientos.routes');
 const img_alojamientosRoutes = require('./routes/img_alojamientos.routes');
 const authRoutes = require('./routes/auth.routes');
-const reservasRoutes = require('./routes/reservas.routes'); // Nueva línea
+const reservasRoutes = require('./routes/reservas.routes');
+const caracteristicasRoutes = require('./routes/caracteristicas.routes');
 
 dotenv.config();
 
@@ -26,8 +27,9 @@ app.use(express.static('public'));
 app.use('/api/auth', authRoutes);
 app.use('/api/alojamientos', alojamientosRoutes);
 app.use('/api/tipo_alojamientos', tipo_alojamientosRoutes);
-app.use('/api/reservas', reservasRoutes); // Nueva línea: montar las rutas de reservas
-app.use('/api/img_alojamientos', img_alojamientosRoutes); // Nueva línea: montar las rutas de imágenes de alojamientos
+app.use('/api/reservas', reservasRoutes); 
+app.use('/api/img_alojamientos', img_alojamientosRoutes);
+app.use('/api/caracteristicas', caracteristicasRoutes);
 
 app.get('/api/test-db', async (req, res) => {
   try {
