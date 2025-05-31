@@ -472,6 +472,9 @@ i.fas::before {
 }
 
 .accommodation-card__amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     font-size: 0.875rem; 
     color: #6b7280;
     margin-bottom: 1rem; 

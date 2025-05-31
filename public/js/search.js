@@ -114,6 +114,9 @@ function renderSearchResults(results) {
                     'Content-Type': 'application/json'
                 },
         });
+        if (!resServices.ok) {
+            throw new Error('Error al obtener servicios');
+        }
         const services = await resServices.json();
         console.log('servicios:', services);
 
@@ -132,10 +135,9 @@ function renderSearchResults(results) {
                                 </div>
                                 <p class="accommodation-card__location">${alojamiento.ciudad}, ${alojamiento.pais}</p>
                                 <div class="accommodation-card__amenities">
-                                    <span class="amenity-tag">Pileta</span>
-                                    <span class="amenity-tag">Desayuno</span>
-                                    <span class="amenity-tag">Estacionamiento</span>
-                                    <span class="amenity-tag">Wifi</span>
+                                    ${services.map(service => 
+                                        `<span class="amenity-tag">${service.caracteristica_nombre}</span>`
+                                    ).join('')}
                                 </div>
                             </div>
                             <div class="accommodation-card__pricing-rating">
