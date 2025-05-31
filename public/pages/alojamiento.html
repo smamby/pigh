@@ -6,6 +6,8 @@
     <title>Detalle del Alojamiento - Booking MVP</title>
     <link rel="stylesheet" href="../css/alojamiento.css">
     <script src="../js/preload_alojamiento.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
     <!-- <header>
@@ -80,6 +82,102 @@
             <button class="boton">Normas de la Casa</button>
             <button class="boton">Comentarios</button>
         </div>
+
+        <div class="hotel-card">
+        <!-- Acciones en la esquina superior derecha -->
+        <div class="actions">
+        <div class="icon" title="Like">
+            <i class="fas fa-heart"></i>
+        </div>
+        <a href="#" class="icon" title="Compartir">
+            <i class="fas fa-share-alt"></i>
+        </a>
+        <button class="btn-reservar">Reservar</button>
+        </div>
+
+            <!-- Línea 1: Nombre y estrellas -->
+        <div class="line1">
+        <div class="nombre">Nombre Hotel</div>
+        <div class="estrellas">
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+        </div>
+        </div>
+
+        <!-- Línea 2: Mapa, dirección y enlace -->
+        <div class="line2">
+        <div class="map-icon">
+            <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div class="direccion">
+            Calle Falsa 123, Ciudad, País
+        </div>
+        <a href="https://maps.google.com/?q=Calle Falsa 123" target="_blank" class="map-link">Mapa</a>
+        </div>
+    </div>
+ 
+    <!-- Contenedor principal que incluye todo el bloque -->
+    <div class="main-container">
+        <!-- Contenedor de la parte izquierda: fotos y rectángulos -->
+        <div class="left-block">
+        <!-- Gran rectángulo a la izquierda con foto -->
+        <div class="big-photo-container">
+            <div class="large-photo"></div>
+        </div>
+        <!-- Rectángulos pequeños a la derecha de la grande -->
+        <div class="small-rectangles">
+            <div class="small-rectangle"></div>
+            <div class="small-rectangle"></div>
+            <div class="small-rectangle"></div>
+        </div>
+        <!-- Línea de 5 rectángulos debajo de las anteriores -->
+        <div class="bottom-rects">
+            <div class="bottom-rectangle">Rectángulo 1</div>
+            <div class="bottom-rectangle">Rectángulo 2</div>
+            <div class="bottom-rectangle">Rectángulo 3</div>
+            <div class="bottom-rectangle">Rectángulo 4</div>
+            <div class="more-photos">37 fotos más</div>
+        </div>
+        </div>
+        <!-- Contenedor derecho con borde y fondo blanco -->
+        <div class="right-block">
+        <!-- Rectángulo superior derecho pequeño -->
+        <div class="top-right-rect">
+            <h3>Encabezado</h3>
+            <div class="opiniones">
+            Opiniones y detalles
+            </div>
+        </div>
+        <!-- Opiniones y firma -->
+        <div class="opiniones-container">
+            <div class="opinion-square">
+            <span>Muy bueno</span>
+            <span>263 opiniones</span>
+            </div>
+            <div class="highlighted-text">Lo que más me gustó</div>
+            <div class="review">
+            Comentario o reseña aquí.
+            </div>
+            <!-- Flechas para navegar opiniones -->
+            <div class="nav-arrows">
+            <div class="arrow">←</div>
+            <div class="arrow">→</div>
+            </div>
+            <!-- Firma del huésped -->
+            <div class="guest-signature">
+            <div class="circle-g">G</div>
+            <div class="guest-info">
+                <div class="guest-name">Nombre del huésped</div>
+                <div class="guest-country">País o bandera</div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    
 
         <div id="alojamiento-individual-container">
             <p>Cargando detalle del alojamiento...</p>

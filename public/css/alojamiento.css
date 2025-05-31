@@ -416,7 +416,6 @@ body {
 }
 
 
-
 /* Estilo para el contenedor principal */
     .botonera   {
                 position: absolute;
@@ -455,6 +454,190 @@ body {
     .boton:hover {
             background-color: #CEEAF2;
         }
+
+    .hotel-card {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 20px;
+        position: relative;
+        }
+
+        /* Línea 1: Nombre y estrellas */
+        .line1 {
+        display: flex;
+        align-items: center;
+    gap: 8px; /* ajusta el espacio entre elementos */
+        }
+
+        .nombre {
+        font-size: 1.5em;
+        font-weight: bold;
+        }
+
+        .estrellas {
+        display: flex;
+        gap: 5px;
+        font-size: 24px; /* Para que sean más visibles */
+        color: gold;     /* Color dorado para las estrellas */
+        }
+
+        /* Línea 2: Mapa icono, dirección y enlace */
+        .line2 {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        }
+
+        .map-icon {
+        margin-right: 8px;
+        }
+
+        .direccion {
+        font-style: italic;
+        }
+
+        .map-link {
+        margin-left: 10px;
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+        }
+
+        /* Estilo para la sección de acciones (favorito, compartir, reservar) */
+        .actions {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        }
+
+        /* Botón reservar */
+        .btn-reservar {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1em;
+        }
+
+    /* Iconos (usar iconos de Font Awesome o similares) */
+        .icon {
+        font-size: 1.2em;
+        cursor: pointer;
+        }
+
+    /* Contenedor principal que incluye todo el bloque */
+    .main-container {
+    position: absolute;
+    width: 847px;
+    height: 483px;
+    top: 3575px;
+    left: -97px;
+    display: flex;
+    gap: 10px; /* espaciado entre bloques */
+    }
+
+    /* Contenedor de la parte izquierda: fotos y rectángulos */
+    .left-block {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    }
+
+    /* Gran rectángulo a la izquierda con foto */
+    .big-photo-container {
+    display: flex;
+    width: 100%;
+    height: 50%;
+    }
+
+    .large-photo {
+    width: 50%;
+    height: 100%;
+    background-color: #e0e0e0; /* placeholder gris */
+    border: 1px solid #ccc;
+    }
+
+    /* Rectángulos pequeños a la derecha de la grande */
+    .small-rectangles {
+    display: flex;
+    width: 50%;
+    height: 100%;
+    gap: 10px;
+    }
+
+    .small-rectangle {
+    width: 33.33%;
+    height: 100%;
+    background-color: #d0d0d0; /* placeholder gris */
+    border: 1px solid #ccc;
+    }
+
+    /* Línea de 5 rectángulos debajo de las anteriores */
+    .bottom-rects {
+    display: flex;
+    width: 100%;
+    height: 50%;
+    margin-top: 10px;
+    }
+
+    .bottom-rectangle {
+    flex: 1;
+    background-color: #f0f0f0; /* placeholder gris */
+    border: 1px solid #ccc;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    /* Último rectángulo con texto "37 fotos más" */
+    .more-photos {
+    flex: 1;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    }
+
+    /* Contenedor derecho con borde y fondo blanco */
+    .right-block {
+    position: relative;
+    width: 1269px;
+    height: 4180px;
+    border: 1px solid #16B0DA;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 10px;
+    }
+
+    /* Rectángulo superior derecho pequeño */
+    .top-right-rect {
+    position: absolute;
+    width: 180px;
+    height: 97.65px;
+    top: 3594.35px;
+    left: 857px;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    }
+
+    .top-right-rect h3 {
+    margin: 0;
+    font-size:
+
 
         footer {
             margin: 2rem auto;
