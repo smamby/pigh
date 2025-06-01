@@ -57,8 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 top: 0,
                 behavior: "smooth"
             });
+            const days = Math.ceil((new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24));
 
-            renderSearchResults(accommodations);
+            renderSearchResults(accommodations, adults, children, rooms, days);
 
             window.scrollTo({
             top: 0,
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function renderSearchResults(results) {
+function renderSearchResults(results, adults, children, rooms, days) {
     searchResultsGrid.innerHTML = ''; // Clear previous results
 
     if (results.length === 0) {
@@ -83,11 +84,13 @@ function renderSearchResults(results) {
         return;
     }
     console.log('results:', results);
+
     results.forEach(async alojamiento => {
         const card = document.createElement('div');
         card.classList.add('card');
         const IDtipoAlojam = alojamiento.id_tipo_alojamiento;
         const IdAlojamiento = alojamiento.id_alojamiento;
+        const totalPrice = alojamiento.precio * days * rooms;
 
         const resIdTipo = await fetch(`http://localhost:3001/api/tipo_alojamientos/${IDtipoAlojam}`, {
                 method: 'GET',
@@ -146,8 +149,9 @@ function renderSearchResults(results) {
                                     <span class="rating-score">8.5</span>
                                 </div>
                                 <div class="price-info">
-                                    <span class="price">$ ${alojamiento.precio}</span>
-                                    <span class="guests-info">2 adultos - 0 menores</span>
+                                    <span class="price">$ ${totalPrice}</span>
+                                    <span class="guests-info">Adultos ${adults}, menores ${children}</span>
+                                    <span class="guests-info">Habitaciones ${rooms}</span>
                                 </div>
                             </div>                        
                         </div>
