@@ -491,6 +491,7 @@ i.fas::before {
 }
 .rating-box {
     display: flex;
+    justify-content: end;
 }
 .rating-text {
     display: flex;

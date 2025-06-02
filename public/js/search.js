@@ -91,6 +91,11 @@ function renderSearchResults(results, adults, children, rooms, days) {
         const IDtipoAlojam = alojamiento.id_tipo_alojamiento;
         const IdAlojamiento = alojamiento.id_alojamiento;
         const totalPrice = alojamiento.precio * days * rooms;
+        const textScore = alojamiento.promedio_puntaje >= 8.6 ? 'Excelente' : 
+                            alojamiento.promedio_puntaje >= 7.6 ? 'Muy Bueno' : 
+                            alojamiento.promedio_puntaje >= 6.6 ? 'Bueno' :
+                            alojamiento.promedio_puntaje >= 5.6 ? 'Aceptable' :
+                            'Regular';
 
         const resIdTipo = await fetch(`http://localhost:3001/api/tipo_alojamientos/${IDtipoAlojam}`, {
                 method: 'GET',
@@ -145,8 +150,8 @@ function renderSearchResults(results, adults, children, rooms, days) {
                             </div>
                             <div class="accommodation-card__pricing-rating">
                                 <div class="rating-box">
-                                    <span class="rating-text">Muy Bueno</span>
-                                    <span class="rating-score">8.5</span>
+                                    <span class="rating-text">${textScore}</span>
+                                    <span class="rating-score">${alojamiento.promedio_puntaje}</span>
                                 </div>
                                 <div class="price-info">
                                     <span class="price">$ ${totalPrice}</span>
