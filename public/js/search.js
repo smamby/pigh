@@ -151,7 +151,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
                                 <div class="price-info">
                                     <span class="price">$ ${totalPrice}</span>
                                     <span class="guests-info">Adultos ${adults}, menores ${children}</span>
-                                    <span class="guests-info">Habitaciones ${rooms}</span>
+                                    <span class="guests-info">Habitaciones: ${rooms} por ${days} días</span>
                                 </div>
                                 <div class="reservar-button">
                                     <a href="/pages/alojamiento.html?id=${IdAlojamiento}" class="btn btn-primary">Reservar</a>
