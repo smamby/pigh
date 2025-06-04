@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const days = Math.ceil((new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24));
 
-            renderSearchResults(accommodations, adults, children, rooms, days);
+            renderSearchResults(accommodations[0], adults, children, rooms, days);
 
             window.scrollTo({
             top: 0,
@@ -137,7 +137,8 @@ function renderSearchResults(results, adults, children, rooms, days) {
                         </div>
                         <div class="accommodation-cont-data">
                             <div class="accommodation-card__details">
-                                <h3 class="accommodation-card__title">${alojamiento.nombre}</h3>
+                                <h3 class="accommodation-card__title">${alojamiento.nombre_aloj}</h3>
+                                <h4 class="accommodation-card__subtitle">${alojamiento.tipo_habitacion_nombre}</h4>
                                 <div class="accommodation-card__stars">
                                     ${'<i class="fas fa-star"></i>'.repeat(alojamiento.estrellas)}
                                 </div>

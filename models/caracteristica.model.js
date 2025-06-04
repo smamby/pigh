@@ -62,7 +62,7 @@ Caracteristica.findById = async (id) => {
 Caracteristica.getCaracteristicas = async (alojamientoId) => {
     try {
       const [rows] = await db.query(
-        `SELECT a.nombre AS alojamiento_nombre, c.nombre AS caracteristica_nombre 
+        `SELECT a.nombre_aloj AS alojamiento_nombre, c.nombre AS caracteristica_nombre 
          FROM caracteristica c
          JOIN alojamiento_caracteristica ac ON c.id_caracteristica = ac.id_caracteristica
          JOIN alojamientos a ON a.id_alojamiento = ac.id_alojamiento

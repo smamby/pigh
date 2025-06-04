@@ -36,66 +36,143 @@ Alojamiento.create = async (nuevoAlojamiento) => {
 };
 
 // Obtener todos los alojamientos (con filtros básicos opcionales)
-Alojamiento.getAll = async (filtros = {}) => {
+// Alojamiento.getAll = async (filtros = {}) => {
   
 
-  let query = `SELECT DISTINCT a.*
-              FROM alojamientos a
-              JOIN habitaciones h ON h.id_alojamiento = a.id_alojamiento
-              WHERE 1=1`; // 1=1 para facilitar concatenación de condiciones
+//   let query = `SELECT DISTINCT a.*, h.*
+//               FROM alojamientos a
+//               JOIN habitaciones h ON h.id_alojamiento = a.id_alojamiento
+//               WHERE 1=1`; // 1=1 para facilitar concatenación de condiciones
 
 
+
+//   const params = [];
+//   console.log('params getAll:', filtros);
+
+//   // Filtro por fechas de disponibilidad (obligatorias)
+//   if (filtros.checkin && filtros.checkout) {
+//     query += ` AND h.id_habitacion NOT IN (
+//               SELECT r.id_habitacion
+//               FROM reservas r
+//               WHERE r.checkin < ?
+//                 AND r.checkout > ?
+//                 AND r.estado IN ('ocupada', 'reservada', 'deshabilitada', 'mantenimiento', 'limpieza')
+//               )`;
+//     params.push(filtros.checkout, filtros.checkin);
+//   }
+  
+  
+//   // Construir la query con filtros opcionales
+//   if (filtros.destination) {
+//     query += ' AND ciudad LIKE ?';
+//     params.push(`%${filtros.destination}%`);
+//   }
+//   // if (filtros.checkin) {
+//   //   query += ' AND pais LIKE ?';
+//   //   params.push(`%${filtros.pais}%`);
+//   // }
+//   // if (filtros.checkout !== undefined) {
+//   //   query += ' AND disponible = ?';
+//   //   params.push(filtros.disponible);
+  
+//   if (filtros.tipo_alojamiento) {
+//     query += ' AND tipo_alojamiento = ?';
+//     params.push(filtros.tipo_alojamiento);
+//   }
+//   if (filtros.precio_max) {
+//     query += ' AND precio_por_noche <= ?';
+//     params.push(filtros.precio_max);
+//   }
+//   // if (filtros.capacidad_min) {
+//   //   query += ' AND capacidad >= ?';
+//   //   params.push(filtros.capacidad_min);
+//   // }
+
+//   // Aquí se podrían añadir más filtros como rango de fechas de disponibilidad (más complejo, para la etapa de reservas)
+
+//   try {
+//     const [rows] = await db.query(query, params);
+//     console.log('rows getAll:', rows);
+//     return rows;
+//   } catch (error) {
+//     console.error("Error al obtener alojamientos de BD:", error);
+//     throw error;
+//   }
+// };
+
+//       h.id_tipo_habitacion,    
+//       h.plazas,
+//       h.precio,
+//       h.estado,
+//       h.id_alojamiento,     
+//       h.fecha_actualizacion, 
+//       h.notas,
+//WITH HabitacionesDisponiblesRankeadas AS (
+
+Alojamiento.getAll = async (filtros = {}) => {
+  let query = `
+    SELECT distinct
+      a.*,
+      h.*,
+      th.nombre AS tipo_habitacion_nombre,
+      th.id_tipo_habitacion,
+      ROW_NUMBER() OVER (PARTITION BY h.id_alojamiento, h.id_tipo_habitacion ORDER BY h.id_habitacion) as rn
+    FROM alojamientos a 
+    JOIN habitaciones h ON h.id_alojamiento = a.id_alojamiento 
+    JOIN tipo_habitacion th ON h.id_tipo_habitacion = th.id_tipo_habitacion 
+    WHERE a.activo = TRUE
+    AND h.estado = 'habilitada'   
+  `
 
   const params = [];
-  console.log('params getAll:', filtros);
 
-  // Filtro por fechas de disponibilidad (obligatorias)
+  // --- Filtro de Disponibilidad (CORREGIDO) ---
   if (filtros.checkin && filtros.checkout) {
-    query += ` AND h.id_habitacion NOT IN (
-              SELECT r.id_habitacion
-              FROM reservas r
-              WHERE r.checkin < ?
-                AND r.checkout > ?
-              )`;
+    query += `
+      AND NOT EXISTS (
+        SELECT 1 
+        FROM reservas r
+        WHERE 
+          r.id_habitacion = h.id_habitacion
+          AND r.checkin < ?  -- Fecha checkout del usuario
+          AND r.checkout > ?  -- Fecha checkin del usuario
+      )       
+    `
     params.push(filtros.checkout, filtros.checkin);
   }
-  
-  
-  // Construir la query con filtros opcionales
+
+  // --- Filtros Adicionales ---
   if (filtros.destination) {
-    query += ' AND ciudad LIKE ?';
-    params.push(`%${filtros.destination}%`);
+    query += ' AND (a.ciudad LIKE ?)';
+    params.push(`%${filtros.destination}%`, `%${filtros.destination}%`);
   }
-  // if (filtros.checkin) {
-  //   query += ' AND pais LIKE ?';
-  //   params.push(`%${filtros.pais}%`);
-  // }
-  // if (filtros.checkout !== undefined) {
-  //   query += ' AND disponible = ?';
-  //   params.push(filtros.disponible);
-  
+
   // if (filtros.tipo_alojamiento) {
-  //   query += ' AND tipo_alojamiento = ?';
+  //   query += ' AND a.id_tipo_alojamiento = ?';
   //   params.push(filtros.tipo_alojamiento);
   // }
+
   // if (filtros.precio_max) {
-  //   query += ' AND precio_por_noche <= ?';
+  //   query += ' AND th.precio_base <= ?';
   //   params.push(filtros.precio_max);
   // }
-  // if (filtros.capacidad_min) {
-  //   query += ' AND capacidad >= ?';
-  //   params.push(filtros.capacidad_min);
+
+  // if (filtros.adultos || filtros.menores) {
+  //   const totalHuespedes = (filtros.adultos || 0) + (filtros.menores || 0);
+  //   query += ' AND (th.capacidad_adultos + th.capacidad_menores) >= ?';
+  //   params.push(totalHuespedes);
   // }
 
-  // Aquí se podrían añadir más filtros como rango de fechas de disponibilidad (más complejo, para la etapa de reservas)
+  // --- Agrupación y Orden ---
+  // query += `
+  //   GROUP BY a.id_alojamiento
+  //   ORDER BY precio_minimo_noche ASC
+  //   LIMIT 100  -- Evitar sobrecarga
+  // `;
 
-  try {
-    const [rows] = await db.query(query, params);
-    return rows;
-  } catch (error) {
-    console.error("Error al obtener alojamientos de BD:", error);
-    throw error;
-  }
+  console.log('params getAll:', filtros);
+
+  return await db.query(query, params);
 };
 
 // Obtener un alojamiento por su ID
