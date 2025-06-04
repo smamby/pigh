@@ -113,7 +113,13 @@ Alojamiento.getAll = async (filtros = {}) => {
   let query = `
     SELECT distinct
       a.*,
-      h.*,
+      h.id_tipo_habitacion,    
+      h.plazas,
+      h.precio,
+      h.estado,
+      h.id_alojamiento,     
+      h.fecha_actualizacion, 
+      h.notas,
       th.nombre AS tipo_habitacion_nombre,
       th.id_tipo_habitacion,
       ROW_NUMBER() OVER (PARTITION BY h.id_alojamiento, h.id_tipo_habitacion ORDER BY h.id_habitacion) as rn
