@@ -149,99 +149,99 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function renderAlojamientos(alojamientos) {
-        if (!alojamientosContainer) return;
-        alojamientosContainer.innerHTML = ''; 
+    // function renderAlojamientos(alojamientos) {
+    //     if (!alojamientosContainer) return;
+    //     alojamientosContainer.innerHTML = ''; 
 
-        if (!alojamientos || alojamientos.length === 0) {
-            alojamientosContainer.innerHTML = '<p>No se encontraron alojamientos con los criterios seleccionados.</p>';
-            return;
-        }
+    //     if (!alojamientos || alojamientos.length === 0) {
+    //         alojamientosContainer.innerHTML = '<p>No se encontraron alojamientos con los criterios seleccionados.</p>';
+    //         return;
+    //     }
 
-        alojamientos.forEach(alojamiento => {
-            const card = document.createElement('div');
-            card.classList.add('alojamiento-card');
-            card.innerHTML = `
-                <h3>${alojamiento.nombre}</h3>
-                <p><strong>Tipo:</strong> ${alojamiento.tipo_alojamiento}</p>
-                <p><strong>Ubicación:</strong> ${alojamiento.ciudad}, ${alojamiento.pais}</p>
-                <p><strong>Capacidad:</strong> ${alojamiento.capacidad} personas</p>
-                <p><strong>Precio por noche:</strong> $${parseFloat(alojamiento.precio_por_noche).toFixed(2)}</p>
-                <p class="${alojamiento.disponible ? 'disponible' : 'no-disponible'}">
-                    ${alojamiento.disponible ? 'Disponible' : 'No Disponible'}
-                </p>
-                <div class="acciones-card">
-                    <a href="alojamiento.html?id=${alojamiento.id}" class="btn btn-ver-detalles">Ver Detalles</a>
-                    ${alojamiento.disponible ? `<button class="btn btn-reservar" data-id="${alojamiento.id}">Reservar</button>` : ''}
+    //     alojamientos.forEach(alojamiento => {
+    //         const card = document.createElement('div');
+    //         card.classList.add('alojamiento-card');
+    //         card.innerHTML = `
+    //             <h3>${alojamiento.nombre_aloj}</h3>
+    //             <p><strong>Tipo:</strong> ${alojamiento.tipo_alojamiento}</p>
+    //             <p><strong>Ubicación:</strong> ${alojamiento.ciudad}, ${alojamiento.pais}</p>
+    //             <p><strong>Capacidad:</strong> ${alojamiento.capacidad} personas</p>
+    //             <p><strong>Precio por noche:</strong> $${parseFloat(alojamiento.precio).toFixed(2)}</p>
+    //             <p class="${alojamiento.disponible ? 'disponible' : 'no-disponible'}">
+    //                 ${alojamiento.disponible ? 'Disponible' : 'No Disponible'}
+    //             </p>
+    //             <div class="acciones-card">
+    //                 <a href="alojamiento.html?id=${alojamiento.id}" class="btn btn-ver-detalles">Ver Detalles</a>
+    //                 ${alojamiento.disponible ? `<button class="btn btn-reservar" data-id="${alojamiento.id}">Reservar</button>` : ''}
                     
-                    <div id="form-reserva-tarjeta-${alojamiento.id}" class="form-reserva-popup" style="display:none;">
-                        <h4>Reservar: ${alojamiento.nombre}</h4>
-                        <div>
-                            <label for="fecha-inicio-tarjeta-${alojamiento.id}">Check-in:</label>
-                            <input type="date" id="fecha-inicio-tarjeta-${alojamiento.id}" name="fecha-inicio">
-                        </div>
-                        <div>
-                            <label for="fecha-fin-tarjeta-${alojamiento.id}">Check-out:</label>
-                            <input type="date" id="fecha-fin-tarjeta-${alojamiento.id}" name="fecha-fin">
-                        </div>
-                        <div>
-                            <button class="btn btn-confirmar-reserva" data-alojamiento-id="${alojamiento.id}">Confirmar Reserva</button>
-                            <button class="btn btn-cancelar-popup" data-form-id="form-reserva-tarjeta-${alojamiento.id}">Cancelar</button>
-                        </div>
-                        <div id="mensaje-form-tarjeta-${alojamiento.id}" style="margin-top:10px;"></div>
-                    </div>
-                </div>
-            `;
+    //                 <div id="form-reserva-tarjeta-${alojamiento.id}" class="form-reserva-popup" style="display:none;">
+    //                     <h4>Reservar: ${alojamiento.nombre}</h4>
+    //                     <div>
+    //                         <label for="fecha-inicio-tarjeta-${alojamiento.id}">Check-in:</label>
+    //                         <input type="date" id="fecha-inicio-tarjeta-${alojamiento.id}" name="fecha-inicio">
+    //                     </div>
+    //                     <div>
+    //                         <label for="fecha-fin-tarjeta-${alojamiento.id}">Check-out:</label>
+    //                         <input type="date" id="fecha-fin-tarjeta-${alojamiento.id}" name="fecha-fin">
+    //                     </div>
+    //                     <div>
+    //                         <button class="btn btn-confirmar-reserva" data-alojamiento-id="${alojamiento.id}">Confirmar Reserva</button>
+    //                         <button class="btn btn-cancelar-popup" data-form-id="form-reserva-tarjeta-${alojamiento.id}">Cancelar</button>
+    //                     </div>
+    //                     <div id="mensaje-form-tarjeta-${alojamiento.id}" style="margin-top:10px;"></div>
+    //                 </div>
+    //             </div>
+    //         `;
             
-            const btnReservar = card.querySelector('.btn-reservar');
-            const formPopup = card.querySelector(`#form-reserva-tarjeta-${alojamiento.id}`);
-            const mensajeElementoPopup = card.querySelector(`#mensaje-form-tarjeta-${alojamiento.id}`);
+    //         const btnReservar = card.querySelector('.btn-reservar');
+    //         const formPopup = card.querySelector(`#form-reserva-tarjeta-${alojamiento.id}`);
+    //         const mensajeElementoPopup = card.querySelector(`#mensaje-form-tarjeta-${alojamiento.id}`);
 
-            if (btnReservar && formPopup) {
-                btnReservar.addEventListener('click', () => {
-                    // Ocultar otros popups abiertos antes de mostrar este
-                    document.querySelectorAll('.form-reserva-popup').forEach(popup => {
-                        if (popup.id !== formPopup.id) popup.style.display = 'none';
-                    });
-                    formPopup.style.display = formPopup.style.display === 'none' ? 'block' : 'none';
-                    if (mensajeElementoPopup) { 
-                        mensajeElementoPopup.style.display = 'none';
-                        mensajeElementoPopup.textContent = '';
-                    }
-                    // Limpiar inputs de fecha al abrir
-                    card.querySelector(`#fecha-inicio-tarjeta-${alojamiento.id}`).value = '';
-                    card.querySelector(`#fecha-fin-tarjeta-${alojamiento.id}`).value = '';
-                });
-            }
+    //         if (btnReservar && formPopup) {
+    //             btnReservar.addEventListener('click', () => {
+    //                 // Ocultar otros popups abiertos antes de mostrar este
+    //                 document.querySelectorAll('.form-reserva-popup').forEach(popup => {
+    //                     if (popup.id !== formPopup.id) popup.style.display = 'none';
+    //                 });
+    //                 formPopup.style.display = formPopup.style.display === 'none' ? 'block' : 'none';
+    //                 if (mensajeElementoPopup) { 
+    //                     mensajeElementoPopup.style.display = 'none';
+    //                     mensajeElementoPopup.textContent = '';
+    //                 }
+    //                 // Limpiar inputs de fecha al abrir
+    //                 card.querySelector(`#fecha-inicio-tarjeta-${alojamiento.id}`).value = '';
+    //                 card.querySelector(`#fecha-fin-tarjeta-${alojamiento.id}`).value = '';
+    //             });
+    //         }
 
-            const btnConfirmarReserva = card.querySelector('.btn-confirmar-reserva');
-            if (btnConfirmarReserva) {
-                btnConfirmarReserva.addEventListener('click', async () => {
-                    const alojamientoId = btnConfirmarReserva.dataset.alojamientoId;
-                    const fechaInicio = card.querySelector(`#fecha-inicio-tarjeta-${alojamientoId}`).value;
-                    const fechaFin = card.querySelector(`#fecha-fin-tarjeta-${alojamientoId}`).value;
-                    const mensajeId = `mensaje-form-tarjeta-${alojamientoId}`;
+    //         const btnConfirmarReserva = card.querySelector('.btn-confirmar-reserva');
+    //         if (btnConfirmarReserva) {
+    //             btnConfirmarReserva.addEventListener('click', async () => {
+    //                 const alojamientoId = btnConfirmarReserva.dataset.alojamientoId;
+    //                 const fechaInicio = card.querySelector(`#fecha-inicio-tarjeta-${alojamientoId}`).value;
+    //                 const fechaFin = card.querySelector(`#fecha-fin-tarjeta-${alojamientoId}`).value;
+    //                 const mensajeId = `mensaje-form-tarjeta-${alojamientoId}`;
                     
-                    const exito = await procesarReserva(alojamientoId, fechaInicio, fechaFin, mensajeId);
-                    if (exito && formPopup) {
-                         setTimeout(() => formPopup.style.display = 'none', 4000); 
-                    }
-                });
-            }
+    //                 const exito = await procesarReserva(alojamientoId, fechaInicio, fechaFin, mensajeId);
+    //                 if (exito && formPopup) {
+    //                      setTimeout(() => formPopup.style.display = 'none', 4000); 
+    //                 }
+    //             });
+    //         }
             
-            const btnCancelarPopup = card.querySelector('.btn-cancelar-popup');
-            if (btnCancelarPopup && formPopup) {
-                btnCancelarPopup.addEventListener('click', () => {
-                    formPopup.style.display = 'none';
-                    if (mensajeElementoPopup) {
-                        mensajeElementoPopup.style.display = 'none';
-                        mensajeElementoPopup.textContent = '';
-                    }
-                });
-            }
-            alojamientosContainer.appendChild(card);
-        });
-    }
+    //         const btnCancelarPopup = card.querySelector('.btn-cancelar-popup');
+    //         if (btnCancelarPopup && formPopup) {
+    //             btnCancelarPopup.addEventListener('click', () => {
+    //                 formPopup.style.display = 'none';
+    //                 if (mensajeElementoPopup) {
+    //                     mensajeElementoPopup.style.display = 'none';
+    //                     mensajeElementoPopup.textContent = '';
+    //                 }
+    //             });
+    //         }
+    //         alojamientosContainer.appendChild(card);
+    //     });
+    // }
 
     async function fetchAndRenderAlojamientoIndividual() {
         if (!alojamientoIndividualContainer) return;
@@ -278,13 +278,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!alojamientoIndividualContainer) return;
         
         alojamientoIndividualContainer.innerHTML = `
-            <article class="alojamiento-detalle-individual"> <h2>${alojamiento.nombre}</h2>
+            <article class="alojamiento-detalle-individual"> <h2>${alojamiento.nombre_aloj}</h2>
                 <p><strong>Descripción:</strong> ${alojamiento.descripcion || 'No disponible.'}</p>
                 <p><strong>Dirección:</strong> ${alojamiento.direccion || 'No disponible.'}</p>
                 <p><strong>Ubicación:</strong> ${alojamiento.ciudad}, ${alojamiento.pais}</p>
-                <p><strong>Tipo:</strong> ${alojamiento.tipo_alojamiento}</p>
+                <p><strong>Tipo:</strong> ${alojamiento.tipo_habitacion_nombre}</p>
                 <p><strong>Capacidad:</strong> ${alojamiento.capacidad} personas</p>
-                <p><strong>Precio por noche:</strong> $${parseFloat(alojamiento.precio_por_noche).toFixed(2)}</p>
+                <p><strong>Precio por noche:</strong> $${parseFloat(alojamiento.precio).toFixed(2)}</p>
                 <p><strong>Latitud:</strong> ${alojamiento.latitud || 'No disponible'}</p>
                 <p><strong>Longitud:</strong> ${alojamiento.longitud || 'No disponible'}</p>
                 <p class="${alojamiento.disponible ? 'disponible' : 'no-disponible'}">

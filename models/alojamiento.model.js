@@ -150,7 +150,7 @@ Alojamiento.getAll = async (filtros = {}) => {
   // --- Filtros Adicionales ---
   if (filtros.destination) {
     query += ' AND (a.ciudad LIKE ?)';
-    params.push(`%${filtros.destination}%`, `%${filtros.destination}%`);
+    params.push(`%${filtros.destination}%`); //, `%${filtros.destination}%`);
   }
 
   // if (filtros.tipo_alojamiento) {

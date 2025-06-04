@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             busqueda.style.display = 'block'; // Show the search results section
             browser.style.display = 'none'; // Hide the browse section
             console.log('data/acommodations', data);
-            const accommodations = data; // Assuming the API returns an array of accommodations
+            const accommodations = data[0]; // Assuming the API returns an array of accommodations
             const estadoBusqueda = document.querySelector('.hero-background');
             const container = document.querySelector('.container.hero-content');
             const searchForm = document.querySelector('.search-form-container');
@@ -59,7 +59,19 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const days = Math.ceil((new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24));
 
-            renderSearchResults(accommodations[0], adults, children, rooms, days);
+            const unHotelPorId = new Map();
+
+            accommodations.forEach(hotel => {
+                if (!unHotelPorId.has(hotel.id_alojamiento)) {
+                    unHotelPorId.set(hotel.id_alojamiento, hotel);
+                }
+            });
+
+            const hotelesUnicos = Array.from(unHotelPorId.values());
+
+            console.log('hotelesUnicos:', hotelesUnicos);
+
+            renderSearchResults(hotelesUnicos, adults, children, rooms, days);
 
             window.scrollTo({
             top: 0,
