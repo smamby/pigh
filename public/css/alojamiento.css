@@ -99,11 +99,20 @@ body {
             margin: 0 auto;
         }
 
-    
+ 
+    .icon-heart {
+    color: #16B0DA;
+    font-size: 1.2em; /* opcional, ajusta el tamaño */
 
+    }
+
+    .icon-share {
+        color: #16B0DA !important;
+        font-size: 1.2em; /* opcional */
+    }
         /* Search Form styles */
         .search-form-wrapper {
-            position: absolute;
+            /*position: absolute;
             bottom: 0;
             left: 50%;
             transform: translate(-50%, 33.33%); /* -translate-x-1/2 translate-y-1/3 */
@@ -121,6 +130,7 @@ body {
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
             color: #1f2937; /* text-gray-800 */
             transition: scale 1s ease;
+            margin-top: 2rem; 
         }
 
         .search-form-container.achicar {
@@ -230,10 +240,7 @@ body {
             box-shadow: 0 0 0 2px #3b82f6, 0 0 0 2px rgba(59, 130, 246, 0.5); /* focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 */
         }
 
-        
-
-
-
+ 
         /* Modal/Popup Styles */
         .modal-overlay {
             display: none; /* Hidden by default */
@@ -342,9 +349,575 @@ body {
 
  /* poner aca main alojamiento y resto de etiquetas */
 
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 1.5rem 0;
+    font-size: 1rem;
+}
+
+.breadcrumb li {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb a {
+    color: #16B0DA;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    color: #0191bd;
+    text-decoration: underline;
+}
+
+.breadcrumb-separator {
+    margin: 0 0.5em;
+    color: #16B0DA;
+    font-size: 1.2em;
+    font-weight: bold;
+    user-select: none;
+}
+
+.breadcrumb-hotel {
+    color: #1f2937;      /* negro moderno */
+    font-weight: normal; /* sin negrita */
+}
+
+ /* Search Bar Section */
+ 
+#register-form h2, #login-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  color: #1f2937;
+}
+
+#register-form .error-message,
+#register-form .success-message,
+#login-form .error-message,
+#login-form .success-message {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.error-message{
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.success-message {
+  background-color: #daf5e4;
+  color: #166534;
+}
+
+/* Campos del formulario */
+#register-form div ,
+#login-form div {
+  margin-bottom: 1rem;
+}
+
+#register-form label ,
+#login-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+#register-form input ,
+#login-form input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+#register-form input:focus ,
+#login-form input:focus {
+  border-color: #02b5e2;
+  box-shadow: 0 0 0 2px rgba(2,181,226,0.3);
+}
+
+/* Botón */
+#register-form .btn , #login-form .btn {
+  width: 100%;
+  background-color: #02b5e2;
+  color: #ffffff;
+  padding: 0.75rem;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
 
 
-        footer {
+/* Estilo para el contenedor principal */
+.botonera   {
+            position: absolute;
+            width: 1269px;
+            height: 4180px;
+            top: 3137px;
+            left: -156px;
+            background-color: #f0f0f0; /* Puedes cambiar el fondo si quieres */
+            padding: 20px;
+            box-sizing: border-box;
+   /* Opcional: agregar overflow para que los botones no se salgan */
+                }
+
+/* Estilo para los botones */
+.boton {
+            display: inline-block;
+            width: 200px; /* Ajusta el tamaño para que quepan bien */
+            height: 40px; /* Ajusta la altura si quieres */
+            margin: 10px;
+            background-color: #ffffff; /* Blanco sin borde */
+            color: #16B0DA;
+            font-family: Inter, sans-serif;
+            font-weight: bold;
+            font-size: 13px;
+            line-height: 17px;
+            letter-spacing: 0%;
+            text-align: center;
+            line-height: 40px; /* para centrar verticalmente el texto */
+            cursor: pointer;
+            border: none;
+            border-radius: 4px; /* opcional, para esquinas redondeadas */
+            transition: background-color 0.3s;
+        }
+
+        /* Cambio de color al pasar el ratón */
+    .boton:hover {
+            background-color: #CEEAF2;
+        }
+
+    .hotel-card {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 20px;
+        position: relative;
+        }
+
+        /* Línea 1: Nombre y estrellas */
+        .line1 {
+        display: flex;
+        align-items: center;
+    gap: 8px; /* ajusta el espacio entre elementos */
+        }
+
+        .nombre {
+        font-size: 1.5em;
+        font-weight: bold;
+        }
+
+        .estrellas {
+        display: flex;
+        gap: 5px;
+        font-size: 24px; /* Para que sean más visibles */
+        color: gold;     /* Color dorado para las estrellas */
+        }
+
+        /* Línea 2: Mapa icono, dirección y enlace */
+        .line2 {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        }
+
+        .map-icon {
+        margin-right: 8px;
+        }
+
+        .direccion {
+        font-style: italic;
+        }
+
+        .map-link {
+        margin-left: 10px;
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+        }
+
+        /* Estilo para la sección de acciones (favorito, compartir, reservar) */
+        .actions {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        }
+
+        /* Botón reservar */
+        .btn-reservar {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1em;
+        }
+
+    /* Iconos (usar iconos de Font Awesome o similares) */
+        .icon {
+        font-size: 1.2em;
+        cursor: pointer;
+        }
+
+    /* Contenedor principal que incluye todo el bloque */
+    .main-container {
+    position: absolute;
+    width: 847px;
+    height: 483px;
+    top: 3575px;
+    left: -97px;
+    display: flex;
+    gap: 10px; /* espaciado entre bloques */
+    }
+
+    /* Contenedor de la parte izquierda: fotos y rectángulos */
+    .left-block {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    }
+
+    /* Gran rectángulo a la izquierda con foto */
+    .big-photo-container {
+    display: flex;
+    width: 100%;
+    height: 50%;
+    }
+
+    .large-photo {
+    width: 50%;
+    height: 100%;
+    background-color: #e0e0e0; /* placeholder gris */
+    border: 1px solid #ccc;
+    }
+
+    /* Rectángulos pequeños a la derecha de la grande */
+    .small-rectangles {
+    display: flex;
+    width: 50%;
+    height: 100%;
+    gap: 10px;
+    }
+
+    .small-rectangle {
+    width: 33.33%;
+    height: 100%;
+    background-color: #d0d0d0; /* placeholder gris */
+    border: 1px solid #ccc;
+    }
+
+    /* Línea de 5 rectángulos debajo de las anteriores */
+    .bottom-rects {
+    display: flex;
+    width: 100%;
+    height: 50%;
+    margin-top: 10px;
+    }
+
+    .bottom-rectangle {
+    flex: 1;
+    background-color: #f0f0f0; /* placeholder gris */
+    border: 1px solid #ccc;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    /* Último rectángulo con texto "37 fotos más" */
+    .more-photos {
+    flex: 1;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    }
+
+    /* Contenedor derecho con borde y fondo blanco */
+    .right-block {
+    position: relative;
+    width: 1269px;
+    height: 4180px;
+    border: 1px solid #16B0DA;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 10px;
+    }
+
+    /* Rectángulo superior derecho pequeño */
+    .top-right-rect {
+    position: absolute;
+    width: 180px;
+    height: 97.65px;
+    top: 3594.35px;
+    left: 857px;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    }
+
+    .top-right-rect h3 {
+    margin: 0;
+    font-size:
+}
+
+/* Título Servicios */
+.titulo-servicios {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.servicios-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.servicio-item {
+    background-color: #EBEBEB;
+    border-radius: 18px;
+    padding: 10px 18px;
+    color: #9A9A9A;
+    font-weight: bold;
+    font-size: small;
+    min-width: 120px;
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    border: 2px solid #ebebeb;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Texto descriptivo de experiencia */
+.texto-descriptivo {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Texto de detalles del hotel */
+.detalles-hotel {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+ .search-form-dispo-wrapper {
+            /*position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 33.33%); /* -translate-x-1/2 translate-y-1/3 */
+            width: 100%;
+            max-width: 900px; /* max-w-4xl (approximate) */
+            padding-left: 1rem; /* px-4 */
+            padding-right: 1rem; /* px-4 */
+            z-index: 20; /* z-20 */
+        }
+
+        .search-form-container-dispo {
+            background-color: #ffffff; /* bg-white */
+            padding: 1.5rem; /* p-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            color: #1f2937; /* text-gray-800 */
+            transition: scale 1s ease;
+            margin-top: 2rem; 
+        }
+
+/* Responsive: en pantallas medianas, ocupa casi todo el ancho y se centra 
+@media (max-width: 1100px) {
+    .search-form-dispo-wrapper {
+        justify-content: center;
+        max-width: 100%;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .search-form-container-dispo {
+        max-width: 98%;
+        padding: 1.2rem 1rem;
+        margin-top: 1.5rem;
+    }
+} NO SE SI FUNCIONA */ 
+
+/* Responsive: en pantallas chicas, ocupa todo el ancho y se apila 
+@media (max-width: 700px) {
+    .search-form-dispo-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .search-form-container-dispo {
+        max-width: 100%;
+        padding: 1rem 0.5rem;
+        margin-top: 1rem;
+    }
+}    NO SE SI FUNCIONA */ 
+
+
+.tabla-habitaciones-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    margin: 2rem auto;
+}
+
+.tabla-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.btn-reservar-ahora {
+    background: #16B0DA;
+    color: #fff;
+    border: none;
+    border-radius: 18px;
+    padding: 0.7rem 2rem;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.btn-reservar-ahora:hover {
+    background: #0191bd;
+}
+
+.tabla-habitaciones {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    font-family: 'Inter', sans-serif;
+}
+
+.tabla-habitaciones th,
+.tabla-habitaciones td {
+    padding: 1rem 0.75rem;
+    text-align: left;
+    border-bottom: 1.5px solid #e5e7eb;
+}
+
+.tabla-habitaciones th {
+    background: #f3f4f6;
+    color: #16B0DA;
+    font-weight: bold;
+    font-size: 1rem;
+    border-bottom: 2.5px solid #16B0DA;
+}
+
+.tabla-habitaciones tr:last-child td {
+    border-bottom: none;
+}
+
+.select-cantidad {
+    padding: 0.4rem 1rem;
+    border-radius: 12px;
+    border: 1px solid #b0b0b0;
+    font-size: 1rem;
+    background: #f8fafc;
+    color: #1f2937;
+    min-width: 60px;
+    cursor: pointer;
+}
+
+.titulo-comentarios-clientes{
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.box-puntuacion {
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem 0 1.5rem 0;
+    background: #f3f4f6;
+    border-radius: 14px;
+    padding: 1.5rem 2rem;
+    min-height: 4.5em; /* Aproximadamente 3 líneas */
+    display: flex;
+    align-items: center;
+}
+
+.box-comentarios {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 0 2rem 0;
+    background: #f3f4f6;
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    min-height: 9em; /* Aproximadamente 6 líneas */
+    display: flex;
+    align-items: center;
+}
+
+.texto-placeholder {
+    color: #9A9A9A;
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+.titulo-normas {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 2.5rem 0 1.5rem 0;
+    color: #1f2937;
+}
+
+.box-normas {
+    width: 100%;
+    max-width: 900px;
+    background: #f3f4f6;
+    border-radius: 14px;
+    padding: 1.5rem 2rem;
+    min-height: 4.5em; /* Aproximadamente 3 líneas */
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.box-puntuacion,
+.box-comentarios,
+.box-normas {
+    background: #e5e7eb; /* Gris más oscuro que #f3f4f6 */
+    border: 1.5px solid #d1d5db;
+    box-shadow: 0 2px 8px rgba(22,176,218,0.06);
+}
+
+footer {
             margin: 2rem auto;
             max-width: 1200px;
         }
