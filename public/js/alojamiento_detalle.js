@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const fotoPrincipal = imagenes[0]?.url_imagen || '';
         const galeria = imagenes.slice(1).map(img => img.url_imagen);
 
-        // Breadcrumb (ruta)
+        // Breadcrumb (ruta) - sin fondo blanco
         const breadcrumbHTML = `
-            <nav class="breadcrumb" style="background:#fff; border-radius:8px; padding:0.7em 1.2em; margin:1.5em 0;">
+            <nav class="breadcrumb" style="border-radius:8px; padding:0.7em 1.2em; margin:1.5em 0;">
                 <span style="font-weight:bold; color: #16B0DA;">Inicio</span>
                 <span class="breadcrumb-separator">›</span>
                 <span style="font-weight:bold; color:#16B0DA;">${alojamiento.tipo_alojamiento || 'Hoteles'}</span>
@@ -36,6 +36,29 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <span class="breadcrumb-separator">›</span>
                 <span style="color:#1f2937; font-weight:normal;">Habitaciones en ${alojamiento.nombre}</span>
             </nav>
+        `;
+
+        // Buscador superior (igual al de la home)
+        const buscadorSuperior = `
+        <div class="buscador-superior" style="width:100%; background:#f3f4f6; border-radius:12px; display:flex; align-items:center; gap:1.5em; padding:1.2em 2em; margin-bottom:2em;">
+            <div>
+                <label style="font-weight:bold;">Destino</label><br>
+                <input type="text" value="${alojamiento.ciudad}" style="padding:0.5em; border-radius:6px; border:1px solid #ccc; width:140px;">
+            </div>
+            <div>
+                <label style="font-weight:bold;">Check in</label><br>
+                <input type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+            </div>
+            <div>
+                <label style="font-weight:bold;">Check out</label><br>
+                <input type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+            </div>
+            <div>
+                <label style="font-weight:bold;">Huéspedes</label><br>
+                <input type="number" min="1" max="10" value="2" style="padding:0.5em; border-radius:6px; border:1px solid #ccc; width:60px;">
+            </div>
+            <button style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.7em 2em; font-weight:bold; font-size:1em; cursor:pointer;">Buscar</button>
+        </div>
         `;
 
         // Galería de fotos (rellena con la principal si faltan)
@@ -66,48 +89,59 @@ document.addEventListener('DOMContentLoaded', async () => {
             <a href="https://maps.google.com/?q=${mapQuery}" target="_blank" style="display:block;">
                 <iframe
                     src="https://maps.google.com/maps?q=${mapQuery}&z=15&output=embed"
-                    width="100%" height="120" style="border-radius:10px; border:0;"
+                    width="100%" height="180" style="border-radius:10px; border:0;"
                     allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </a>
         `;
 
-        // Side info: calificación, comentario, mapa (más abajo, todos igual de ancho)
+        // Side info: mapa más grande, comentarios más pequeños
         const sideInfoHTML = `
-        <div style="display:flex; flex-direction:column; align-items:center; gap:1.2em; margin-top:2.5em; width:100%;">
-            <div class="box-puntuacion" style="max-width:260px; width:100%; margin-bottom:0;">
-                <div style="font-weight:bold; font-size:1.1em; margin-right:1em;">¡Muy bueno!</div>
-                <div style="background:#16B0DA; color:#fff; border-radius:8px; padding:0.4em 1em; font-size:1.1em; font-weight:bold;">${alojamiento.promedio_puntaje || 8.7}</div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:1em; margin-top:5em; width:80%;">
+            <div class="box-puntuacion" style="max-width:208px; width:100%; margin-bottom:0; font-size:0.85em;">
+                <div style="font-weight:bold; font-size:1em; margin-right:1em;">¡Muy bueno!</div>
+                <div style="background:#16B0DA; color:#fff; border-radius:8px; padding:0.3em 0.8em; font-size:1em; font-weight:bold;">${alojamiento.promedio_puntaje || 8.7}</div>
             </div>
-            <div class="box-comentarios" style="max-width:260px; width:100%; margin-bottom:0;">
-                <span class="texto-placeholder" style="font-size:0.98em;">"Excelente atención y ubicación. Volvería sin dudar." <br><b>- Ejemplo de huésped</b></span>
+            <div class="box-comentarios" style="max-width:120px; width:100%; margin-bottom:0; font-size:0.8em;">
+                <span class="texto-placeholder" style="font-size:0.92em;">"Excelente atención y ubicación."<br><b>- Ejemplo</b></span>
             </div>
-            <div style="max-width:260px; width:100%;">${mapaMini}</div>
+            <div style="max-width:280px; width:100%;">${mapaMini}</div>
         </div>
+        `;
+
+        // Botón reservar arriba, hace scroll a la tabla de disponibilidad
+        const reservarBtn = `
+            <button onclick="document.getElementById('tabla-disponibilidad').scrollIntoView({behavior:'smooth'});" 
+                style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.7em 2em; font-weight:bold; font-size:1em; cursor:pointer; margin-left:2em;">
+                Reservar
+            </button>
         `;
 
         // Render principal
         contenedor.innerHTML = `
             ${breadcrumbHTML}
+            ${buscadorSuperior}
             <div style="display:flex; gap:32px; align-items:flex-start; margin-bottom:2em;">
-                <div style="flex:2; min-width:0;">
-                    <div class="hotel-card" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1em;">
-                        <div>
-                            <div class="nombre" style="font-size:1.7em; font-weight:bold;">${alojamiento.nombre}</div>
-                            <div style="display:flex; align-items:center; gap:0.7em; margin-top:0.2em;">
-                                <div class="direccion" style="font-size:1.08em; color:#444;">
-                                    ${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}
-                                </div>
-                                <a href="https://maps.google.com/?q=${mapQuery}" target="_blank" style="font-weight:bold; color:#16B0DA; margin-left:0.5em; text-decoration:none;">Mapa</a>
+                <div style="flex:3; min-width:0;">
+                    <div class="hotel-card" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1em; width:85vw; max-width:1200px; min-width:600px; height:68px; background:#fff; border-radius:12px; box-shadow:0 2px 8px #0001; padding:0.7em 2.5em;">
+                        <div style="display:flex; flex-direction:column; align-items:flex-start; flex:1;">
+                            <div style="display:flex; align-items:center; flex-wrap:wrap;">
+                                <span class="nombre" style="font-size:1.35em; font-weight:bold; vertical-align:middle; margin-right:0.7em; white-space:nowrap; line-height:1;">
+                                    ${alojamiento.nombre}
+                                </span>
+                                <span class="estrellas" style="font-size:1.05em; color:#FFD700; vertical-align:middle; margin-right:1em; white-space:nowrap;">${'★'.repeat(alojamiento.estrellas || 4)}</span>
+                            </div>
+                            <div class="direccion" style="font-size:0.98em; color:#444; margin-top:0.1em; line-height:1.2;">
+                                ${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}
+                                <a href="https://maps.google.com/?q=${mapQuery}" target="_blank" style="font-weight:bold; color:#16B0DA; margin-left:0.7em; text-decoration:none; font-size:0.97em;">Mapa</a>
                             </div>
                         </div>
                         <div style="display:flex; align-items:center; gap:1em;">
                             <div class="icon" title="Like" style="cursor:pointer;"><i class="far fa-heart icon-heart"></i></div>
                             <a href="#" class="icon" title="Compartir" style="color:#16B0DA;"><i class="fa-solid fa-share-nodes icon-share"></i></a>
-                            <button class="btn-reservar" style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.6em 1.2em; font-weight:bold; cursor:pointer;">Reservar</button>
+                            ${reservarBtn}
                         </div>
                     </div>
-                    <div class="estrellas" style="font-size:1.2em; color:#FFD700; margin-bottom:1em;">${'★'.repeat(alojamiento.estrellas || 4)}</div>
                     ${galeriaHTML}
                     <h3 class="titulo-servicios" style="margin-top:2em;">Servicios</h3>
                     <ul class="servicios-lista">
@@ -118,138 +152,128 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <p>${alojamiento.descripcion || 'No disponible.'}</p>
                         <hr style="margin:1.5em 0 0.5em 0; border:0; border-top:1.5px solid #e5e7eb;">
                     </section>
+                    <h2 style="margin-top:2.5em;">Disponibilidad</h2>
+                    <div class="buscador-disponibilidad" style="width:100%; background:#f3f4f6; border-radius:12px; display:flex; align-items:center; gap:1.5em; padding:1.2em 2em; margin-bottom:2em;">
+                        <div>
+                            <label style="font-weight:bold;">Check in</label><br>
+                            <input type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+                        </div>
+                        <div>
+                            <label style="font-weight:bold;">Check out</label><br>
+                            <input type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+                        </div>
+                        <div>
+                            <label style="font-weight:bold;">Huéspedes</label><br>
+                            <input type="number" min="1" max="10" value="2" style="padding:0.5em; border-radius:6px; border:1px solid #ccc; width:60px;">
+                        </div>
+                        <button style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.7em 2em; font-weight:bold; font-size:1em; cursor:pointer;">Modificar búsqueda</button>
+                    </div>
+                    <div id="tabla-disponibilidad"></div>
+                    <h2 style="margin-top:2.5em;">Comentarios de los clientes</h2>
+                    <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:1.2em;">
+                        <span style="font-weight:bold; font-size:0.98em;">Puntuación pormenorizada de cada servicio</span>
+                    </div>
+                    <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
+                        <span style="font-weight:bold; font-size:0.98em;">Comentarios de los clientes</span>
+                    </div>
+                    <h2 style="margin-top:2.5em;">Normas de la Casa</h2>
+                    <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
+                        <span style="font-weight:bold; font-size:0.98em;">Detalle de las Normas de la Casa (horarios check in y check out, horario desayuno, parking, etc)</span>
+                    </div>
                 </div>
-                <div style="flex:1; min-width:260px; align-self:stretch; display:flex;">
+                <div style="flex:1; min-width:208px; align-self:stretch; display:flex;">
                     ${sideInfoHTML}
                 </div>
             </div>
-            <section class="reserva-section">
-                <button class="btn btn-reservar-grande" id="btn-reservar-dinamico">¡Reservar Ahora!</button>
-                <div id="form-reserva-detalle" class="form-reserva-popup" style="display:none;">
-                    <h3>Completa tu Reserva para ${alojamiento.nombre}</h3>
-                    <div>
-                        <label for="fecha-inicio-detalle">Check-in:</label>
-                        <input type="date" id="fecha-inicio-detalle" name="fecha-inicio">
-                    </div>
-                    <div>
-                        <label for="fecha-fin-detalle">Check-out:</label>
-                        <input type="date" id="fecha-fin-detalle" name="fecha-fin">
-                    </div>
-                    <div>
-                        <button class="btn btn-confirmar-reserva" id="btn-confirmar-reserva">Confirmar Reserva</button>
-                        <button class="btn btn-cancelar-popup" id="btn-cancelar-popup">Cancelar</button>
-                    </div>
-                    <div id="mensaje-form-detalle" style="margin-top:10px;"></div>
-                </div>
-            </section>
         `;
 
-        // Mostrar/ocultar formulario de reserva
-        const btnReservar = document.getElementById('btn-reservar-dinamico');
-        const formReserva = document.getElementById('form-reserva-detalle');
-        const btnCancelar = document.getElementById('btn-cancelar-popup');
-        if(btnReservar && formReserva) {
-            btnReservar.onclick = () => {
-                formReserva.style.display = 'block';
-                btnReservar.style.display = 'none';
-            };
-        }
-        if(btnCancelar && formReserva && btnReservar) {
-            btnCancelar.onclick = () => {
-                formReserva.style.display = 'none';
-                btnReservar.style.display = 'block';
-            };
-        }
-
-        // Mensajes en el formulario
-        function mostrarMensajeEnElemento(mensaje, tipo, elementoId) {
-            const elementoMensaje = document.getElementById(elementoId);
-            if (elementoMensaje) {
-                elementoMensaje.textContent = mensaje;
-                elementoMensaje.className = tipo === 'exito' ? 'mensaje-exito-popup' : 'mensaje-error-popup';
-                elementoMensaje.style.display = 'block';
-                if (tipo === 'exito') {
-                    setTimeout(() => {
-                        elementoMensaje.style.display = 'none';
-                        elementoMensaje.textContent = '';
-                    }, 7000);
-                }
-            } else {
-                alert(mensaje);
+        // Render tabla de disponibilidad con formato y estilos
+        document.getElementById('tabla-disponibilidad').innerHTML = `
+        <table style="width:100%; border-collapse:separate; border-spacing:0; font-size:1em; border:1.5px solid #4c76b2; border-radius:10px;">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="background:#4c76b2; color:#fff; font-weight:bold; text-align:left; border-radius:8px 0 0 0; padding:1em 1em; border-right:1.5px solid #4c76b2; transition:background 0.2s;">Tipo de Habitación</th>
+                    <th style="background:#4c76b2; color:#fff; font-weight:bold; text-align:center; border-right:1.5px solid #4c76b2; transition:background 0.2s;">Cant. Huéspedes</th>
+                    <th style="background:#4c76b2; color:#fff; font-weight:bold; text-align:center; border-right:1.5px solid #4c76b2; transition:background 0.2s;">Precio por 2 noches</th>
+                    <th style="background:#4c76b2; color:#fff; font-weight:bold; text-align:center; border-right:1.5px solid #4c76b2; transition:background 0.2s;">Tus opciones</th>
+                    <th style="background:#4c76b2; color:#fff; font-weight:bold; text-align:center; border-radius:0 8px 0 0; transition:background 0.2s;">Elegir habitaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2" style="border-right:1.5px solid #4c76b2; background:#f8fafc;">
+                        <div style="font-weight:bold; color:#4c76b2; font-size:1.1em;"> Habitación Doble Clásica <span style="margin-left:0.3em;"></div>
+                        <div style="font-size:0.97em; color:#444; margin-bottom:0.5em;">2 camas individuales 🛏️🛏️</span> 
+                        <div style="font-size:0.97em; color:#444; margin-bottom:0.5em;">Habitación amplia con vista al jardín. Aire acondicionado, caja fuerte, escritorio.</div>
+                        <div style="margin-top:0.3em;">
+                            <span title="Metros cuadrados">📏 25 m²</span>
+                            <span title="Baño privado" style="margin-left:0.7em;">🛁 Baño privado</span>
+                            <span title="TV" style="margin-left:0.7em;">📺 TV pantalla plana</span>
+                            <span title="Desayuno" style="margin-left:0.7em;">🥐 Desayuno</span>
+                            <span title="WiFi" style="margin-left:0.7em;">📶 Wifi gratis</span>
+                        </div>
+                    </td>
+                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;"><span title="2 huéspedes">👤👤</span></td>
+                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;">
+                        $32.000
+                        <br>
+                        <span style="font-size:0.78em; color: #4c76b2; border-radius:5px; padding:1px 5px; margin-top:0.2em; display:inline-block;">+11% imp. <span title="Impuestos" style="cursor:pointer;">ℹ️</span></span>
+                    </td>
+                    <td style="border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;">
+                        <div style="color:#176B4D; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">✔️</span>Desayuno Incluido</div>
+                        <div style="color:#176B4D; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">✔️</span>Incluye estacionamiento</div>
+                        <div style="color:#176B4D; font-weight:bold;"><span style="margin-right:0.3em;">✔️</span>Reembolsable</div>
+                    </td>
+                    <td style="text-align:center; border-top:1.5px solid #4c76b2; background:#f8fafc;">
+                        <select style="padding:0.3em 0.7em; border-radius:6px; border:1px solid #ccc;">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;"><span title="2 huéspedes">👤👤</span></td>
+                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;">
+                        $28.000
+                        <br>
+                        <span style="font-size:0.78em; color: #4c76b2; border-radius:5px; padding:1px 5px; margin-top:0.2em; display:inline-block;">+11% imp. <span title="Impuestos" style="cursor:pointer;">ℹ️</span></span>
+                    </td>
+                    <td style="border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;">
+                        <div style="color:#B00020; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">⛔</span>Sin desayuno</div>
+                        <div style="color:#176B4D; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">✔️</span>Incluye estacionamiento</div>
+                        <div style="color:#B00020; font-weight:bold;"><span style="margin-right:0.3em;">⛔</span>No reembolsable</div>
+                    </td>
+                    <td style="text-align:center; border-top:1.5px solid #4c76b2; background:#f8fafc;">
+                        <select style="padding:0.3em 0.7em; border-radius:6px; border:1px solid #ccc;">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <style>
+            #tabla-disponibilidad th {
+                cursor:pointer;
+                transition:background 0.2s;
             }
-        }
-
-        // Procesar reserva igual que en catalogo.js
-        async function procesarReserva(alojamientoId, fechaInicioStr, fechaFinStr, mensajeElementoId) {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                mostrarMensajeEnElemento('Debes iniciar sesión para realizar una reserva. Redirigiendo a login...', 'error', mensajeElementoId);
-                setTimeout(() => window.location.href = 'login.html', 3000);
-                return false;
+            #tabla-disponibilidad th:hover {
+                background:#138bb3 !important;
             }
-            if (!fechaInicioStr || !fechaFinStr) {
-                mostrarMensajeEnElemento('Debes seleccionar ambas fechas: Check-in y Check-out.', 'error', mensajeElementoId);
-                return false;
+            #tabla-disponibilidad td, #tabla-disponibilidad th {
+                border-bottom:1.5px solid #4c76b2;
             }
-            const fechaInicio = new Date(fechaInicioStr + "T00:00:00");
-            const fechaFin = new Date(fechaFinStr + "T00:00:00");
-            const hoy = new Date();
-            hoy.setHours(0,0,0,0);
-
-            if (fechaInicio < hoy) {
-                mostrarMensajeEnElemento('La fecha de Check-in no puede ser anterior a hoy.', 'error', mensajeElementoId);
-                return false;
+            #tabla-disponibilidad tr:last-child td {
+                border-bottom:none;
             }
-            if (fechaFin <= fechaInicio) {
-                mostrarMensajeEnElemento('La fecha de Check-out debe ser posterior a la fecha de Check-in.', 'error', mensajeElementoId);
-                return false;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/reservas`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        alojamiento_id: parseInt(alojamientoId),
-                        fecha_inicio: fechaInicioStr,
-                        fecha_fin: fechaFinStr
-                    })
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    mostrarMensajeEnElemento(`¡Reserva creada exitosamente! ID: ${result.reserva.id}, Estado: ${result.reserva.estado}, Total: $${parseFloat(result.reserva.precio_total).toFixed(2)}`, 'exito', mensajeElementoId);
-                    return true;
-                } else {
-                    mostrarMensajeEnElemento(`Error al crear reserva: ${result.message || response.statusText || 'Error desconocido del servidor'}`, 'error', mensajeElementoId);
-                    return false;
-                }
-            } catch (error) {
-                mostrarMensajeEnElemento('Ocurrió un error de red o conexión al procesar tu solicitud de reserva.', 'error', mensajeElementoId);
-                return false;
-            }
-        }
-
-        // Evento click de "Confirmar Reserva"
-        const btnConfirmar = document.getElementById('btn-confirmar-reserva');
-        if(btnConfirmar) {
-            btnConfirmar.onclick = async () => {
-                const fechaInicio = document.getElementById('fecha-inicio-detalle').value;
-                const fechaFin = document.getElementById('fecha-fin-detalle').value;
-                const mensajeDivId = 'mensaje-form-detalle';
-                const exito = await procesarReserva(alojamientoId, fechaInicio, fechaFin, mensajeDivId);
-                if (exito) {
-                    setTimeout(() => {
-                        document.getElementById('form-reserva-detalle').style.display = 'none';
-                        document.getElementById('btn-reservar-dinamico').style.display = 'block';
-                    }, 4000);
-                }
-            };
-        }
+        </style>
+        `;
 
     } catch (error) {
         contenedor.innerHTML = '<p class="error">No se pudo cargar el detalle del alojamiento.</p>';
