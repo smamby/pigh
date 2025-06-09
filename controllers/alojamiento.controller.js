@@ -76,17 +76,91 @@ exports.getAllAlojamientos = async (req, res) => {
 };
 
 // Obtener un alojamiento por su ID (público o admin)
+//exports.getAlojamientoById = async (req, res) => {
+ // try {
+   // const id = req.params.id;
+
+    // Busca el alojamiento principal
+    //const alojamiento = await Alojamiento.findByPk(id);
+
+    //if (!alojamiento) {
+     // return res.status(404).json({ message: 'Alojamiento no encontrado' });
+    //}
+
+    // Busca el tipo de alojamiento
+    // const tipo = await TipoAlojamiento.findByPk(alojamiento.id_tipo_alojamiento);
+
+    // Busca las imágenes del alojamiento
+    // const imagenes = await ImgAlojamiento.findAll({ where: { id_alojamiento: id } });
+
+    // Si tienes servicios relacionados, descomenta y ajusta:
+    // const servicios = await Servicio.findAll({ where: { id_alojamiento: id } });
+
+   // res.json({
+     // id: alojamiento.id_alojamiento,
+      //nombre: alojamiento.nombre,
+      //descripcion: alojamiento.descripcion,
+      //direccion: alojamiento.direccion,
+      //ciudad: alojamiento.ciudad,
+      //pais: alojamiento.pais,
+      //tipo_alojamiento: tipo ? tipo.nombre : '',
+      //capacidad: alojamiento.capacidad,
+      //precio_por_noche: alojamiento.precio,
+      //disponible: alojamiento.disponible,
+      //foto_principal: imagenes[0] ? imagenes[0].url_imagen : '',
+      //fotos: imagenes.map(img => img.url_imagen),
+      // servicios: servicios.map(s => s.nombre), // Descomenta si tienes servicios
+      // ...otros campos que quieras agregar...
+    // });
+  //} catch (error) {
+    //console.error('Error al obtener alojamiento por ID:', error);
+    //res.status(500).json({ message: 'Error interno del servidor' });
+ // }
+//}; //
+
+const db = require('../db');
+const AlojamientoImagen = require('../models/img_alojamiento.model.js');
+
 exports.getAlojamientoById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const alojamiento = await Alojamiento.findById(id);
+    const id = req.params.id;
+    const [rows] = await db.query('SELECT * FROM alojamientos WHERE id_alojamiento = ?', [id]);
+    const alojamiento = rows[0];
+
     if (!alojamiento) {
-      return res.status(404).json({ message: 'Alojamiento no encontrado.' });
+      return res.status(404).json({ message: 'Alojamiento no encontrado' });
     }
-    res.status(200).json(alojamiento);
+
+    // Traer imágenes usando tu modelo
+     const imagenes = await AlojamientoImagen.getByAlojamientoId(id);
+
+    res.json({
+      id: alojamiento.id_alojamiento,
+      nombre: alojamiento.nombre_aloj,
+      descripcion: alojamiento.descripcion,
+      direccion: alojamiento.direccion,
+      ciudad: alojamiento.ciudad,
+      pais: alojamiento.pais,
+      tipo_alojamiento: alojamiento.id_tipo_alojamiento, // o puedes mapear a texto si tienes tabla de tipos
+      capacidad: alojamiento.capacidad,
+      precio_por_noche: alojamiento.precio,
+      disponible: alojamiento.activo,
+      latitud: alojamiento.latitud,
+      longitud: alojamiento.longitud,
+      estrellas: alojamiento.estrellas,
+      telefono: alojamiento.telefono,
+      email: alojamiento.email,
+      politicas: alojamiento.politicas,
+      check_in_hora: alojamiento.check_in_hora,
+      check_out_hora: alojamiento.check_out_hora,
+      promedio_puntaje: alojamiento.promedio_puntaje,
+      cantidad_puntajes: alojamiento.cantidad_puntajes,
+      foto_principal: imagenes[0]?.url_imagen || '',
+      fotos: imagenes.map(img => img.url_imagen),
+    });
   } catch (error) {
     console.error('Error al obtener alojamiento por ID:', error);
-    res.status(500).json({ message: 'Error interno del servidor.', error: error.message });
+    res.status(500).json({ message: 'Error interno del servidor', error: error.message });
   }
 };
 
