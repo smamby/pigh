@@ -243,75 +243,83 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    async function fetchAndRenderAlojamientoIndividual() {
-        if (!alojamientoIndividualContainer) return;
-        const urlParams = new URLSearchParams(window.location.search);
-        const alojamientoIdParam = urlParams.get('id');
-
-        if (!alojamientoIdParam) {
-            alojamientoIndividualContainer.innerHTML = '<p class="error">No se especificó un ID de alojamiento.</p>';
-            return;
-        }
-
-        try {
-            const response = await fetch(`${API_BASE_URL}/alojamientos/${alojamientoIdParam}`);
-            if (!response.ok) {
-                if (response.status === 404) {
-                    alojamientoIndividualContainer.innerHTML = '<p class="error">Alojamiento no encontrado.</p>';
-                } else {
-                    alojamientoIndividualContainer.innerHTML = `<p class="error">Error al cargar el alojamiento: ${response.statusText}</p>`;
-                }
-                throw new Error(`Error HTTP: ${response.status}`);
-            }
-            const alojamiento = await response.json();
-            renderAlojamientoIndividual(alojamiento);
-        } catch (error) {
-            console.error('Error al obtener el alojamiento individual:', error.message);
-            // Evitar sobreescribir mensaje de error específico si ya se puso
-            if (!alojamientoIndividualContainer.querySelector('.error')) {
-                alojamientoIndividualContainer.innerHTML = '<p class="error">No se pudo cargar el detalle del alojamiento. Intente más tarde.</p>';
-            }
-        }
+async function fetchAndRenderAlojamientoIndividual() {
+    if (!alojamientoIndividualContainer) return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const alojamientoIdParam = urlParams.get('id');
+    if (!alojamientoIdParam) {
+        alojamientoIndividualContainer.innerHTML = '<p class="error">No se especificó un ID de alojamiento.</p>';
+        return;
     }
+    try {
+        const response = await fetch(`${API_BASE_URL}/alojamientos/${alojamientoIdParam}`);
+        if (!response.ok) throw new Error('Alojamiento no encontrado');
+        const alojamiento = await response.json();
 
-    function renderAlojamientoIndividual(alojamiento) {
-        if (!alojamientoIndividualContainer) return;
-        
-        alojamientoIndividualContainer.innerHTML = `
-            <article class="alojamiento-detalle-individual"> <h2>${alojamiento.nombre}</h2>
-                <p><strong>Descripción:</strong> ${alojamiento.descripcion || 'No disponible.'}</p>
-                <p><strong>Dirección:</strong> ${alojamiento.direccion || 'No disponible.'}</p>
-                <p><strong>Ubicación:</strong> ${alojamiento.ciudad}, ${alojamiento.pais}</p>
-                <p><strong>Tipo:</strong> ${alojamiento.tipo_alojamiento}</p>
-                <p><strong>Capacidad:</strong> ${alojamiento.capacidad} personas</p>
-                <p><strong>Precio por noche:</strong> $${parseFloat(alojamiento.precio_por_noche).toFixed(2)}</p>
-                <p><strong>Latitud:</strong> ${alojamiento.latitud || 'No disponible'}</p>
-                <p><strong>Longitud:</strong> ${alojamiento.longitud || 'No disponible'}</p>
-                <p class="${alojamiento.disponible ? 'disponible' : 'no-disponible'}">
-                    <strong>${alojamiento.disponible ? 'Disponible para reservar' : 'Actualmente No Disponible'}</strong>
-                </p>
-                ${alojamiento.disponible ? `<button class="btn btn-reservar-grande" data-id="${alojamiento.id}">¡Reservar Ahora!</button>` : ''}
-                
-                <div id="form-reserva-detalle-${alojamiento.id}" class="form-reserva-popup" style="display:none;">
-                    <h3>Completa tu Reserva para ${alojamiento.nombre}</h3>
-                    <div>
-                        <label for="fecha-inicio-detalle-${alojamiento.id}">Check-in:</label>
-                        <input type="date" id="fecha-inicio-detalle-${alojamiento.id}" name="fecha-inicio">
-                    </div>
-                    <div>
-                        <label for="fecha-fin-detalle-${alojamiento.id}">Check-out:</label>
-                        <input type="date" id="fecha-fin-detalle-${alojamiento.id}" name="fecha-fin">
-                    </div>
-                    <div>
-                        <button class="btn btn-confirmar-reserva" data-alojamiento-id="${alojamiento.id}">Confirmar Reserva</button>
-                        <button class="btn btn-cancelar-popup">Cancelar</button>
-                    </div>
-                    <div id="mensaje-form-detalle-${alojamiento.id}" style="margin-top:10px;"></div>
+        // Traer imagen principal
+        const resImgAloj = await fetch(`${API_BASE_URL}/img_alojamientos/${alojamientoIdParam}`);
+        const imgAlojamiento = await resImgAloj.json();
+        alojamiento.foto_principal = imgAlojamiento[0]?.url_imagen || '';
+
+        renderAlojamientoIndividual(alojamiento);
+    } catch (error) {
+        alojamientoIndividualContainer.innerHTML = '<p class="error">No se pudo cargar el detalle del alojamiento.</p>';
+    }
+}
+    
+
+function renderAlojamientoIndividual(alojamiento) {
+    if (!alojamientoIndividualContainer) return;
+
+    alojamientoIndividualContainer.innerHTML = `
+        <article class="alojamiento-detalle-individual">
+            <h2>${alojamiento.nombre}</h2>
+            ${alojamiento.foto_principal ? `<img src="${alojamiento.foto_principal}" alt="Foto de ${alojamiento.nombre}" class="foto-principal-detalle">` : ''}
+            <p><strong>Descripción:</strong> ${alojamiento.descripcion || 'No disponible.'}</p>
+            <p><strong>Dirección:</strong> ${alojamiento.direccion || 'No disponible.'}</p>
+            <p><strong>Ubicación:</strong> ${alojamiento.ciudad}, ${alojamiento.pais}</p>
+            <p><strong>Tipo:</strong> ${alojamiento.tipo_alojamiento}</p>
+            <p><strong>Capacidad:</strong> ${alojamiento.capacidad} personas</p>
+            <p><strong>Precio por noche:</strong> $${parseFloat(alojamiento.precio_por_noche).toFixed(2)}</p>
+            <p><strong>Latitud:</strong> ${alojamiento.latitud || 'No disponible'}</p>
+            <p><strong>Longitud:</strong> ${alojamiento.longitud || 'No disponible'}</p>
+            ${alojamiento.servicios && alojamiento.servicios.length ? `
+                <div>
+                    <strong>Servicios:</strong>
+                    <ul class="servicios-lista">
+                        ${alojamiento.servicios.map(s => `<li>${s}</li>`).join('')}
+                    </ul>
                 </div>
-                <br/>
-                <a href="index.html" class="btn btn-volver">Volver al catálogo</a>
-            </article>
-        `;
+            ` : ''}
+            ${alojamiento.fotos && alojamiento.fotos.length ? `
+                <div class="galeria-fotos">
+                    ${alojamiento.fotos.map(f => `<img src="${f}" alt="Foto adicional" class="foto-galeria">`).join('')}
+                </div>
+            ` : ''}
+            <p class="${alojamiento.disponible ? 'disponible' : 'no-disponible'}">
+                <strong>${alojamiento.disponible ? 'Disponible para reservar' : 'Actualmente No Disponible'}</strong>
+            </p>
+            ${alojamiento.disponible ? `<button class="btn btn-reservar-grande" data-id="${alojamiento.id}">¡Reservar Ahora!</button>` : ''}
+            <div id="form-reserva-detalle-${alojamiento.id}" class="form-reserva-popup" style="display:none;">
+                <h3>Completa tu Reserva para ${alojamiento.nombre}</h3>
+                <div>
+                    <label for="fecha-inicio-detalle-${alojamiento.id}">Check-in:</label>
+                    <input type="date" id="fecha-inicio-detalle-${alojamiento.id}" name="fecha-inicio">
+                </div>
+                <div>
+                    <label for="fecha-fin-detalle-${alojamiento.id}">Check-out:</label>
+                    <input type="date" id="fecha-fin-detalle-${alojamiento.id}" name="fecha-fin">
+                </div>
+                <div>
+                    <button class="btn btn-confirmar-reserva" data-alojamiento-id="${alojamiento.id}">Confirmar Reserva</button>
+                    <button class="btn btn-cancelar-popup">Cancelar</button>
+                </div>
+                <div id="mensaje-form-detalle-${alojamiento.id}" style="margin-top:10px;"></div>
+            </div>
+            <br/>
+            <a href="index.html" class="btn btn-volver">Volver al catálogo</a>
+        </article>
+    `;
 
         const btnReservarGrande = alojamientoIndividualContainer.querySelector('.btn-reservar-grande');
         const formPopupDetalle = alojamientoIndividualContainer.querySelector(`#form-reserva-detalle-${alojamiento.id}`);

@@ -785,6 +785,41 @@ body {
     }
 }    NO SE SI FUNCIONA */ 
 
+.foto-principal-detalle {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+    margin: 1rem 0;
+    display: block;
+}
+.galeria-fotos {
+    display: flex;
+    gap: 10px;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+.foto-galeria {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+.servicios-lista {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.servicios-lista li {
+    background: #EBEBEB;
+    border-radius: 12px;
+    padding: 6px 14px;
+    color: #1f2937;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
 
 .tabla-habitaciones-wrapper {
     width: 100%;
