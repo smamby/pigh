@@ -1,3 +1,4 @@
+// controllers/img_alojamiento.controller.js
 const AlojamientoImagen = require('../models/img_alojamiento.model');
 
 const getAllImages = async (req, res) => {
@@ -45,4 +46,3 @@ module.exports = {
   addImage,
   deleteImage,
 };
-// controllers/img_alojamiento.controller.js
