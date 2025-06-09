@@ -19,9 +19,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         const resImg = await fetch(`${API_BASE_URL}/img_alojamientos/${alojamientoId}`);
         const imagenes = await resImg.json();
 
+        // Traer puntajes y comentarios dinámicos
+        let puntajes = [];
+        try {
+            const resPuntajes = await fetch(`${API_BASE_URL}/puntajes/alojamiento/${alojamientoId}`);
+            if (resPuntajes.ok) {
+                puntajes = await resPuntajes.json();
+            }
+        } catch (e) {
+            puntajes = [];
+        }
+
+        // Calcular promedio dinámico si hay puntajes
+        const promedio = puntajes.length
+            ? (puntajes.reduce((acc, p) => acc + parseFloat(p.puntuacion), 0) / puntajes.length).toFixed(1)
+            : (alojamiento.promedio_puntaje || 8.7);
+
+        // Comentario destacado (el más reciente con comentario)
+        const comentarioDestacado = puntajes.find(p => p.comentario && p.comentario.trim());
+
+        // Renderizar lista de comentarios para la sección de comentarios
+        const comentariosHTML = puntajes.length
+            ? puntajes
+                .filter(p => p.comentario && p.comentario.trim())
+                .map(p => `<div class="comentario-item" style="margin-bottom:1em;"><b>★ ${p.puntuacion}</b> — ${p.comentario}</div>`)
+                .join('')
+            : '<span class="texto-placeholder" style="font-size:0.92em;">Sin comentarios aún.</span>';
+
         // Usar la primera como principal, el resto como galería
         const fotoPrincipal = imagenes[0]?.url_imagen || '';
         const galeria = imagenes.slice(1).map(img => img.url_imagen);
+
+        // Agregar definición de fotos para la galería
+        const fotos = [fotoPrincipal, ...galeria].filter(Boolean);
+        while (fotos.length < 8) fotos.push(fotos[0] || '');
 
         // Breadcrumb (ruta) - sin fondo blanco
         const breadcrumbHTML = `
@@ -61,53 +92,43 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
         `;
 
-        // Galería de fotos (rellena con la principal si faltan)
-        const fotos = [fotoPrincipal, ...galeria].filter(Boolean);
-        while (fotos.length < 8) fotos.push(fotos[0] || '');
-
-        const galeriaHTML = `
-        <div class="galeria-fotos" style="display:flex; gap:18px;">
-            <div style="flex:2; display:flex; flex-direction:column; gap:8px;">
-                <img src="${fotos[0]}" alt="Foto principal" style="width:100%; height:260px; object-fit:cover; border-radius:14px;">
-                <div style="display:flex; gap:8px;">
-                    <img src="${fotos[3]}" alt="" style="width:24%; height:70px; object-fit:cover; border-radius:8px;">
-                    <img src="${fotos[4]}" alt="" style="width:24%; height:70px; object-fit:cover; border-radius:8px;">
-                    <img src="${fotos[5]}" alt="" style="width:24%; height:70px; object-fit:cover; border-radius:8px;">
-                    <img src="${fotos[6]}" alt="" style="width:24%; height:70px; object-fit:cover; border-radius:8px;">
-                </div>
-            </div>
-            <div style="flex:1; display:flex; flex-direction:column; gap:8px;">
-                <img src="${fotos[1]}" alt="" style="width:100%; height:120px; object-fit:cover; border-radius:8px;">
-                <img src="${fotos[2]}" alt="" style="width:100%; height:120px; object-fit:cover; border-radius:8px;">
+// Galería y side info al mismo nivel y largo
+const galeriaYSideHTML = `
+<div style="display:flex; gap:32px; align-items:stretch; margin-bottom:2em;">
+    <div style="flex:3; min-width:0;">
+        <div class="galeria-fotos" style="display:flex; flex-direction:column; gap:12px;">
+            <img src="${fotos[0]}" alt="Foto principal" style="width:100%; height:300px; object-fit:cover; border-radius:14px;">
+            <div style="display:flex; gap:10px; width:100%;">
+                <img src="${fotos[1]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
+                <img src="${fotos[2]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
+                <img src="${fotos[3]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
+                <img src="${fotos[4]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
+                <img src="${fotos[5]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
             </div>
         </div>
-        `;
-
-        // Mapa
-        const mapQuery = encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`);
-        const mapaMini = `
-            <a href="https://maps.google.com/?q=${mapQuery}" target="_blank" style="display:block;">
+    </div>
+    <div style="flex:1; min-width:220px; max-width:320px; display:flex; flex-direction:column; gap:14px; justify-content:flex-start;">
+        <div class="box-puntuacion" style="width:100%; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001;">
+            <div style="font-weight:bold; font-size:1em; color:#176B4D; margin-bottom:0.2em;">¡Muy bueno!</div>
+            <div style="color:#fff; background:#16B0DA; border-radius:8px; padding:0.2em 0.7em; font-size:1.15em; font-weight:bold;">${promedio}</div>
+        </div>
+        <div class="box-comentarios" style="width:100%; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001;">
+            <span class="texto-placeholder" style="font-size:0.92em; text-align:center; line-height:1.1;">
+                ${comentarioDestacado ? `"${comentarioDestacado.comentario}"<br><b>- ${comentarioDestacado.nombre || 'Cliente'}</b>` : 'Sin comentarios'}
+            </span>
+        </div>
+        <div style="width:100%; height:100px; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+            <a href="https://maps.google.com/?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}" target="_blank" style="display:block; width:100%; height:100%;">
                 <iframe
-                    src="https://maps.google.com/maps?q=${mapQuery}&z=15&output=embed"
-                    width="100%" height="180" style="border-radius:10px; border:0;"
+                    src="https://maps.google.com/maps?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}&z=15&output=embed"
+                    width="100%" height="100%" style="border-radius:10px; border:0;"
                     allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </a>
-        `;
-
-        // Side info: mapa más grande, comentarios más pequeños
-        const sideInfoHTML = `
-        <div style="display:flex; flex-direction:column; align-items:center; gap:1em; margin-top:5em; width:80%;">
-            <div class="box-puntuacion" style="max-width:208px; width:100%; margin-bottom:0; font-size:0.85em;">
-                <div style="font-weight:bold; font-size:1em; margin-right:1em;">¡Muy bueno!</div>
-                <div style="background:#16B0DA; color:#fff; border-radius:8px; padding:0.3em 0.8em; font-size:1em; font-weight:bold;">${alojamiento.promedio_puntaje || 8.7}</div>
-            </div>
-            <div class="box-comentarios" style="max-width:120px; width:100%; margin-bottom:0; font-size:0.8em;">
-                <span class="texto-placeholder" style="font-size:0.92em;">"Excelente atención y ubicación."<br><b>- Ejemplo</b></span>
-            </div>
-            <div style="max-width:280px; width:100%;">${mapaMini}</div>
         </div>
-        `;
+    </div>
+</div>
+`;
 
         // Botón reservar arriba, hace scroll a la tabla de disponibilidad
         const reservarBtn = `
@@ -133,7 +154,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             </div>
                             <div class="direccion" style="font-size:0.98em; color:#444; margin-top:0.1em; line-height:1.2;">
                                 ${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}
-                                <a href="https://maps.google.com/?q=${mapQuery}" target="_blank" style="font-weight:bold; color:#16B0DA; margin-left:0.7em; text-decoration:none; font-size:0.97em;">Mapa</a>
+                                <a href="https://maps.google.com/?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}" target="_blank" style="font-weight:bold; color:#16B0DA; margin-left:0.7em; text-decoration:none; font-size:0.97em;">Mapa</a>
                             </div>
                         </div>
                         <div style="display:flex; align-items:center; gap:1em;">
@@ -142,7 +163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             ${reservarBtn}
                         </div>
                     </div>
-                    ${galeriaHTML}
+                    ${galeriaYSideHTML}
                     <h3 class="titulo-servicios" style="margin-top:2em;">Servicios</h3>
                     <ul class="servicios-lista">
                         ${(alojamiento.servicios || ['WiFi','Desayuno','Estacionamiento','Piscina']).map(s => `<li class="servicio-item">${s}</li>`).join('')}
@@ -170,19 +191,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>
                     <div id="tabla-disponibilidad"></div>
                     <h2 style="margin-top:2.5em;">Comentarios de los clientes</h2>
-                    <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:1.2em;">
-                        <span style="font-weight:bold; font-size:0.98em;">Puntuación pormenorizada de cada servicio</span>
-                    </div>
                     <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
-                        <span style="font-weight:bold; font-size:0.98em;">Comentarios de los clientes</span>
+                        ${comentariosHTML}
                     </div>
                     <h2 style="margin-top:2.5em;">Normas de la Casa</h2>
                     <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
                         <span style="font-weight:bold; font-size:0.98em;">Detalle de las Normas de la Casa (horarios check in y check out, horario desayuno, parking, etc)</span>
                     </div>
-                </div>
-                <div style="flex:1; min-width:208px; align-self:stretch; display:flex;">
-                    ${sideInfoHTML}
                 </div>
             </div>
         `;
