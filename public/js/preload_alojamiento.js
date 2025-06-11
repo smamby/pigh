@@ -12,11 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const adultsHiddenInput = document.getElementById('adultsInput');
             const childrenHiddenInput = document.getElementById('childrenInput');
             const roomsHiddenInput = document.getElementById('roomsInput');
-            const checkinInput = document.getElementById('checkinInput');
-            const checkoutInput = document.getElementById('checkoutInput'); 
+            // const checkinInput = document.getElementById('checkinInput');
+            // const checkoutInput = document.getElementById('checkoutInput'); 
             const destinationInput = document.getElementById('destinationInput');
             const tipoAlojamientoInput = document.getElementById('tipoAlojamientoInput');
-            const guestsDisplayText = document.getElementById('guestsDisplayText');
+            //const guestsDisplayText = document.getElementById('guestsDisplay');
 
 
             const navregister = document.getElementById("nav-register")
@@ -26,15 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const navavatar = document.getElementById("avatar-img")
 
             const alojamientoI = sessionStorage.getItem('alojamientoId');
-            modalAdultsInput.value = sessionStorage.getItem('adults');
-            modalChildrenInput.value = sessionStorage.getItem('children');         
-            modalRoomsInput.value = sessionStorage.getItem('rooms');
-            guestsDisplayText.textContent = `${modalAdultsInput.value} Adultos, ${modalChildrenInput.value} Niños, ${modalRoomsInput.value} Habitaciones`;
+            const AdultsInput = sessionStorage.getItem('adults');
+            const ChildrenInput = sessionStorage.getItem('children');         
+            const RoomsInput = sessionStorage.getItem('rooms');
+            //guestsDisplayText.textContent = `${AdultsInput} Adultos, ${ChildrenInput} Niños, ${RoomsInput} Habitaciones`;
+        
             const days = sessionStorage.getItem('days');
-            checkinInput.value = sessionStorage.getItem('checkin');
-            checkoutInput.value = sessionStorage.getItem('checkout');
-            destinationInput.value = sessionStorage.getItem('destination');
-            sessionStorage.getItem('tipoAlojamiento');
+            // checkinInput.value = sessionStorage.getItem('checkin');
+            // checkoutInput.value = sessionStorage.getItem('checkout');
+            // destinationInput.value = sessionStorage.getItem('destination');
+            const tipoAlojamientoNombre = sessionStorage.getItem('tipoAlojamiento');
 
             if (sessionStorage.getItem('user') !== null) {
                 const user = JSON.parse(sessionStorage.getItem('user'));
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('nav-logout').addEventListener('click', function (e) {
                 e.preventDefault(); // Evita que navegue inmediatamente
 
-                // Borra datos del localStorage
+                // Borra datos del sessionStorage
                 sessionStorage.removeItem('token');
                 sessionStorage.removeItem('user');
 

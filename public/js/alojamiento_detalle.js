@@ -70,27 +70,29 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <span style="color:#1f2937; font-weight:normal;">Habitaciones en ${alojamiento.nombre}</span>
             </nav>
         `;
-
         // Buscador superior (igual al de la home)
         const buscadorSuperior = `
         <div class="buscador-superior" style="width:100%; background:#f3f4f6; border-radius:12px; display:flex; align-items:center; gap:1.5em; padding:1.2em 2em; margin-bottom:2em;">
-            <div>
-                <label style="font-weight:bold;">Destino</label><br>
-                <input type="text" value="${alojamiento.ciudad}" style="padding:0.5em; border-radius:6px; border:1px solid #ccc; width:140px;">
-            </div>
-            <div>
-                <label style="font-weight:bold;">Check in</label><br>
-                <input type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
-            </div>
-            <div>
-                <label style="font-weight:bold;">Check out</label><br>
-                <input type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
-            </div>
-            <div>
-                <label style="font-weight:bold;">Huéspedes</label><br>
-                <input type="number" min="1" max="10" value="2" style="padding:0.5em; border-radius:6px; border:1px solid #ccc; width:60px;">
-            </div>
-            <button style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.7em 2em; font-weight:bold; font-size:1em; cursor:pointer;">Buscar</button>
+        <div>
+        <label style="font-weight:bold;">Destino</label><br>
+        <input type="text" value="${alojamiento.ciudad}" style="padding:0.5em; border-radius:6px; border:1px solid #ccc; width:140px;">
+        </div>
+        <div>
+        <label style="font-weight:bold;">Check in</label><br>
+        <input id="checkinInput" type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+        </div>
+        <div>
+        <label style="font-weight:bold;">Check out</label><br>
+        <input id="checkoutInput" type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+        </div>
+        <div class="form-group">
+        <label for="guestsDisplay">Huéspedes</label>
+        <div id="guestsDisplay" class="custom-select">2 Adultos, 0 Niños, 1 Habitaciones</div>
+        <input type="hidden" id="adultsInput" value="2">
+        <input type="hidden" id="childrenInput" value="0">
+        <input type="hidden" id="roomsInput" value="1">
+        </div>
+        <button style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.7em 2em; font-weight:bold; font-size:1em; cursor:pointer;">Buscar</button>
         </div>
         `;
 
@@ -291,6 +293,18 @@ const galeriaYSideHTML = `
             }
         </style>
         `;
+
+        const checkinInput = document.getElementById('checkinInput');
+        const checkoutInput = document.getElementById('checkoutInput');
+        checkinInput.value = sessionStorage.getItem('checkin');
+        checkoutInput.value = sessionStorage.getItem('checkout');
+        //destinationInput.value = sessionStorage.getItem('destination');
+
+        const guestsDisplayText = document.getElementById('guestsDisplay');
+        const AdultsInput = sessionStorage.getItem('adults') || '2';
+        const ChildrenInput = sessionStorage.getItem('children') || '0';         
+        const RoomsInput = sessionStorage.getItem('rooms') || '1';
+        guestsDisplayText.textContent = `${AdultsInput} Adultos, ${ChildrenInput} Niños, ${RoomsInput} Habitaciones`;
 
     } catch (error) {
         contenedor.innerHTML = '<p class="error">No se pudo cargar el detalle del alojamiento.</p>';
