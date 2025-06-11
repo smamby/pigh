@@ -185,6 +185,15 @@ function renderSearchResults(results, adults, children, rooms, days) {
                 //const idAlojamiento = card.getAttribute('data-id');
                 const id = card.dataset.idAlojamiento;
                 console.log('Click en card, ID:', id);
+                sessionStorage.setItem('alojamientoId', id);
+                sessionStorage.setItem('adults', adults);
+                sessionStorage.setItem('children', children);   
+                sessionStorage.setItem('rooms', rooms);
+                sessionStorage.setItem('days', days);
+                sessionStorage.setItem('checkin', document.getElementById('checkin').value);
+                sessionStorage.setItem('checkout', document.getElementById('checkout').value);
+                sessionStorage.setItem('destination', document.getElementById('destinationSelect').value);
+                sessionStorage.setItem('tipoAlojamiento', tipoAlojamiento.tipo_alojamiento_nombre);
                 window.location.href = `/pages/alojamiento.html?id=${id}`;
             });
         })

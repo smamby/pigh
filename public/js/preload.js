@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const navlogout = document.getElementById("nav-logout")
             const navavatar = document.getElementById("avatar-img")
 
-            if (localStorage.getItem('user') !== null) {
-                const user = JSON.parse(localStorage.getItem('user'));
+            if (sessionStorage.getItem('user') !== null) {
+                const user = JSON.parse(sessionStorage.getItem('user'));
                 const userName = document.getElementById('username');
                 userName.textContent = `${user.nombre} ${user.apellido}`;
                 navregister.classList.add('loged')
@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault(); // Evita que navegue inmediatamente
 
                 // Borra datos del localStorage
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('user');
 
                 // Redirige manualmente
                 window.location.href = "../index.html";

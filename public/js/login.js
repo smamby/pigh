@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    localStorage.setItem('token', data.token);
+                    sessionStorage.setItem('token', data.token);
                     if (data.usuario) {
-                        localStorage.setItem('user', JSON.stringify(data.usuario));
+                        sessionStorage.setItem('user', JSON.stringify(data.usuario));
                     }
                     
                     // Mostrar mensaje de éxito en el div

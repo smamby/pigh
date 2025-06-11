@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const adultsHiddenInput = document.getElementById('adultsInput');
             const childrenHiddenInput = document.getElementById('childrenInput');
             const roomsHiddenInput = document.getElementById('roomsInput');
+            const checkinInput = document.getElementById('checkinInput');
+            const checkoutInput = document.getElementById('checkoutInput'); 
+            const destinationInput = document.getElementById('destinationInput');
+            const tipoAlojamientoInput = document.getElementById('tipoAlojamientoInput');
+            const guestsDisplayText = document.getElementById('guestsDisplayText');
+
 
             const navregister = document.getElementById("nav-register")
             const navlogin = document.getElementById("nav-login")
@@ -19,8 +25,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const navlogout = document.getElementById("nav-logout")
             const navavatar = document.getElementById("avatar-img")
 
-            if (localStorage.getItem('user') !== null) {
-                const user = JSON.parse(localStorage.getItem('user'));
+            const alojamientoI = sessionStorage.getItem('alojamientoId');
+            modalAdultsInput.value = sessionStorage.getItem('adults');
+            modalChildrenInput.value = sessionStorage.getItem('children');         
+            modalRoomsInput.value = sessionStorage.getItem('rooms');
+            guestsDisplayText.textContent = `${modalAdultsInput.value} Adultos, ${modalChildrenInput.value} Niños, ${modalRoomsInput.value} Habitaciones`;
+            const days = sessionStorage.getItem('days');
+            checkinInput.value = sessionStorage.getItem('checkin');
+            checkoutInput.value = sessionStorage.getItem('checkout');
+            destinationInput.value = sessionStorage.getItem('destination');
+            sessionStorage.getItem('tipoAlojamiento');
+
+            if (sessionStorage.getItem('user') !== null) {
+                const user = JSON.parse(sessionStorage.getItem('user'));
                 const userName = document.getElementById('username');
                 userName.textContent = `${user.nombre} ${user.apellido}`;
                 navregister.classList.add('loged')
@@ -49,8 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault(); // Evita que navegue inmediatamente
 
                 // Borra datos del localStorage
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('user');
 
                 // Redirige manualmente
                 //window.location.href = "../index.html";

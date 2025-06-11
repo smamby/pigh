@@ -21,19 +21,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Traer puntajes y comentarios dinámicos
         let puntajes = [];
+        let puntajePromedio = alojamiento.promedio_puntaje;
+
         try {
             const resPuntajes = await fetch(`${API_BASE_URL}/puntajes/alojamiento/${alojamientoId}`);
             if (resPuntajes.ok) {
-                puntajes = await resPuntajes.json();
+                puntaje = await resPuntajes.json();
             }
         } catch (e) {
             puntajes = [];
         }
 
-        // Calcular promedio dinámico si hay puntajes
-        const promedio = puntajes.length
-            ? (puntajes.reduce((acc, p) => acc + parseFloat(p.puntuacion), 0) / puntajes.length).toFixed(1)
-            : (alojamiento.promedio_puntaje || 8.7);
+        // // Calcular promedio dinámico si hay puntajes
+        // const promedio = puntajes.length
+        //     ? (puntajes.reduce((acc, p) => acc + parseFloat(p.puntuacion), 0) / puntajes.length).toFixed(1)
+        //     : (alojamiento.promedio_puntaje || 8.7);
 
         // Comentario destacado (el más reciente con comentario)
         const comentarioDestacado = puntajes.find(p => p.comentario && p.comentario.trim());
@@ -59,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <nav class="breadcrumb" style="border-radius:8px; padding:0.7em 1.2em; margin:1.5em 0;">
                 <span style="font-weight:bold; color: #16B0DA;">Inicio</span>
                 <span class="breadcrumb-separator">›</span>
-                <span style="font-weight:bold; color:#16B0DA;">${alojamiento.tipo_alojamiento || 'Hoteles'}</span>
+                <span style="font-weight:bold; color:#16B0DA;">${sessionStorage.getItem('tipoAlojamiento') || 'Hoteles'}</span>
                 <span class="breadcrumb-separator">›</span>
                 <span style="font-weight:bold; color:#16B0DA;">${alojamiento.pais}</span>
                 <span class="breadcrumb-separator">›</span>
@@ -110,7 +112,7 @@ const galeriaYSideHTML = `
     <div style="flex:1; min-width:220px; max-width:320px; display:flex; flex-direction:column; gap:14px; justify-content:flex-start;">
         <div class="box-puntuacion" style="width:100%; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001;">
             <div style="font-weight:bold; font-size:1em; color:#176B4D; margin-bottom:0.2em;">¡Muy bueno!</div>
-            <div style="color:#fff; background:#16B0DA; border-radius:8px; padding:0.2em 0.7em; font-size:1.15em; font-weight:bold;">${promedio}</div>
+            <div style="color:#fff; background:#16B0DA; border-radius:8px; padding:0.2em 0.7em; font-size:1.15em; font-weight:bold;">${puntajePromedio}</div>
         </div>
         <div class="box-comentarios" style="width:100%; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001;">
             <span class="texto-placeholder" style="font-size:0.92em; text-align:center; line-height:1.1;">
