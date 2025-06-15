@@ -21,7 +21,7 @@
     </header> -->
     <header class="header">
         <div class="container header-content">
-            <div class="logo">
+            <div id="logo" class="logo">
                 <img src="../assets/logo-check-inn.png" alt="Check-inn" class="logo-image">
             </div>
             <nav class="nav-links">
@@ -46,300 +46,38 @@
         </div>
     </header>
 
+
+
     <main>
-
-        <!-- <ol class="breadcrumb">
-            <li><a href="index.html">Inicio</a></li>
-            <li class="breadcrumb-separator">›</li>
-            <li><a href="#">Hoteles</a></li>
-            <li class="breadcrumb-separator">›</li>
-            <li><a href="#">País</a></li>
-            <li class="breadcrumb-separator">›</li>
-            <li><a href="#">Ciudad</a></li>
-            <li class="breadcrumb-separator">›</li>
-            <li class="breadcrumb-hotel">Nombre del Hotel</li>
-        </ol>
-         <div class="search-form-container">
-                    <form class="search-form" id="search-form">
-                        <div class="form-group">
-                            <label for="destinations">Destino</label>
-                            <input id="destinationSelect" list="cityOptions" placeholder="A donde vas?" autofocus autocomplete="off"/>
-                            <datalist id="ciudad"></datalist>
-                        </div>
-                        <div class="form-group">
-                            <label for="checkin">Check-in</label>
-                            <input type="date" id="checkin">
-                        </div>
-                        <div class="form-group">
-                            <label for="checkout">Check-out</label>
-                            <input type="date" id="checkout" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="guestsDisplay">Huéspedes</label>
-                            <div id="guestsDisplay" class="custom-select">2 adultos, 0 menores, 1 habitación</div>
-                            <input type="hidden" id="adultsInput" value="2">
-                            <input type="hidden" id="childrenInput" value="0">
-                            <input type="hidden" id="roomsInput" value="1">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="search-button">Buscar</button>
-                        </div>
-                    </form>
-                </div>
-
-        <div id="botonera">
-            <button class="boton">Vista General</button>
-            <button class="boton">Info y precios</button>
-            <button class="boton">Servicios</button>
-            <button class="boton">Normas de la Casa</button>
-            <button class="boton">Comentarios</button>
-        </div>
-
-        <div class="hotel-card"> --> 
-        <!-- Acciones en la esquina superior derecha -->
-       <!-- <div class="actions">
-        <div class="icon" title="Like">
-           <i class="far fa-heart icon-heart"></i>
-        </div>
-        <a href="#" class="icon" title="Compartir">
-           <i class="fa-solid fa-share-nodes icon-share"></i>
-        </a>
-        <button class="btn-reservar">Reservar</button>
-        </div> -->
-
-            <!-- Línea 1: Nombre y estrellas -->
-        <!-- <div class="line1">
-        <div class="nombre">Nombre Hotel</div>
-        <div class="estrellas">
-            <span>&#9733;</span>
-            <span>&#9733;</span>
-            <span>&#9733;</span>
-            <span>&#9733;</span>
-            <span>&#9733;</span>
-        </div>
-        </div> -->
-
-        <!-- Línea 2: Mapa, dirección y enlace -->
-        <!-- <div class="line2">
-        <div class="map-icon">
-            <i class="fas fa-map-marker-alt"></i>
-        </div>
-        <div class="direccion">
-            Calle Falsa 123, Ciudad, País
-        </div>
-        <a href="https://maps.google.com/?q=Calle Falsa 123" target="_blank" class="map-link">Mapa</a>
-        </div>
-    </div>  -->
- 
-    <!-- Contenedor principal que incluye todo el bloque -->
-    <!--<div class="main-container"> -->
-        <!-- Contenedor de la parte izquierda: fotos y rectángulos -->
-        <!-- <div class="left-block"> -->
-        <!-- Gran rectángulo a la izquierda con foto -->
-        <!-- <div class="big-photo-container">
-            <div class="large-photo"></div>
-        </div> -->
-        <!-- Rectángulos pequeños a la derecha de la grande -->
-        <!-- <div class="small-rectangles">
-            <div class="small-rectangle"></div>
-            <div class="small-rectangle"></div>
-            <div class="small-rectangle"></div>
-        </div> -->
-        <!-- Línea de 5 rectángulos debajo de las anteriores -->
-        <!-- <div class="bottom-rects">
-            <div class="bottom-rectangle">Rectángulo 1</div>
-            <div class="bottom-rectangle">Rectángulo 2</div>
-            <div class="bottom-rectangle">Rectángulo 3</div>
-            <div class="bottom-rectangle">Rectángulo 4</div>
-            <div class="more-photos">37 fotos más</div>
-        </div>
-        </div>-->
-        <!-- Contenedor derecho con borde y fondo blanco -->
-        <!--  <div class="right-block">-->
-        <!-- Rectángulo superior derecho pequeño -->
-       <!-- <div class="top-right-rect">
-            <h3>Encabezado</h3>
-            <div class="opiniones">
-            Opiniones y detalles
-            </div>
-        </div> -->
-        <!-- Opiniones y firma -->
-        <!-- <div class="opiniones-container">
-            <div class="opinion-square">
-            <span>Muy bueno</span>
-            <span>263 opiniones</span>
-            </div>
-            <div class="highlighted-text">Lo que más me gustó</div>
-            <div class="review">
-            Comentario o reseña aquí.
-            </div>  -->
-            <!-- Flechas para navegar opiniones -->
-           <!--  <div class="nav-arrows">
-            <div class="arrow">←</div>
-            <div class="arrow">→</div>
-            </div>  -->
-            <!-- Firma del huésped -->
-            <!-- <div class="guest-signature">
-            <div class="circle-g">G</div>
-            <div class="guest-info">
-                <div class="guest-name">Nombre del huésped</div>
-                <div class="guest-country">País o bandera</div>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div> -->
-    
-
         <div id="alojamiento-detalle-dinamico">
             <p>Cargando detalle del alojamiento...</p>
         </div>
 
-         <!-- Título Servicios -->
-   <!-- <h2 class="titulo-servicios">Servicios</h2>-->
-
-    <!-- Rectángulos de servicios -->
-  <!--  <ul class="servicios-lista">
-        <li class="servicio-item">WiFi</li>
-        <li class="servicio-item">Spa</li>
-        <li class="servicio-item">Desayuno</li>
-        <li class="servicio-item">Café/Bar</li>
-        <li class="servicio-item">Lavandería</li>
-        <li class="servicio-item">Restaurante</li>
-        <li class="servicio-item">Gimnasio</li>
-        <li class="servicio-item">Servicio de Habitación</li>
-        <li class="servicio-item">Acceso adaptado a movilidad reducida</li>
-        <li class="servicio-item">Acceso directo a la Playa</li>
-        <li class="servicio-item">Caja de Seguridad</li>
-    </ul> -->
-
-     <!-- Texto descriptivo de experiencia -->
-    <!-- <h3 class="texto-descriptivo">Texto descriptivo de experiencia</h3> -->
-
-    <!-- Texto con detalles del hotel 
-        <div class="detalles-hotel">
-        <p>Aquí puedes agregar más detalles del hotel que desees mostrar. </p>
-        <p> El Hotel  está en el centro  y combina elementos modernos y tradicionales canarios, como el patio central. Se encuentra a 2,3 km de la playa.</p>
-        <p> Este hotel cuenta con WiFi gratuita, piscina exterior abierta en temporada y solárium con terraza panorámica con vistas a la ciudad.</p>
-        <p> Alberga un gastrobar de primera clase que sirve cocina variada. El restaurante tiene 2 terrazas, 1 de ellas con vistas al océano.</p>
-        <p>Las habitaciones disponen de mucha luz natural, aire acondicionado, TV vía satélite, minibar y baño con secador de pelo y artículos de aseo gratuitos.</p>
-    </div>   -->
-        
-    <!-- <h3 class="texto-descriptivo">Disponibilidad</h3> -->
-   
-
-  <!-- <div class="search-form-container-dispo">
-                    <form class="search-form" id="search-form">
-                       
-                        <div class="form-group">
-                            <label for="checkin">Check-in</label>
-                            <input type="date" id="checkin">
-                        </div>
-                        <div class="form-group">
-                            <label for="checkout">Check-out</label>
-                            <input type="date" id="checkout" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="guestsDisplay">Huéspedes</label>
-                            <div id="guestsDisplay" class="custom-select">2 adultos, 0 menores, 1 habitación</div>
-                            <input type="hidden" id="adultsInput" value="2">
-                            <input type="hidden" id="childrenInput" value="0">
-                            <input type="hidden" id="roomsInput" value="1">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="search-button">Buscar</button>
-                        </div>
-                    </form>
-                </div>
+    </main>
 
 
-                <div class="tabla-habitaciones-wrapper">
-  <div class="tabla-header">
-    <span></span>
-    <button class="btn-reservar-ahora">Reservar ahora</button>
-  </div>
-  <table class="tabla-habitaciones">
-    <thead>
-      <tr>
-        <th>Tipo de habitación</th>
-        <th>Cantidad de huéspedes</th>
-        <th>Precio por x noches</th>
-        <th>Tus opciones</th>
-        <th>Elegir habitaciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Doble estándar</td>
-        <td>2 adultos</td>
-        <td>$50.000</td>
-        <td>Desayuno incluido</td>
-        <td>
-          <select class="select-cantidad">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td>Suite familiar</td>
-        <td>4 adultos</td>
-        <td>$90.000</td>
-        <td>Cancelación gratis</td>
-        <td>
-          <select class="select-cantidad">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </select>
-        </td>
-      </tr>  -->
-      <!-- Más filas según necesidad -->
-     <!-- </tbody>
-  </table>
-</div>   -->
 
-     <!-- Título comentarios clientes -->
-    <!--  <h2 class="titulo-comentarios-clientes">Comentarios de los Clientes</h2>  -->
-
-<!-- Contenedor de puntuación pormenorizada -->
- <!-- <div class="box-puntuacion">
-  <span class="texto-placeholder">Puntuación pormenorizada de cada servicio</span> 
-</div>   -->
-
-<!-- Contenedor de comentarios de clientes -->
- <!-- <div class="box-comentarios">
-  <span class="texto-placeholder">Comentarios de los clientes</span>
-</div>
-
-<h2 class="titulo-normas">Normas de la Casa</h2>   -->
-
-<!-- Contenedor de normas de la casa -->
- <!-- <div class="box-normas">
-  <span class="texto-placeholder">
-    Detalle de las normas de la casas. ej Hora check in/out. Desayuno. Parking. etc
-  </span>
-</div>   -->
-
-
-</main>
+    <div id="guestsModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close-button" id="closeModalBtn">&times;</span>
+            <h2>Seleccionar Huéspedes y Habitaciones</h2>
+            <div class="modal-input-group">
+                <label for="modalAdults">Adultos:</label>
+                <input type="number" id="modalAdults" class="modalAdults" value="2" min="1">
+            </div>
+            <div class="modal-input-group">
+                <label for="modalChildren">Menores:</label>
+                <input type="number" id="modalChildren" class="modalChildren" value="0" min="0">
+            </div>
+            <div class="modal-input-group">
+                <label for="modalRooms">Habitaciones:</label>
+                <input type="number" id="modalRooms" class="modalRooms" value="1" min="1">
+            </div>
+            <div class="modal-actions">
+                <button id="saveGuestsBtn">Guardar</button>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; <span id="currentYear"></span> Booking MVP Latam. Todos los derechos reservados.</p>

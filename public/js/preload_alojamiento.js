@@ -1,7 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-            
-            //const searchForm = document.getElementById('searchForm');
-            //const searchResultsGrid = document.getElementById('searchResultsGrid');
+document.addEventListener('DOMContentLoaded', () => {            
             const guestsDisplay = document.getElementById('guestsDisplay');
             const guestsModal = document.getElementById('guestsModal');
             const closeModalBtn = document.getElementById('closeModalBtn');
@@ -12,11 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const adultsHiddenInput = document.getElementById('adultsInput');
             const childrenHiddenInput = document.getElementById('childrenInput');
             const roomsHiddenInput = document.getElementById('roomsInput');
-            // const checkinInput = document.getElementById('checkinInput');
-            // const checkoutInput = document.getElementById('checkoutInput'); 
             const destinationInput = document.getElementById('destinationInput');
             const tipoAlojamientoInput = document.getElementById('tipoAlojamientoInput');
-            //const guestsDisplayText = document.getElementById('guestsDisplay');
 
 
             const navregister = document.getElementById("nav-register")
@@ -29,12 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const AdultsInput = sessionStorage.getItem('adults');
             const ChildrenInput = sessionStorage.getItem('children');         
             const RoomsInput = sessionStorage.getItem('rooms');
-            //guestsDisplayText.textContent = `${AdultsInput} Adultos, ${ChildrenInput} Niños, ${RoomsInput} Habitaciones`;
         
             const days = sessionStorage.getItem('days');
-            // checkinInput.value = sessionStorage.getItem('checkin');
-            // checkoutInput.value = sessionStorage.getItem('checkout');
-            // destinationInput.value = sessionStorage.getItem('destination');
             const tipoAlojamientoNombre = sessionStorage.getItem('tipoAlojamiento');
 
             if (sessionStorage.getItem('user') !== null) {

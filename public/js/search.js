@@ -116,7 +116,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
                 },
         });
         const tipoAlojamiento = await resIdTipo.json();
-        console.log('[[Response data]]:', IdAlojamiento);
+        console.log('[[Response data]]:', tipoAlojamiento);
 
         const resImgAloj = await fetch(`http://localhost:3001/api/img_alojamientos/${IdAlojamiento}`, {
                 method: 'GET',
@@ -193,7 +193,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
                 sessionStorage.setItem('checkin', document.getElementById('checkin').value);
                 sessionStorage.setItem('checkout', document.getElementById('checkout').value);
                 sessionStorage.setItem('destination', document.getElementById('destinationSelect').value);
-                sessionStorage.setItem('tipoAlojamiento', tipoAlojamiento.tipo_alojamiento_nombre);
+                sessionStorage.setItem('tipoAlojamiento', tipoAlojamiento.nombre);
                 window.location.href = `/pages/alojamiento.html?id=${id}`;
             });
         })

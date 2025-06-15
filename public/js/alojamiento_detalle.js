@@ -22,11 +22,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Traer puntajes y comentarios dinámicos
         let puntajes = [];
         let puntajePromedio = alojamiento.promedio_puntaje;
+        let tipoAlojamiento = sessionStorage.getItem('tipoAlojamiento') || 'Hoteles';
 
         try {
             const resPuntajes = await fetch(`${API_BASE_URL}/puntajes/alojamiento/${alojamientoId}`);
             if (resPuntajes.ok) {
-                puntaje = await resPuntajes.json();
+                puntajes = await resPuntajes.json();
             }
         } catch (e) {
             puntajes = [];
@@ -60,13 +61,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         const breadcrumbHTML = `
             <nav class="breadcrumb" style="border-radius:8px; padding:0.7em 1.2em; margin:1.5em 0;">
                 <span style="font-weight:bold; color: #16B0DA;">Inicio</span>
-                <span class="breadcrumb-separator">›</span>
-                <span style="font-weight:bold; color:#16B0DA;">${sessionStorage.getItem('tipoAlojamiento') || 'Hoteles'}</span>
-                <span class="breadcrumb-separator">›</span>
+                <span class="breadcrumb-separator"></span>
+                <span style="font-weight:bold; color:#16B0DA;">${tipoAlojamiento}</span>
+                <span class="breadcrumb-separator"></span>
                 <span style="font-weight:bold; color:#16B0DA;">${alojamiento.pais}</span>
-                <span class="breadcrumb-separator">›</span>
+                <span class="breadcrumb-separator"></span>
                 <span style="font-weight:bold; color:#16B0DA;">${alojamiento.ciudad}</span>
-                <span class="breadcrumb-separator">›</span>
+                <span class="breadcrumb-separator"></span>
                 <span style="color:#1f2937; font-weight:normal;">Habitaciones en ${alojamiento.nombre}</span>
             </nav>
         `;
@@ -121,7 +122,7 @@ const galeriaYSideHTML = `
                 ${comentarioDestacado ? `"${comentarioDestacado.comentario}"<br><b>- ${comentarioDestacado.nombre || 'Cliente'}</b>` : 'Sin comentarios'}
             </span>
         </div>
-        <div style="width:100%; height:100px; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+        <div style="width:100%; height:300px; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001; overflow:hidden; display:flex; align-items:center; justify-content:center;">
             <a href="https://maps.google.com/?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}" target="_blank" style="display:block; width:100%; height:100%;">
                 <iframe
                     src="https://maps.google.com/maps?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}&z=15&output=embed"
@@ -178,19 +179,23 @@ const galeriaYSideHTML = `
                         <hr style="margin:1.5em 0 0.5em 0; border:0; border-top:1.5px solid #e5e7eb;">
                     </section>
                     <h2 style="margin-top:2.5em;">Disponibilidad</h2>
+
                     <div class="buscador-disponibilidad" style="width:100%; background:#f3f4f6; border-radius:12px; display:flex; align-items:center; gap:1.5em; padding:1.2em 2em; margin-bottom:2em;">
                         <div>
                             <label style="font-weight:bold;">Check in</label><br>
-                            <input type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+                            <input id="modifCheckinInput" type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
                         </div>
                         <div>
                             <label style="font-weight:bold;">Check out</label><br>
-                            <input type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+                            <input id="modifCheckoutInput" type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
                         </div>
-                        <div>
-                            <label style="font-weight:bold;">Huéspedes</label><br>
-                            <input type="number" min="1" max="10" value="2" style="padding:0.5em; border-radius:6px; border:1px solid #ccc; width:60px;">
-                        </div>
+                        <div class="form-group">
+                            <label for="guestsDisplay">Huéspedes</label>
+                            <div id="modifGuestsDisplay" class="custom-select">2 Adultos, 0 Niños, 1 Habitaciones</div>
+                            <input type="hidden" id="modifAdultsInput" value="2">
+                            <input type="hidden" id="modifChildrenInput" value="0">
+                            <input type="hidden" id="modifRoomsInput" value="1">
+                        </div>                        
                         <button style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.7em 2em; font-weight:bold; font-size:1em; cursor:pointer;">Modificar búsqueda</button>
                     </div>
                     <div id="tabla-disponibilidad"></div>
@@ -208,14 +213,14 @@ const galeriaYSideHTML = `
 
         // Render tabla de disponibilidad con formato y estilos
         document.getElementById('tabla-disponibilidad').innerHTML = `
-        <table style="width:100%; border-collapse:separate; border-spacing:0; font-size:1em; border:1.5px solid #4c76b2; border-radius:10px;">
+        <table class="tabla-habitaciones">
             <thead>
                 <tr>
-                    <th rowspan="2" style="background:#4c76b2; color:#fff; font-weight:bold; text-align:left; border-radius:8px 0 0 0; padding:1em 1em; border-right:1.5px solid #4c76b2; transition:background 0.2s;">Tipo de Habitación</th>
-                    <th style="background:#4c76b2; color:#fff; font-weight:bold; text-align:center; border-right:1.5px solid #4c76b2; transition:background 0.2s;">Cant. Huéspedes</th>
-                    <th style="background:#4c76b2; color:#fff; font-weight:bold; text-align:center; border-right:1.5px solid #4c76b2; transition:background 0.2s;">Precio por 2 noches</th>
-                    <th style="background:#4c76b2; color:#fff; font-weight:bold; text-align:center; border-right:1.5px solid #4c76b2; transition:background 0.2s;">Tus opciones</th>
-                    <th style="background:#4c76b2; color:#fff; font-weight:bold; text-align:center; border-radius:0 8px 0 0; transition:background 0.2s;">Elegir habitaciones</th>
+                    <th class="th0" rowspan="2">Tipo de Habitación</th>
+                    <th class="th1">Cant. Huéspedes</th>
+                    <th class="th1">Precio por 2 noches</th>
+                    <th class="th1">Tus opciones</th>
+                    <th class="th2">Elegir habitaciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -277,37 +282,86 @@ const galeriaYSideHTML = `
                 </tr>
             </tbody>
         </table>
-        <style>
-            #tabla-disponibilidad th {
-                cursor:pointer;
-                transition:background 0.2s;
-            }
-            #tabla-disponibilidad th:hover {
-                background:#138bb3 !important;
-            }
-            #tabla-disponibilidad td, #tabla-disponibilidad th {
-                border-bottom:1.5px solid #4c76b2;
-            }
-            #tabla-disponibilidad tr:last-child td {
-                border-bottom:none;
-            }
-        </style>
         `;
 
         const checkinInput = document.getElementById('checkinInput');
         const checkoutInput = document.getElementById('checkoutInput');
+        const modifCheckinInput = document.getElementById('modifCheckinInput');
+        const modifCheckoutInput = document.getElementById('modifCheckoutInput');
         checkinInput.value = sessionStorage.getItem('checkin');
         checkoutInput.value = sessionStorage.getItem('checkout');
+        modifCheckinInput.value = sessionStorage.getItem('checkin');
+        modifCheckoutInput.value = sessionStorage.getItem('checkout');
         //destinationInput.value = sessionStorage.getItem('destination');
 
         const guestsDisplayText = document.getElementById('guestsDisplay');
-        const AdultsInput = sessionStorage.getItem('adults') || '2';
-        const ChildrenInput = sessionStorage.getItem('children') || '0';         
-        const RoomsInput = sessionStorage.getItem('rooms') || '1';
+        let AdultsInput = sessionStorage.getItem('adults');
+        let ChildrenInput = sessionStorage.getItem('children');         
+        let RoomsInput = sessionStorage.getItem('rooms');
         guestsDisplayText.textContent = `${AdultsInput} Adultos, ${ChildrenInput} Niños, ${RoomsInput} Habitaciones`;
+        const modifGuestsDisplayText = document.getElementById('modifGuestsDisplay');
+        const modifAdultsInput = sessionStorage.getItem('adults'); 
+        const modifChildrenInput = sessionStorage.getItem('children'); 
+        const modifRoomsInput = sessionStorage.getItem('rooms'); 
+        modifGuestsDisplayText.textContent = `${modifAdultsInput} Adultos, ${modifChildrenInput} Niños, ${modifRoomsInput} Habitaciones`;
+        
+        //  Lógica del popup de Huéspedes ---
+        const guestsDisplay = document.getElementById('guestsDisplay');
+        const guestsModal = document.getElementById('guestsModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const saveGuestsBtn = document.getElementById('saveGuestsBtn');
+        const modalAdultsInput = document.getElementById('modalAdults');
+        const modalChildrenInput = document.getElementById('modalChildren');
+        const modalRoomsInput = document.getElementById('modalRooms');
+        const adultsHiddenInput = document.getElementById('adultsInput');
+        const childrenHiddenInput = document.getElementById('childrenInput');
+        const roomsHiddenInput = document.getElementById('roomsInput');
+        
+        guestsDisplay.addEventListener('click', () => {
+            // Set modal inputs to current hidden input values
+            modalAdultsInput.value = AdultsInput;
+            modalChildrenInput.value = ChildrenInput;
+            modalRoomsInput.value = RoomsInput;
+            guestsModal.style.display = 'flex'; // Show the modal
+        });
+        modifGuestsDisplayText.addEventListener('click', () => {
+            // Set modal inputs to current hidden input values
+            modalAdultsInput.value = AdultsInput;
+            modalChildrenInput.value = ChildrenInput;
+            modalRoomsInput.value = RoomsInput;
+            guestsModal.style.display = 'flex'; // Show the modal
+        });
+        
+        closeModalBtn.addEventListener('click', () => {
+            guestsModal.style.display = 'none'; // Hide the modal
+        });
+        
+        saveGuestsBtn.addEventListener('click', () => {
+            AdultsInput = parseInt(modalAdultsInput.value);
+            ChildrenInput = parseInt(modalChildrenInput.value);
+            RoomsInput = parseInt(modalRoomsInput.value);
+        
+            // Update hidden inputs
+            adultsHiddenInput.value = AdultsInput;
+            childrenHiddenInput.value = ChildrenInput;
+            roomsHiddenInput.value = RoomsInput;
+        
+            // Update the display text
+            guestsDisplay.textContent = `${AdultsInput} adultos, ${ChildrenInput} menores, ${RoomsInput} habitación${RoomsInput !== 1 ? 'es' : ''}`;
+            modifGuestsDisplayText.textContent = `${AdultsInput} Adultos, ${ChildrenInput} Niños, ${RoomsInput} Habitaciones`;
+            guestsModal.style.display = 'none'; // Hide the modal
+        });
+        
+        // Close modal if clicking outside
+        guestsModal.addEventListener('click', (event) => {
+            if (event.target === guestsModal) {
+                guestsModal.style.display = 'none';
+            }
+        });
 
     } catch (error) {
         contenedor.innerHTML = '<p class="error">No se pudo cargar el detalle del alojamiento.</p>';
         console.error('Error al cargar detalle:', error);
     }
+    
 });

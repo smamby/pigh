@@ -2,16 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
             
             //const searchForm = document.getElementById('searchForm');
             //const searchResultsGrid = document.getElementById('searchResultsGrid');
-            const guestsDisplay = document.getElementById('guestsDisplay');
-            const guestsModal = document.getElementById('guestsModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const saveGuestsBtn = document.getElementById('saveGuestsBtn');
-            const modalAdultsInput = document.getElementById('modalAdults');
-            const modalChildrenInput = document.getElementById('modalChildren');
-            const modalRoomsInput = document.getElementById('modalRooms');
-            const adultsHiddenInput = document.getElementById('adultsInput');
-            const childrenHiddenInput = document.getElementById('childrenInput');
-            const roomsHiddenInput = document.getElementById('roomsInput');
+            // const guestsDisplay = document.getElementById('guestsDisplay');
+            // const guestsModal = document.getElementById('guestsModal');
+            // const closeModalBtn = document.getElementById('closeModalBtn');
+            // const saveGuestsBtn = document.getElementById('saveGuestsBtn');
+            // const modalAdultsInput = document.getElementById('modalAdults');
+            // const modalChildrenInput = document.getElementById('modalChildren');
+            // const modalRoomsInput = document.getElementById('modalRooms');
+            // const adultsHiddenInput = document.getElementById('adultsInput');
+            // const childrenHiddenInput = document.getElementById('childrenInput');
+            // const roomsHiddenInput = document.getElementById('roomsInput');
 
             const navregister = document.getElementById("nav-register")
             const navlogin = document.getElementById("nav-login")
