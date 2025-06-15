@@ -353,19 +353,27 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
        
 
  /* poner aca main alojamiento y resto de etiquetas */
-
-.breadcrumb {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    padding: 0;
-    margin: 2rem 0 1.5rem 0;
-    font-size: 1rem;
+#logo {
+    cursor: pointer;
 }
 
-.breadcrumb li {
-    display: flex;
-    align-items: center;
+.breadcrumb {
+    border-radius:8px; 
+    padding:0.7em 0; 
+    margin:1.5em 0;
+}
+
+#bc-inicio,
+#bc-tipo-aloj,
+#bc-ciudad-aloj,
+#bc-pais-aloj {
+    font-weight:bold; 
+    color:#16B0DA;
+}
+
+#bc-habitaciones-aloj {
+    color:#1f2937; 
+    font-weight:normal;
 }
 
 .breadcrumb a {
@@ -688,7 +696,7 @@ box-sizing: border-box;
 
 .top-right-rect h3 {
 margin: 0;
-font-size:
+font-size: 1.2em;
 }
 
 /* Título Servicios */

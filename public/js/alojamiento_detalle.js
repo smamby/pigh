@@ -57,20 +57,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         const fotos = [fotoPrincipal, ...galeria].filter(Boolean);
         while (fotos.length < 8) fotos.push(fotos[0] || '');
 
-        // Breadcrumb (ruta) - sin fondo blanco
-        const breadcrumbHTML = `
-            <nav class="breadcrumb" style="border-radius:8px; padding:0.7em 1.2em; margin:1.5em 0;">
-                <span style="font-weight:bold; color: #16B0DA;">Inicio</span>
-                <span class="breadcrumb-separator"></span>
-                <span style="font-weight:bold; color:#16B0DA;">${tipoAlojamiento}</span>
-                <span class="breadcrumb-separator"></span>
-                <span style="font-weight:bold; color:#16B0DA;">${alojamiento.pais}</span>
-                <span class="breadcrumb-separator"></span>
-                <span style="font-weight:bold; color:#16B0DA;">${alojamiento.ciudad}</span>
-                <span class="breadcrumb-separator"></span>
-                <span style="color:#1f2937; font-weight:normal;">Habitaciones en ${alojamiento.nombre}</span>
-            </nav>
-        `;
+        document.getElementById('logo').addEventListener('click', () => {
+            window.location.href = '../index.html';
+        });
+
+        document.getElementById('bc-tipo-aloj').textContent = tipoAlojamiento;
+        document.getElementById('bc-pais-aloj').textContent = alojamiento.pais;
+        document.getElementById('bc-ciudad-aloj').textContent = alojamiento.ciudad;
+        document.getElementById('bc-habitaciones-aloj').textContent += alojamiento.nombre;
+
         // Buscador superior (igual al de la home)
         const buscadorSuperior = `
         <div class="buscador-superior" style="width:100%; background:#f3f4f6; border-radius:12px; display:flex; align-items:center; gap:1.5em; padding:1.2em 2em; margin-bottom:2em;">
@@ -145,7 +140,6 @@ const galeriaYSideHTML = `
 
         // Render principal
         contenedor.innerHTML = `
-            ${breadcrumbHTML}
             ${buscadorSuperior}
             <div style="display:flex; gap:32px; align-items:flex-start; margin-bottom:2em;">
                 <div style="flex:3; min-width:0;">
