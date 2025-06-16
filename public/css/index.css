@@ -641,7 +641,7 @@ i.fas::before {
     gap: 1.5rem; /* gap-6 */
 }
 
-.card {
+.card-tipo {
     background-color: #ffffff; /* bg-white */
     border-radius: 0.5rem; /* rounded-lg */
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
@@ -664,7 +664,14 @@ i.fas::before {
 .card-title {
     font-size: 1.125rem; /* text-lg */
     font-weight: 600; /* font-semibold */
-    color: #1f2937; /* text-gray-800 */
+    color: #1f2937;
+    transition: transform 0.2s ease;
+}
+.card-tipo:hover {
+    background-color: #eaebeb98
+}
+.card-tipo:hover .card-title {
+    transform: scale(1.15);
 }
 
 /* Responsive adjustments for cards */

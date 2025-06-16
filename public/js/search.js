@@ -2,12 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('search-form');
     let searchResultsGrid = document.getElementById('searchResultsGrid');
 
+
     // --- 0) Renderizar busqueda recurente desde alojamiento ---
     if (sessionStorage.getItem('storedSearchResults')) {
         let checkin = sessionStorage.getItem('checkin');
         let checkout = sessionStorage.getItem('checkout');
         document.getElementById('checkin').value = checkin;
         document.getElementById('checkout').value = checkout;
+        document.getElementById('checkout').disabled = false;
 
         if (sessionStorage.getItem('tipoBusqueda') === 'ciudadAlojamiento') {
             document.getElementById('destinationSelect').value = sessionStorage.getItem('destination');
@@ -285,7 +287,16 @@ if (!isNaN(checkinDate)) {
 }
 });
 
+// busquedas con cards tipo alojamiento
+const tipoHotel = document.getElementById('card-hotel');
+const tipoApartamento = document.getElementById('card-apartamento');
+const tipoResort = document.getElementById('card-resort');
+const tipoVillas = document.getElementById('card-villas');
 
+
+
+
+// scroll para achicar hero y browse section
 window.addEventListener('scroll', () => {
     const hero = document.querySelector('.hero-background');
     const browseSection = document.querySelector('.browse-section');
