@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Traer puntajes y comentarios dinámicos
         let puntajes = [];
         let puntajePromedio = alojamiento.promedio_puntaje;
-        let tipoAlojamiento = sessionStorage.getItem('tipoAlojamiento') || 'Hoteles';
+        let tipoAlojamiento = sessionStorage.getItem('tipoAlojamiento');
 
         try {
             const resPuntajes = await fetch(`${API_BASE_URL}/puntajes/alojamiento/${alojamientoId}`);
@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         //variables de busqueda guardadas de huspedes y rooms
+        document.getElementById('destinationSelect').value = sessionStorage.getItem('destination') || '';
         let AdultsInput = sessionStorage.getItem('adults');
         let ChildrenInput = sessionStorage.getItem('children');         
         let RoomsInput = sessionStorage.getItem('rooms');
@@ -69,9 +70,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         let checkoutInput = document.getElementById('checkoutInput');
 
         // Breadcrumb
+        let idTipoAloj = alojamiento.tipo_alojamiento_id;
         let inicio = document.getElementById('bc-inicio');
         let tipoAloj = document.getElementById('bc-tipo-aloj');
-        let idTipoAloj = sessionStorage.getItem('idTipoAlojamiento');;
         let paisAloj = document.getElementById('bc-pais-aloj');
         let ciudadAloj = document.getElementById('bc-ciudad-aloj');
         let nombreAloj = document.getElementById('bc-nombre-aloj');
@@ -115,7 +116,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.location.href = '../index.html';
         });
 
-        const searchParams = {
+        let searchParams = {
             checkin: checkinInput.value,
             checkout: checkoutInput.value,
             adults: AdultsInput,
@@ -123,8 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             rooms: RoomsInput
         };
 
-        tipoAloj.addEventListener('click', async () => {
-            let queryString = new URLSearchParams({ tipo_alojamiento: idTipoAloj, ...searchParams }).toString();
+        async function busquedaTabulada(queryString) {
             const response = await fetch(`http://localhost:3001/api/alojamientos?${queryString}`, {
                 method: 'GET',
                 headers: {
@@ -132,23 +132,77 @@ document.addEventListener('DOMContentLoaded', async () => {
                 },
             });
             const data = await response.json();
-            console.log('Alojamientos de este mismo tipo:', data[0]);
             sessionStorage.setItem('storedSearchResults', JSON.stringify(data[0]));
-            //console.log('Search results stored in sessionStorage', JSON.stringify(data));
+            sessionStorage.removeItem('alojamientoId')
+            sessionStorage.setItem('adults', AdultsInput);
+            sessionStorage.setItem('children', ChildrenInput);
+            sessionStorage.setItem('rooms', RoomsInput);
             sessionStorage.setItem('checkin', checkinInput.value);
             sessionStorage.setItem('checkout', checkoutInput.value);
-            console.log('data', data[0]);
+            console.log('Alojamientos de este mismo tipo:', data[0]);
+            console.log('queryString:', queryString);
             window.location.href = `../index.html`;
+        }        
+        tipoAloj.addEventListener('click', async () => {
+            searchParams = {
+                checkin: checkinInput.value,
+                checkout: checkoutInput.value,
+                adults: AdultsInput,
+                children: ChildrenInput,
+                rooms: RoomsInput
+            };
+            let queryString = new URLSearchParams({ 
+                tipo_alojamiento: alojamiento.tipo_alojamiento,
+                ...searchParams 
+            }).toString();
+            sessionStorage.setItem('tipoAlojamiento', tipoAlojamiento);
+            sessionStorage.setItem('idTipoAlojamiento', alojamiento.tipo_alojamiento);
+            sessionStorage.setItem('tipoBusqueda', 'tipoAlojamiento');
+            busquedaTabulada(queryString);
         });
         paisAloj.addEventListener('click', async () => {
-            // Lógica para filtrar por tipo de alojamiento
+            searchParams = {
+                checkin: checkinInput.value,
+                checkout: checkoutInput.value,
+                adults: AdultsInput,
+                children: ChildrenInput,
+                rooms: RoomsInput
+            };
+            let queryString = new URLSearchParams({ 
+                pais: alojamiento.pais, 
+                ...searchParams 
+            }).toString();
+            sessionStorage.setItem('alojamientoPais', alojamiento.pais);
+            sessionStorage.setItem('tipoBusqueda', 'paisAlojamiento');
+            busquedaTabulada(queryString);
         });
         ciudadAloj.addEventListener('click', async () => {
-            // Lógica para filtrar por tipo de alojamiento
+            searchParams = {
+                checkin: checkinInput.value,
+                checkout: checkoutInput.value,
+                adults: AdultsInput,
+                children: ChildrenInput,
+                rooms: RoomsInput
+            };
+            let queryString = new URLSearchParams({ 
+                destination: alojamiento.ciudad, 
+                ...searchParams 
+            }).toString();
+            // let queryString = new URLSearchParams({
+            //     ciudad: alojamiento.ciudad,
+            //     checkin: checkinInput.value,
+            //     checkout: checkoutInput.value,
+            //     adults: AdultsInput,
+            //     children: ChildrenInput,
+            //     rooms: RoomsInput
+            // }).toString();
+            sessionStorage.setItem('destination', alojamiento.ciudad);
+            sessionStorage.setItem('tipoBusqueda', 'ciudadAlojamiento');
+            console.log('Ciudad de alojamiento:', ciudad, alojamiento.ciudad);
+            console.log('alojamientos', alojamiento);
+            busquedaTabulada(queryString);
         });
-        nombreAloj.addEventListener('click', async() => {
-            // Lógica para filtrar por tipo de alojamiento
-        });
+        
 
         
 

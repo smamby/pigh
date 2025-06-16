@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('storedSearchResults')) {
         let checkin = sessionStorage.getItem('checkin');
         let checkout = sessionStorage.getItem('checkout');
+        document.getElementById('checkin').value = checkin;
+        document.getElementById('checkout').value = checkout;
+
+        if (sessionStorage.getItem('tipoBusqueda') === 'ciudadAlojamiento') {
+            document.getElementById('destinationSelect').value = sessionStorage.getItem('destination');
+        }
         let accommodations = JSON.parse(sessionStorage.getItem('storedSearchResults'));
 
         const busqueda = document.querySelector('.search-results-section');
@@ -227,6 +233,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
                 //const idAlojamiento = card.getAttribute('data-id');
                 const id = card.dataset.idAlojamiento;
                 console.log('Click en card, ID:', id);
+                sessionStorage.removeItem('tipoBusqueda');
                 sessionStorage.setItem('alojamientoId', id);
                 sessionStorage.setItem('adults', adults);
                 sessionStorage.setItem('children', children);   
@@ -237,6 +244,9 @@ function renderSearchResults(results, adults, children, rooms, days) {
                 sessionStorage.setItem('destination', document.getElementById('destinationSelect').value);
                 sessionStorage.setItem('tipoAlojamiento', tipoAlojamiento.nombre);
                 sessionStorage.setItem('idTipoAlojamiento', alojamiento.id_tipo_alojamiento);
+                console.log('debugging', id, adults, children, rooms, days, 
+                    alojamiento.id_tipo_alojamiento, tipoAlojamiento.nombre, 
+                    alojamiento.ciudad, alojamiento.pais);
                 window.location.href = `/pages/alojamiento.html?id=${id}`;
             });
         })
