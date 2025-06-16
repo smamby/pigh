@@ -10,6 +10,8 @@ router.get('/', alojamientoController.getAllAlojamientos);
 
 // GET /api/alojamientos/destinations - Obtener lista de destinos (ciudades) disponibles (con filtros opcionales por query params)
 router.get('/destinos', alojamientoController.destinos);
+// router.get('/pais', alojamientoController.pais);
+// router.get('/tipo', alojamientoController.tipo);
 
 // GET /api/alojamientos/:id - Obtener un alojamiento específico por ID
 router.get('/:id', alojamientoController.getAlojamientoById);

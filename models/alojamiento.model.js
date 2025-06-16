@@ -152,16 +152,16 @@ Alojamiento.getAll = async (filtros = {}) => {
     query += ' AND (a.ciudad LIKE ?)';
     params.push(`%${filtros.destination}%`); //, `%${filtros.destination}%`);
   }
+//
+  if (filtros.tipo_alojamiento) {
+    query += ' AND a.id_tipo_alojamiento = ?';
+    params.push(filtros.tipo_alojamiento);
+  }
 
-  // if (filtros.tipo_alojamiento) {
-  //   query += ' AND a.id_tipo_alojamiento = ?';
-  //   params.push(filtros.tipo_alojamiento);
-  // }
-
-  // if (filtros.precio_max) {
-  //   query += ' AND th.precio_base <= ?';
-  //   params.push(filtros.precio_max);
-  // }
+  if (filtros.precio_max) {
+    query += ' AND th.precio_base <= ?';
+    params.push(filtros.precio_max);
+  }
 
   // if (filtros.adultos || filtros.menores) {
   //   const totalHuespedes = (filtros.adultos || 0) + (filtros.menores || 0);
@@ -169,7 +169,7 @@ Alojamiento.getAll = async (filtros = {}) => {
   //   params.push(totalHuespedes);
   // }
 
-  // --- Agrupación y Orden ---
+  // //--- Agrupación y Orden ---
   // query += `
   //   GROUP BY a.id_alojamiento
   //   ORDER BY precio_minimo_noche ASC

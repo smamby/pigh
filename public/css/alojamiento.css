@@ -369,41 +369,27 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
 #bc-pais-aloj {
     font-weight:bold; 
     color:#16B0DA;
+    cursor: pointer;
 }
 
-#bc-habitaciones-aloj {
+#bc-nombre-aloj {
     color:#1f2937; 
     font-weight:normal;
 }
 
-.breadcrumb a {
-    color: #16B0DA;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.2s;
-}
-
-.breadcrumb a:hover {
-    color: #0191bd;
-    text-decoration: underline;
+.bc-items:hover {
+    text-shadow: #77d5f0 0px 0px 16px;
 }
 
 .breadcrumb-separator {
     margin: 0 0.5em;
-    color: #16B0DA;
     font-size: 1.2em;
-    font-weight: bold;
     user-select: none;
-}
-
-.breadcrumb-hotel {
-    color: #1f2937;      /* negro moderno */
-    font-weight: normal; /* sin negrita */
 }
 
  /* Search Bar Section */
  
-#register-form h2, #login-form h2 {
+/* #register-form h2, #login-form h2 {
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.75rem;
@@ -428,7 +414,7 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
 .success-message {
   background-color: #daf5e4;
   color: #166534;
-}
+} */
 
 /* Campos del formulario */
 #register-form div ,
@@ -860,7 +846,7 @@ font-size: 1.2em;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
 .btn-reservar-ahora:hover {
-    background: #0191bd;
+    background: #108bad;
 }
 
 #tabla-disponibilidad {

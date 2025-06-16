@@ -98,6 +98,8 @@ WHERE id_alojamiento = 17;
 
 select id_alojamiento, nombre, ciudad, pais, estrellas from alojamientos where id_alojamiento > 0;
 
+select * from alojamientos;
+
 -- Alojamiento 1: Hotel Patios de Córdoba (España)
 INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
 ('101', 1, 'libre', 1, 'Vista al patio interior, piso bajo'),

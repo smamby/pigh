@@ -61,74 +61,134 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.location.href = '../index.html';
         });
 
-        document.getElementById('bc-tipo-aloj').textContent = tipoAlojamiento;
-        document.getElementById('bc-pais-aloj').textContent = alojamiento.pais;
-        document.getElementById('bc-ciudad-aloj').textContent = alojamiento.ciudad;
-        document.getElementById('bc-habitaciones-aloj').textContent += alojamiento.nombre;
+        //variables de busqueda guardadas de huspedes y rooms
+        let AdultsInput = sessionStorage.getItem('adults');
+        let ChildrenInput = sessionStorage.getItem('children');         
+        let RoomsInput = sessionStorage.getItem('rooms');
+        let checkinInput = document.getElementById('checkinInput');
+        let checkoutInput = document.getElementById('checkoutInput');
 
-        // Buscador superior (igual al de la home)
-        const buscadorSuperior = `
-        <div class="buscador-superior" style="width:100%; background:#f3f4f6; border-radius:12px; display:flex; align-items:center; gap:1.5em; padding:1.2em 2em; margin-bottom:2em;">
-        <div>
-        <label style="font-weight:bold;">Destino</label><br>
-        <input type="text" value="${alojamiento.ciudad}" style="padding:0.5em; border-radius:6px; border:1px solid #ccc; width:140px;">
-        </div>
-        <div>
-        <label style="font-weight:bold;">Check in</label><br>
-        <input id="checkinInput" type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
-        </div>
-        <div>
-        <label style="font-weight:bold;">Check out</label><br>
-        <input id="checkoutInput" type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
-        </div>
-        <div class="form-group">
-        <label for="guestsDisplay">Huéspedes</label>
-        <div id="guestsDisplay" class="custom-select">2 Adultos, 0 Niños, 1 Habitaciones</div>
-        <input type="hidden" id="adultsInput" value="2">
-        <input type="hidden" id="childrenInput" value="0">
-        <input type="hidden" id="roomsInput" value="1">
-        </div>
-        <button style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.7em 2em; font-weight:bold; font-size:1em; cursor:pointer;">Buscar</button>
-        </div>
-        `;
+        // Breadcrumb
+        let inicio = document.getElementById('bc-inicio');
+        let tipoAloj = document.getElementById('bc-tipo-aloj');
+        let idTipoAloj = sessionStorage.getItem('idTipoAlojamiento');;
+        let paisAloj = document.getElementById('bc-pais-aloj');
+        let ciudadAloj = document.getElementById('bc-ciudad-aloj');
+        let nombreAloj = document.getElementById('bc-nombre-aloj');
+        tipoAloj.textContent = tipoAlojamiento;
+        paisAloj.textContent = alojamiento.pais;
+        ciudadAloj.textContent = alojamiento.ciudad;
+        nombreAloj.textContent += alojamiento.nombre;
+        
+        // Logica de calendarios para checkin checkout
+        // Establecer mínimo para hoy
+        const today = new Date().toISOString().split('T')[0];
+        checkinInput.min = today;
 
-// Galería y side info al mismo nivel y largo
-const galeriaYSideHTML = `
-<div style="display:flex; gap:32px; align-items:stretch; margin-bottom:2em;">
-    <div style="flex:3; min-width:0;">
-        <div class="galeria-fotos" style="display:flex; flex-direction:column; gap:12px;">
-            <img src="${fotos[0]}" alt="Foto principal" style="width:100%; height:300px; object-fit:cover; border-radius:14px;">
-            <div style="display:flex; gap:10px; width:100%;">
-                <img src="${fotos[1]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
-                <img src="${fotos[2]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
-                <img src="${fotos[3]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
-                <img src="${fotos[4]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
-                <img src="${fotos[5]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
+        checkinInput.addEventListener('change', () => {
+        const checkinDate = new Date(checkinInput.value);
+
+        if (!isNaN(checkinDate)) {
+            // Activar el input de checkout
+            checkoutInput.disabled = false;
+
+            // Agregar 1 día
+            checkinDate.setDate(checkinDate.getDate() + 1);
+
+            // Formatear en YYYY-MM-DD
+            const minCheckout = checkinDate.toISOString().split('T')[0];
+            checkoutInput.min = minCheckout;
+
+            // (Opcional) Resetear valor si quedó anterior al nuevo mínimo
+            if (checkoutInput.value < minCheckout) {
+            checkoutInput.value = minCheckout;
+            }
+        } else {
+            // Si se borra el valor de checkin, deshabilita checkout
+            checkoutInput.disabled = true;
+            checkoutInput.value = '';
+        }
+        });
+
+        // Busqueda desde breadcrumb
+        inicio.addEventListener('click', () => {
+            window.location.href = '../index.html';
+        });
+
+        const searchParams = {
+            checkin: checkinInput.value,
+            checkout: checkoutInput.value,
+            adults: AdultsInput,
+            children: ChildrenInput,
+            rooms: RoomsInput
+        };
+
+        tipoAloj.addEventListener('click', async () => {
+            let queryString = new URLSearchParams({ tipo_alojamiento: idTipoAloj, ...searchParams }).toString();
+            const response = await fetch(`http://localhost:3001/api/alojamientos?${queryString}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            const data = await response.json();
+            console.log('Alojamientos de este mismo tipo:', data[0]);
+            sessionStorage.setItem('storedSearchResults', JSON.stringify(data[0]));
+            //console.log('Search results stored in sessionStorage', JSON.stringify(data));
+            sessionStorage.setItem('checkin', checkinInput.value);
+            sessionStorage.setItem('checkout', checkoutInput.value);
+            console.log('data', data[0]);
+            window.location.href = `../index.html`;
+        });
+        paisAloj.addEventListener('click', async () => {
+            // Lógica para filtrar por tipo de alojamiento
+        });
+        ciudadAloj.addEventListener('click', async () => {
+            // Lógica para filtrar por tipo de alojamiento
+        });
+        nombreAloj.addEventListener('click', async() => {
+            // Lógica para filtrar por tipo de alojamiento
+        });
+
+        
+
+        // Galería y side info al mismo nivel y largo
+        const galeriaYSideHTML = `
+        <div style="display:flex; gap:32px; align-items:stretch; margin-bottom:2em;">
+            <div style="flex:3; min-width:0;">
+                <div class="galeria-fotos" style="display:flex; flex-direction:column; gap:12px;">
+                    <img src="${fotos[0]}" alt="Foto principal" style="width:100%; height:300px; object-fit:cover; border-radius:14px;">
+                    <div style="display:flex; gap:10px; width:100%;">
+                        <img src="${fotos[1]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
+                        <img src="${fotos[2]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
+                        <img src="${fotos[3]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
+                        <img src="${fotos[4]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
+                        <img src="${fotos[5]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
+                    </div>
+                </div>
+            </div>
+            <div style="flex:1; min-width:220px; max-width:320px; display:flex; flex-direction:column; gap:14px; justify-content:flex-start;">
+                <div class="box-puntuacion" style="width:100%; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001;">
+                    <div style="font-weight:bold; font-size:1em; color:#176B4D; margin-bottom:0.2em;">¡Muy bueno!</div>
+                    <div style="color:#fff; background:#16B0DA; border-radius:8px; padding:0.2em 0.7em; font-size:1.15em; font-weight:bold;">${puntajePromedio}</div>
+                </div>
+                <div class="box-comentarios" style="width:100%; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001;">
+                    <span class="texto-placeholder" style="font-size:0.92em; text-align:center; line-height:1.1;">
+                        ${comentarioDestacado ? `"${comentarioDestacado.comentario}"<br><b>- ${comentarioDestacado.nombre || 'Cliente'}</b>` : 'Sin comentarios'}
+                    </span>
+                </div>
+                <div style="width:100%; height:300px; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                    <a href="https://maps.google.com/?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}" target="_blank" style="display:block; width:100%; height:100%;">
+                        <iframe
+                            src="https://maps.google.com/maps?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}&z=15&output=embed"
+                            width="100%" height="100%" style="border-radius:10px; border:0;"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-    <div style="flex:1; min-width:220px; max-width:320px; display:flex; flex-direction:column; gap:14px; justify-content:flex-start;">
-        <div class="box-puntuacion" style="width:100%; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001;">
-            <div style="font-weight:bold; font-size:1em; color:#176B4D; margin-bottom:0.2em;">¡Muy bueno!</div>
-            <div style="color:#fff; background:#16B0DA; border-radius:8px; padding:0.2em 0.7em; font-size:1.15em; font-weight:bold;">${puntajePromedio}</div>
-        </div>
-        <div class="box-comentarios" style="width:100%; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001;">
-            <span class="texto-placeholder" style="font-size:0.92em; text-align:center; line-height:1.1;">
-                ${comentarioDestacado ? `"${comentarioDestacado.comentario}"<br><b>- ${comentarioDestacado.nombre || 'Cliente'}</b>` : 'Sin comentarios'}
-            </span>
-        </div>
-        <div style="width:100%; height:300px; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-            <a href="https://maps.google.com/?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}" target="_blank" style="display:block; width:100%; height:100%;">
-                <iframe
-                    src="https://maps.google.com/maps?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}&z=15&output=embed"
-                    width="100%" height="100%" style="border-radius:10px; border:0;"
-                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </a>
-        </div>
-    </div>
-</div>
-`;
+        `;
 
         // Botón reservar arriba, hace scroll a la tabla de disponibilidad
         const reservarBtn = `
@@ -140,7 +200,7 @@ const galeriaYSideHTML = `
 
         // Render principal
         contenedor.innerHTML = `
-            ${buscadorSuperior}
+            
             <div style="display:flex; gap:32px; align-items:flex-start; margin-bottom:2em;">
                 <div style="flex:3; min-width:0;">
                     <div class="hotel-card" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1em; width:85vw; max-width:1200px; min-width:600px; height:68px; background:#fff; border-radius:12px; box-shadow:0 2px 8px #0001; padding:0.7em 2.5em;">
@@ -278,10 +338,9 @@ const galeriaYSideHTML = `
         </table>
         `;
 
-        const checkinInput = document.getElementById('checkinInput');
-        const checkoutInput = document.getElementById('checkoutInput');
         const modifCheckinInput = document.getElementById('modifCheckinInput');
         const modifCheckoutInput = document.getElementById('modifCheckoutInput');
+
         checkinInput.value = sessionStorage.getItem('checkin');
         checkoutInput.value = sessionStorage.getItem('checkout');
         modifCheckinInput.value = sessionStorage.getItem('checkin');
@@ -289,9 +348,6 @@ const galeriaYSideHTML = `
         //destinationInput.value = sessionStorage.getItem('destination');
 
         const guestsDisplayText = document.getElementById('guestsDisplay');
-        let AdultsInput = sessionStorage.getItem('adults');
-        let ChildrenInput = sessionStorage.getItem('children');         
-        let RoomsInput = sessionStorage.getItem('rooms');
         guestsDisplayText.textContent = `${AdultsInput} Adultos, ${ChildrenInput} Niños, ${RoomsInput} Habitaciones`;
         const modifGuestsDisplayText = document.getElementById('modifGuestsDisplay');
         const modifAdultsInput = sessionStorage.getItem('adults'); 

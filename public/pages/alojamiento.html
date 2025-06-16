@@ -48,21 +48,52 @@
 
     <main>
         <nav class="breadcrumb">
-            <span id="bc-inicio">Inicio</span>
+            <span id="bc-inicio" class="bc-items">Inicio</span>
             <span class="breadcrumb-separator"></span>
-            <span id="bc-tipo-aloj"></span>
+            <span id="bc-tipo-aloj" class="bc-items"></span>
             <span class="breadcrumb-separator"></span>
-            <span id="bc-pais-aloj"></span>
+            <span id="bc-pais-aloj" class="bc-items"></span>
             <span class="breadcrumb-separator"></span>
-            <span id="bc-ciudad-aloj"></span>
+            <span id="bc-ciudad-aloj" class="bc-items"></span>
             <span class="breadcrumb-separator"></span>
-            <span id="bc-habitaciones-aloj" class="breadcrumb-end">Habitaciones en </span>
+            <span id="bc-nombre-aloj" class="breadcrumb-end">Habitaciones en </span>
         </nav>
+        <div class="search-form-wrapper">
+            <div class="search-form-container">
+                <form class="search-form" id="search-form">
+                    <div class="form-group">
+                        <label for="destinations">Destino</label>
+                        <input id="destinationSelect" list="cityOptions" placeholder="A donde vas?" autofocus autocomplete="off"/>
+                        <datalist id="ciudad"></datalist>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkin">Check-in</label>
+                        <input type="date" id="checkinInput">
+                    </div>
+                    <div class="form-group">
+                        <label for="checkout">Check-out</label>
+                        <input type="date" id="checkoutInput">
+                    </div>
+                    <div class="form-group">
+                        <label for="guestsDisplay">Huéspedes</label>
+                        <div id="guestsDisplay" class="custom-select">2 adultos, 0 menores, 1 habitación</div>
+                        <input type="hidden" id="adultsInput" value="2">
+                        <input type="hidden" id="childrenInput" value="0">
+                        <input type="hidden" id="roomsInput" value="1">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="search-button">Buscar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <div id="alojamiento-detalle-dinamico">
             <p>Cargando detalle del alojamiento...</p>
         </div>
 
+
+        
     </main>
 
 
@@ -96,6 +127,6 @@
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
-    <script src="../js/alojamiento_detalle.js"></script>
+    <script src="../js/alojamiento_detalle.js" defer></script>
 </body>
 </html>

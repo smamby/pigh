@@ -1,6 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('search-form');
-    const searchResultsGrid = document.getElementById('searchResultsGrid');
+    let searchResultsGrid = document.getElementById('searchResultsGrid');
+
+    // --- 0) Renderizar busqueda recurente desde alojamiento ---
+    if (sessionStorage.getItem('storedSearchResults')) {
+        let checkin = sessionStorage.getItem('checkin');
+        let checkout = sessionStorage.getItem('checkout');
+        let accommodations = JSON.parse(sessionStorage.getItem('storedSearchResults'));
+
+        const busqueda = document.querySelector('.search-results-section');
+        const browser = document.querySelector('.browse-section');
+        busqueda.style.display = 'block'; // Mostrar la sección de resultados
+        browser.style.display = 'none'; // Ocultar la sección de exploración
+        
+        const estadoBusqueda = document.querySelector('.hero-background');
+        const container = document.querySelector('.container.hero-content');
+        const searchForm = document.querySelector('.search-form-container');
+        estadoBusqueda.classList.add('busqueda');
+        container.classList.add('busqueda');
+        searchForm.classList.add('busqueda');
+        searchForm.classList.remove('achicar');
+        
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+
+        const unHotelPorId = new Map();
+        accommodations.forEach(hotel => {
+            if (!unHotelPorId.has(hotel.id_alojamiento)) {
+                unHotelPorId.set(hotel.id_alojamiento, hotel);
+            }
+        });
+        const hotelesUnicos = Array.from(unHotelPorId.values());
+        console.log('Cargando resultados de búsqueda desde sessionStorage', 
+                    hotelesUnicos);
+        let adults = sessionStorage.getItem('adults');
+        let children = sessionStorage.getItem('children');
+        let rooms = sessionStorage.getItem('rooms');
+        let days = Math.ceil((new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24));
+        renderSearchResults(hotelesUnicos, adults, children, rooms, days);
+        sessionStorage.removeItem('storedSearchResults');
+    } 
 
     // --- 1) Sumit del buscador ---
     searchForm.addEventListener('submit', async (event) => {
@@ -116,7 +158,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
                 },
         });
         const tipoAlojamiento = await resIdTipo.json();
-        console.log('[[Response data]]:', tipoAlojamiento);
+        console.log('[[Response data]]:', tipoAlojamiento.nombre, IDtipoAlojam);
 
         const resImgAloj = await fetch(`http://localhost:3001/api/img_alojamientos/${IdAlojamiento}`, {
                 method: 'GET',
@@ -194,6 +236,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
                 sessionStorage.setItem('checkout', document.getElementById('checkout').value);
                 sessionStorage.setItem('destination', document.getElementById('destinationSelect').value);
                 sessionStorage.setItem('tipoAlojamiento', tipoAlojamiento.nombre);
+                sessionStorage.setItem('idTipoAlojamiento', alojamiento.id_tipo_alojamiento);
                 window.location.href = `/pages/alojamiento.html?id=${id}`;
             });
         })
@@ -202,70 +245,69 @@ function renderSearchResults(results, adults, children, rooms, days) {
 }
 
 
-
 // Logica de calendarios para checkin checkout
 // Establecer mínimo para hoy
-  const today = new Date().toISOString().split('T')[0];
-  checkin.min = today;
+const today = new Date().toISOString().split('T')[0];
+checkin.min = today;
 
-  checkin.addEventListener('change', () => {
-    const checkinDate = new Date(checkin.value);
+checkin.addEventListener('change', () => {
+const checkinDate = new Date(checkin.value);
 
-    if (!isNaN(checkinDate)) {
-      // Activar el input de checkout
-      checkout.disabled = false;
-    
-        // Agregar 1 día
-        checkinDate.setDate(checkinDate.getDate() + 1);
+if (!isNaN(checkinDate)) {
+    // Activar el input de checkout
+    checkout.disabled = false;
 
-        // Formatear en YYYY-MM-DD
-        const minCheckout = checkinDate.toISOString().split('T')[0];
-        checkout.min = minCheckout;
+    // Agregar 1 día
+    checkinDate.setDate(checkinDate.getDate() + 1);
 
-        // (Opcional) Resetear valor si quedó anterior al nuevo mínimo
-        if (checkout.value < minCheckout) {
-        checkout.value = minCheckout;
-        }
-    } else {
-      // Si se borra el valor de checkin, deshabilita checkout
-      checkout.disabled = true;
-      checkout.value = '';
+    // Formatear en YYYY-MM-DD
+    const minCheckout = checkinDate.toISOString().split('T')[0];
+    checkout.min = minCheckout;
+
+    // (Opcional) Resetear valor si quedó anterior al nuevo mínimo
+    if (checkout.value < minCheckout) {
+    checkout.value = minCheckout;
     }
-  });
+} else {
+    // Si se borra el valor de checkin, deshabilita checkout
+    checkout.disabled = true;
+    checkout.value = '';
+}
+});
 
 
-  window.addEventListener('scroll', () => {
-        const hero = document.querySelector('.hero-background');
-        const browseSection = document.querySelector('.browse-section');
-        const moduloBuscador = document.querySelector('.search-form-container');
+window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero-background');
+    const browseSection = document.querySelector('.browse-section');
+    const moduloBuscador = document.querySelector('.search-form-container');
 
-        const scrollY = window.scrollY;
-        const screenHeight = window.innerHeight;
-        console.log(scrollY);
+    const scrollY = window.scrollY;
+    const screenHeight = window.innerHeight;
+    console.log(scrollY);
 
-        // Si se ha hecho scroll de al menos el 10% de la pantalla
-        if (scrollY > screenHeight * 0.1 && !moduloBuscador.classList.contains('busqueda')) {
-            hero.classList.add('achicarse');
-            browseSection.classList.add('achicar');
-            moduloBuscador.classList.add('achicar');
-        } else {
-            hero.classList.remove('achicarse');
-            browseSection.classList.remove('achicar');
-            moduloBuscador.classList.remove('achicar');
-        }
-        // let hasSnapped = false;
-        // if (scrollY < screenHeight * 0.04  && !hasSnapped) {
-        //     hasSnapped = true;
-        //     window.scrollTo({
-        //     top: 0,
-        //     behavior: "smooth"
-        //     });
-        // }
-        // // Evita múltiples disparos
-        // setTimeout(() => {
-        // hasSnapped = false;
-        // }, 500);
-    });
+    // Si se ha hecho scroll de al menos el 10% de la pantalla
+    if (scrollY > screenHeight * 0.1 && !moduloBuscador.classList.contains('busqueda')) {
+        hero.classList.add('achicarse');
+        browseSection.classList.add('achicar');
+        moduloBuscador.classList.add('achicar');
+    } else {
+        hero.classList.remove('achicarse');
+        browseSection.classList.remove('achicar');
+        moduloBuscador.classList.remove('achicar');
+    }
+    // let hasSnapped = false;
+    // if (scrollY < screenHeight * 0.04  && !hasSnapped) {
+    //     hasSnapped = true;
+    //     window.scrollTo({
+    //     top: 0,
+    //     behavior: "smooth"
+    //     });
+    // }
+    // // Evita múltiples disparos
+    // setTimeout(() => {
+    // hasSnapped = false;
+    // }, 500);
+});
 
 const destinationSelect = document.getElementById('destinationSelect');
 const datalist = document.getElementById('ciudad');
