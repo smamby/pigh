@@ -4,12 +4,12 @@ const Puntaje = require('../models/puntaje.model'); // Asegúrate de la ruta cor
 
 // [GET] /api/puntajes o /api/puntajes?idAlojamiento=X&includeUnpublished=true
 const getAllPuntajes = async (req, res) => {
-    const { idAlojamiento, includeUnpublished } = req.query; // Leer parámetros de query
+    const idAlojamiento = req.query; // Leer parámetros de query
     // Convierte el string 'true' a booleano, cualquier otra cosa a false
     const _includeUnpublished = includeUnpublished === 'true'; 
 
     try {
-        const puntajes = await Puntaje.getAll(idAlojamiento, _includeUnpublished);
+        const puntajes = await Puntaje.getAll(idAlojamiento);
         if (puntajes.length === 0 && idAlojamiento) {
             return res.status(404).json({ message: 'No se encontraron puntajes para este alojamiento.' });
         }
@@ -22,8 +22,6 @@ const getAllPuntajes = async (req, res) => {
 
 const getPuntajesByAlojamientoId = async (req, res) => {
     const { idAlojamiento } = req.params;
-    const { includeUnpublished } = req.query; // Permite también filtrar si quieres incluir no publicados
-    const _includeUnpublished = includeUnpublished === 'true';
 
     // Validación básica del ID de alojamiento
     if (!idAlojamiento || isNaN(idAlojamiento)) {
@@ -32,7 +30,7 @@ const getPuntajesByAlojamientoId = async (req, res) => {
 
     try {
         // Llama al mismo método getAll del modelo, pero ahora pasando el idAlojamiento
-        const puntajes = await Puntaje.getAll(idAlojamiento, _includeUnpublished);
+        const puntajes = await Puntaje.getByIdAloj(idAlojamiento);
         if (puntajes.length === 0) { // Aquí no importa si se encontró el alojamiento, sino si tiene puntajes
             return res.status(404).json({ message: 'No se encontraron puntajes para este alojamiento.' });
         }

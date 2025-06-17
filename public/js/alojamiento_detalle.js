@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const resPuntajes = await fetch(`${API_BASE_URL}/puntajes/alojamiento/${alojamientoId}`);
             if (resPuntajes.ok) {
                 puntajes = await resPuntajes.json();
+                console.log('Puntajes obtenidos:', puntajes);
             }
         } catch (e) {
             puntajes = [];
@@ -39,15 +40,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         //     : (alojamiento.promedio_puntaje || 8.7);
 
         // Comentario destacado (el más reciente con comentario)
-        const comentarioDestacado = puntajes.find(p => p.comentario && p.comentario.trim());
-
+        
         // Renderizar lista de comentarios para la sección de comentarios
-        const comentariosHTML = puntajes.length
-            ? puntajes
-                .filter(p => p.comentario && p.comentario.trim())
-                .map(p => `<div class="comentario-item" style="margin-bottom:1em;"><b>★ ${p.puntuacion}</b> — ${p.comentario}</div>`)
-                .join('')
-            : '<span class="texto-placeholder" style="font-size:0.92em;">Sin comentarios aún.</span>';
+        const puntaje = puntajes[Math.floor(Math.random() * puntajes.length)];
+        const comentarioHTML = puntaje
+            ? `<div class="texto-placeholder">★ <b>${puntaje.puntuacion}</b> — ${puntaje.comentario}<br><b>${puntaje.nombre} ${puntaje.apellido}</b></div>`
+            : '<span class="texto-placeholder">Sin comentarios aún.</span>';
+
+        const textScore = alojamiento.promedio_puntaje >= 8.6 ? 'Excelente' : 
+                            alojamiento.promedio_puntaje >= 7.6 ? 'Muy Bueno' : 
+                            alojamiento.promedio_puntaje >= 6.6 ? 'Bueno' :
+                            alojamiento.promedio_puntaje >= 5.6 ? 'Aceptable' :
+                            'Regular';
 
         // Usar la primera como principal, el resto como galería
         const fotoPrincipal = imagenes[0]?.url_imagen || '';
@@ -204,9 +208,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
         
 
-        
-
         // Galería y side info al mismo nivel y largo
+
+
         const galeriaYSideHTML = `
         <div id="galery">
             <div style="flex:3; min-width:0;">
@@ -223,12 +227,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
             <div class="cont-opinion">
                 <div class="box-puntuacion">
-                    <div>¡Muy bueno!</div>
+                    <div>${textScore}</div>
                     <div>${puntajePromedio}</div>
                 </div>
                 <div class="box-comentarios">
                     <span id="texto-placeholder" >
-                        ${comentarioDestacado ? `"${comentarioDestacado.comentario}"<br><b>- ${comentarioDestacado.nombre || 'Cliente'}</b>` : 'Sin comentarios'}
+                        ${comentarioHTML }
                     </span>
                 </div>
                 <div id="cont-map">
@@ -318,7 +322,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div id="tabla-disponibilidad"></div>
                     <h2 style="margin-top:2.5em;">Comentarios de los clientes</h2>
                     <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
-                        ${comentariosHTML}
+                        ${comentarioHTML}
                     </div>
                     <h2 style="margin-top:2.5em;">Normas de la Casa</h2>
                     <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">

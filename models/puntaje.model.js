@@ -6,19 +6,9 @@ const Puntaje = {
     // Método para obtener todos los puntajes, ahora también usado para filtrar por alojamiento
     // Si idAlojamiento es null, devuelve todos los publicados.
     // Si idAlojamiento tiene un valor, devuelve los publicados para ese alojamiento.
-    getAll: async (idAlojamiento = null, includeUnpublished = false) => {
+    getAll: async () => {
         let query = 'SELECT * FROM puntaje';
         const params = [];
-
-        if (!includeUnpublished) {
-            query += ' WHERE publicado = TRUE';
-        }
-
-        if (idAlojamiento) {
-            // Ajusta WHERE/AND para que la cláusula sea correcta
-            query += (includeUnpublished ? (params.length === 0 ? ' WHERE' : ' AND') : ' AND') + ' id_alojamiento = ?';
-            params.push(idAlojamiento);
-        }
 
         try {
             const [rows] = await db.query(query, params);
@@ -30,10 +20,30 @@ const Puntaje = {
     },
 
     // Obtener un puntaje por su ID
+    getByIdAloj: async (id_alojamiento) => {
+        try {
+            const [rows] = await db.query(
+                'SELECT puntaje.*, usuarios.nombre, usuarios.apellido FROM puntaje' + 
+                ' JOIN usuarios ON puntaje.id_usuario = usuarios.id_usuario' +
+                ' JOIN alojamientos ON puntaje.id_alojamiento = alojamientos.id_alojamiento' +
+                ' WHERE puntaje.id_alojamiento = ?',
+                [id_alojamiento]
+            );
+            return rows; // Retorna el primer resultado o undefined si no se encuentra
+        } catch (err) {
+            console.error('🔥 Error SQL en Puntaje.getById:', err);
+            throw err;
+        }
+    },
+
+    // Obtener un puntaje por su ID
     getById: async (id_puntaje) => {
         try {
             const [rows] = await db.query(
-                'SELECT * FROM puntaje WHERE id_puntaje = ?',
+                'SELECT puntaje.*, usuarios.nombre, usuarios.apellido FROM puntaje' + 
+                ' JOIN usuarios ON puntaje.id_usuario = usuarios.id_usuario' +
+                ' JOIN alojamientos ON puntaje.id_alojamiento = alojamientos.id_alojamiento' +
+                ' WHERE puntaje.id_puntaje = ?',
                 [id_puntaje]
             );
             return rows[0]; // Retorna el primer resultado o undefined si no se encuentra
