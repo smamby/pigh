@@ -95,6 +95,96 @@ body {
     display: visible;
 }
 
+/* Modal/Popup Styles */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* High z-index to be on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    width: 80%;
+    max-width: 400px;
+    position: relative;
+}
+
+.modal-close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-close-button:hover,
+.modal-close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-input-group {
+    margin-bottom: 1rem;
+}
+
+.modal-input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.modal-input-group input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+.modal-input-group input[type="number"]:focus {
+    outline: none;
+    border-color: #02b5e2;
+    box-shadow: 0 0 0 1px #02b5e2, 0 0 0 2px rgba(2, 181, 226, 0.5);
+}
+
+.modal-actions {
+    text-align: right;
+    margin-top: 1.5rem;
+}
+
+.modal-actions button {
+    background-color: #02b5e2;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.modal-actions button:hover {
+    background-color: #0191bd;
+}
+
+/* Hide default arrow for custom select */
+.custom-select::-ms-expand {
+    display: none;
+}
+
+
+/* Main, y todo alojamiento esta de aca hacia abajo */
 main {
     max-width: 1200px;
     margin: 0 auto;
@@ -309,10 +399,27 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     line-height:1.2;
 }
 
+/* galery*/
+#galery {
+    display:flex; 
+    gap:32px; 
+    align-items:stretch; 
+    margin-bottom:2em;
+}
+
 
 /* aside comentarios, puntuacion y map */
+.cont-opinion {
+    flex:1; 
+    min-width:220px; 
+    max-width:320px; 
+    display:flex; 
+    flex-direction:column; 
+    gap:20px; 
+    justify-content:flex-start;
+}
 .box-puntuacion {
-    margin: 1rem 0;
+    margin: 1rem 0 0 0;
     width: auto;
     height: 100px;
     display: flex;
@@ -322,11 +429,25 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     border-radius: 14px;
     background: #f3f4f6;
     box-shadow: 0 2px 8px #0001;
+}
+.box-puntuacion div:nth-child(1) {
+    font-weight:bold; 
+    font-size:1em; 
+    color:#176B4D; 
+    margin-bottom:0.2em;
+}
+.box-puntuacion div:nth-child(2) {
+    color:#fff; 
+    background:#16B0DA; 
+    border-radius:8px; 
+    padding:0.2em 0.7em; 
+    font-size:1.15em; 
+    font-weight:bold;
 }
 
 .box-comentarios {
     width: auto;
-    height: 100px;
+    height: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -335,94 +456,64 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     background: #f3f4f6;
     box-shadow: 0 2px 8px #0001;
 }
-
-
-/* Modal/Popup Styles */
-.modal-overlay {
-    display: none; /* Hidden by default */
-    position: fixed;
-    z-index: 1000; /* High z-index to be on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    justify-content: center;
-    align-items: center;
+#texto-placeholder {
+    font-size:0.92em; 
+    text-align:center; 
+    line-height:1.1;
+    color: #9A9A9A;
+    font-style: italic;
+}
+#cont-map {
+    width:100%; 
+    height:300px; 
+    border-radius:14px; 
+    background:#f3f4f6; 
+    box-shadow:0 2px 8px #0001; 
+    overflow:hidden; display:flex; 
+    align-items:center; 
+    justify-content:center;
 }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    width: 80%;
-    max-width: 400px;
-    position: relative;
+.galeria-fotos {
+    display:flex; 
+    flex-direction:column; 
+    gap:12px;
 }
 
-.modal-close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
+.galeria-fotos > img:first-of-type{
+    width:100%;
+    height: 456px !important;
+    object-fit:cover; 
+    border-radius:14px;
+}
+.galeria-fotos > div:first-of-type {
+    display:flex; 
+    gap:10px; 
+    width:100%;
+}
+.galeria-fotos > div > img {
+    flex:1; 
+    height:100px; 
+    object-fit:cover; 
+    border-radius:8px;
+}
+
+
+/* servicios */
+.servicios-lista {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.servicios-lista li {
+    background: #CAEEF2;
+    border-radius: 16px;
+    padding: 6px 14px;
+    color: #1f2937;
     font-weight: bold;
-    cursor: pointer;
-}
-
-.modal-close-button:hover,
-.modal-close-button:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.modal-input-group {
-    margin-bottom: 1rem;
-}
-
-.modal-input-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-}
-
-.modal-input-group input[type="number"] {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-}
-.modal-input-group input[type="number"]:focus {
-    outline: none;
-    border-color: #02b5e2;
-    box-shadow: 0 0 0 1px #02b5e2, 0 0 0 2px rgba(2, 181, 226, 0.5);
-}
-
-.modal-actions {
-    text-align: right;
-    margin-top: 1.5rem;
-}
-
-.modal-actions button {
-    background-color: #02b5e2;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 0.375rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-
-.modal-actions button:hover {
-    background-color: #0191bd;
-}
-
-/* Hide default arrow for custom select */
-.custom-select::-ms-expand {
-    display: none;
+    font-size: 0.95rem;
 }
 
 /* Responsive adjustments for search form */
@@ -792,21 +883,8 @@ font-size: 1.2em;
     border-radius: 8px;
     border: 1px solid #e5e7eb;
 }
-.servicios-lista {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-.servicios-lista li {
-    background: #EBEBEB;
-    border-radius: 12px;
-    padding: 6px 14px;
-    color: #1f2937;
-    font-weight: bold;
-    font-size: 0.95rem;
-}
+
+
 
 .tabla-habitaciones-wrapper {
     width: 100%;
@@ -922,11 +1000,6 @@ font-size: 1.2em;
     margin-bottom: 20px;
 }
 
-.texto-placeholder {
-    color: #9A9A9A;
-    font-size: 1.1rem;
-    font-style: italic;
-}
 
 .titulo-normas {
     font-size: 1.5rem;

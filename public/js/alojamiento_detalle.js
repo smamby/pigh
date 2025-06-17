@@ -208,30 +208,30 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Galería y side info al mismo nivel y largo
         const galeriaYSideHTML = `
-        <div id="galery" style="display:flex; gap:32px; align-items:stretch; margin-bottom:2em;">
+        <div id="galery">
             <div style="flex:3; min-width:0;">
-                <div class="galeria-fotos" style="display:flex; flex-direction:column; gap:12px;">
-                    <img src="${fotos[0]}" alt="Foto principal" style="width:100%; height:300px; object-fit:cover; border-radius:14px;">
-                    <div style="display:flex; gap:10px; width:100%;">
-                        <img src="${fotos[1]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
-                        <img src="${fotos[2]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
-                        <img src="${fotos[3]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
-                        <img src="${fotos[4]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
-                        <img src="${fotos[5]}" alt="" style="flex:1; height:80px; object-fit:cover; border-radius:8px;">
+                <div class="galeria-fotos">
+                    <img src="${fotos[0]}" alt="Foto principal">
+                    <div>
+                        <img src="${fotos[1]}" alt="">
+                        <img src="${fotos[2]}" alt="">
+                        <img src="${fotos[3]}" alt="">
+                        <img src="${fotos[4]}" alt="">
+                        <img src="${fotos[5]}" alt="">
                     </div>
                 </div>
             </div>
-            <div style="flex:1; min-width:220px; max-width:320px; display:flex; flex-direction:column; gap:14px; justify-content:flex-start;">
+            <div class="cont-opinion">
                 <div class="box-puntuacion">
-                    <div style="font-weight:bold; font-size:1em; color:#176B4D; margin-bottom:0.2em;">¡Muy bueno!</div>
-                    <div style="color:#fff; background:#16B0DA; border-radius:8px; padding:0.2em 0.7em; font-size:1.15em; font-weight:bold;">${puntajePromedio}</div>
+                    <div>¡Muy bueno!</div>
+                    <div>${puntajePromedio}</div>
                 </div>
                 <div class="box-comentarios">
-                    <span class="texto-placeholder" style="font-size:0.92em; text-align:center; line-height:1.1;">
+                    <span id="texto-placeholder" >
                         ${comentarioDestacado ? `"${comentarioDestacado.comentario}"<br><b>- ${comentarioDestacado.nombre || 'Cliente'}</b>` : 'Sin comentarios'}
                     </span>
                 </div>
-                <div style="width:100%; height:300px; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                <div id="cont-map">
                     <a href="https://maps.google.com/?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}" target="_blank" style="display:block; width:100%; height:100%;">
                         <iframe
                             src="https://maps.google.com/maps?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}&z=15&output=embed"
