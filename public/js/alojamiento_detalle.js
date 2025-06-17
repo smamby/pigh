@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Galería y side info al mismo nivel y largo
         const galeriaYSideHTML = `
-        <div style="display:flex; gap:32px; align-items:stretch; margin-bottom:2em;">
+        <div id="galery" style="display:flex; gap:32px; align-items:stretch; margin-bottom:2em;">
             <div style="flex:3; min-width:0;">
                 <div class="galeria-fotos" style="display:flex; flex-direction:column; gap:12px;">
                     <img src="${fotos[0]}" alt="Foto principal" style="width:100%; height:300px; object-fit:cover; border-radius:14px;">
@@ -276,6 +276,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             ${reservarBtn}
                         </div>
                     </div>
+                    
                     ${galeriaYSideHTML}
                     <h3 class="titulo-servicios" style="margin-top:2em;">Servicios</h3>
                     <ul class="servicios-lista">
@@ -288,24 +289,33 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </section>
                     <h2 style="margin-top:2.5em;">Disponibilidad</h2>
 
-                    <div class="buscador-disponibilidad" style="width:100%; background:#f3f4f6; border-radius:12px; display:flex; align-items:center; gap:1.5em; padding:1.2em 2em; margin-bottom:2em;">
-                        <div>
-                            <label style="font-weight:bold;">Check in</label><br>
-                            <input id="modifCheckinInput" type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+
+                    <div class="search-form-wrapper">
+                        <div class="search-form-container">
+                            <form class="search-form">
+                                <div class="form-group">
+                                    <label>Check in</label>
+                                    <input id="modifCheckinInput" type="date">
+                                </div>
+                                <div class="form-group">
+                                    <label>Check out</label>
+                                    <input id="modifCheckoutInput" type="date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="modiGuestsDisplay">Huéspedes</label>
+                                    <div id="modifGuestsDisplay" class="custom-select">2 Adultos, 0 Niños, 1 Habitaciones</div>
+                                    <input type="hidden" id="modifAdultsInput" value="2">
+                                    <input type="hidden" id="modifChildrenInput" value="0">
+                                    <input type="hidden" id="modifRoomsInput" value="1">
+                                </div>                        
+                                <div class="form-group">
+                                    <button type="submit" class="search-button">Buscar</button>
+                                </div>
+                            </form>
                         </div>
-                        <div>
-                            <label style="font-weight:bold;">Check out</label><br>
-                            <input id="modifCheckoutInput" type="date" style="padding:0.5em; border-radius:6px; border:1px solid #ccc;">
-                        </div>
-                        <div class="form-group">
-                            <label for="guestsDisplay">Huéspedes</label>
-                            <div id="modifGuestsDisplay" class="custom-select">2 Adultos, 0 Niños, 1 Habitaciones</div>
-                            <input type="hidden" id="modifAdultsInput" value="2">
-                            <input type="hidden" id="modifChildrenInput" value="0">
-                            <input type="hidden" id="modifRoomsInput" value="1">
-                        </div>                        
-                        <button style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.7em 2em; font-weight:bold; font-size:1em; cursor:pointer;">Modificar búsqueda</button>
                     </div>
+
+
                     <div id="tabla-disponibilidad"></div>
                     <h2 style="margin-top:2.5em;">Comentarios de los clientes</h2>
                     <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
