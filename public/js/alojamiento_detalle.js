@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const API_BASE_URL = 'http://localhost:3001/api';
-    const contenedor = document.getElementById('alojamiento-detalle-dinamico');
+    const contenedor = document.getElementById('subdiv-content');
     const urlParams = new URLSearchParams(window.location.search);
     const alojamientoId = urlParams.get('id');
 
@@ -222,11 +222,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             </div>
             <div style="flex:1; min-width:220px; max-width:320px; display:flex; flex-direction:column; gap:14px; justify-content:flex-start;">
-                <div class="box-puntuacion" style="width:100%; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001;">
+                <div class="box-puntuacion">
                     <div style="font-weight:bold; font-size:1em; color:#176B4D; margin-bottom:0.2em;">¡Muy bueno!</div>
                     <div style="color:#fff; background:#16B0DA; border-radius:8px; padding:0.2em 0.7em; font-size:1.15em; font-weight:bold;">${puntajePromedio}</div>
                 </div>
-                <div class="box-comentarios" style="width:100%; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:14px; background:#f3f4f6; box-shadow:0 2px 8px #0001;">
+                <div class="box-comentarios">
                     <span class="texto-placeholder" style="font-size:0.92em; text-align:center; line-height:1.1;">
                         ${comentarioDestacado ? `"${comentarioDestacado.comentario}"<br><b>- ${comentarioDestacado.nombre || 'Cliente'}</b>` : 'Sin comentarios'}
                     </span>
@@ -255,28 +255,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Render principal
         contenedor.innerHTML = `
             
-            <div style="display:flex; gap:32px; align-items:flex-start; margin-bottom:2em;">
-                <div style="flex:3; min-width:0;">
-                    <div class="hotel-card" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1em; width:85vw; max-width:1200px; min-width:600px; height:68px; background:#fff; border-radius:12px; box-shadow:0 2px 8px #0001; padding:0.7em 2.5em;">
-                        <div style="display:flex; flex-direction:column; align-items:flex-start; flex:1;">
-                            <div style="display:flex; align-items:center; flex-wrap:wrap;">
-                                <span class="nombre" style="font-size:1.35em; font-weight:bold; vertical-align:middle; margin-right:0.7em; white-space:nowrap; line-height:1;">
+            
+                    <div class="hotel-card">
+                        <div id="name-address" style="">
+                            <div id="name">
+                                <span class="nombre">
                                     ${alojamiento.nombre}
                                 </span>
-                                <span class="estrellas" style="font-size:1.05em; color:#FFD700; vertical-align:middle; margin-right:1em; white-space:nowrap;">${'★'.repeat(alojamiento.estrellas || 4)}</span>
+                                <span class="estrellas">${'★'.repeat(alojamiento.estrellas || 1)}</span>
                             </div>
-                            <div class="direccion" style="font-size:0.98em; color:#444; margin-top:0.1em; line-height:1.2;">
+                            <div class="direccion">
                                 ${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}
                                 <a href="https://maps.google.com/?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}" target="_blank" style="font-weight:bold; color:#16B0DA; margin-left:0.7em; text-decoration:none; font-size:0.97em;">Mapa</a>
                             </div>
                         </div>
-                        <div style="display:flex; align-items:center; gap:1em;">
+                        <div id="btn-like-comp" style="display:flex; align-items:center; gap:1em;">
                             <div class="icon" title="Like" style="cursor:pointer;"><i class="far fa-heart icon-heart"></i></div>
                             <a href="#" class="icon" title="Compartir" style="color:#16B0DA;"><i class="fa-solid fa-share-nodes icon-share"></i></a>
                             ${reservarBtn}
                         </div>
                     </div>
-                    
+
                     ${galeriaYSideHTML}
                     <h3 class="titulo-servicios" style="margin-top:2em;">Servicios</h3>
                     <ul class="servicios-lista">
@@ -325,8 +324,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
                         <span style="font-weight:bold; font-size:0.98em;">Detalle de las Normas de la Casa (horarios check in y check out, horario desayuno, parking, etc)</span>
                     </div>
-                </div>
-            </div>
         `;
 
         // Render tabla de disponibilidad con formato y estilos

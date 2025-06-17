@@ -29,6 +29,7 @@ body {
 .logo {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 .logo-image {
     width: 16rem; /* w-8 */
@@ -110,6 +111,39 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     color: #16B0DA !important;
     font-size: 1.2em; /* opcional */
 }
+
+
+/* breadCrumb */
+.breadcrumb {
+    border-radius:8px; 
+    padding:0.7em 0; 
+    margin:1.5em 0;
+}
+
+#bc-inicio,
+#bc-tipo-aloj,
+#bc-ciudad-aloj,
+#bc-pais-aloj {
+    font-weight:bold; 
+    color:#16B0DA;
+    cursor: pointer;
+}
+
+#bc-nombre-aloj {
+    color:#1f2937; 
+    font-weight:normal;
+}
+
+.bc-items:hover {
+    text-shadow: #77d5f0 0px 0px 16px;
+}
+
+.breadcrumb-separator {
+    margin: 0 0.5em;
+    font-size: 1.2em;
+    user-select: none;
+}
+
 /* Search Form styles */
 .search-form-wrapper {
     /*position: absolute;
@@ -117,7 +151,7 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     left: 50%;
     transform: translate(-50%, 33.33%); /* -translate-x-1/2 translate-y-1/3 */
     width: 100%;
-    max-width: 900px; /* max-w-4xl (approximate) */
+    max-width: 876px; /* max-w-4xl (approximate) */
     padding: 1rem 0;
     z-index: 20; /* z-20 */
 }
@@ -182,28 +216,6 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     cursor: text;
 }
 
-/* #ciudad {
-    display: none
-}
-#ciudad.expandido {
-    display: block;
-    background-color: #ffffff;
-    color: #1f2937;
-    position: absolute;
-    height: auto;
-    cursor: pointer;
-    z-index: 10;
-} 
-
-.opt-ciudad {
-    height: 28px;
-    padding: 8px;
-}
-.opt-ciudad:hover {
-    background-color: #cff1fa; 
-    box-shadow: 0 0 0 1px #02b5e2, 0 0 0 1px rgba(59, 130, 246, 0.5);
-    color: #1f2937; 
-} */
 
 #destinationSelect:focus,
 .form-group select:focus,
@@ -241,9 +253,88 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
 } 
 
 
+/* card nombre y direccion, like */
+#div-content {
+    display:flex; 
+    gap:32px; 
+    align-items:flex-start; 
+    margin-bottom:2em;
+    max-width: 1200px;
+}
+#subduv.content {
+    flex:3; 
+    max-width: 1200px;
+}
+.hotel-card {
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+    margin-bottom:1em;      
+    max-width:1200px; 
+    min-width:600px; 
+    height:68px; 
+    background:#fff; 
+    border-radius:12px; 
+    box-shadow:0 2px 8px #0001; 
+    padding:0.7em 2.5em;
+}
+#name-address {
+    display:flex; 
+    flex-direction:column; 
+    align-items:flex-start; 
+    flex:1;
+}
+#name {
+    display: flex;
+}
+.nombre {
+    font-size:1.35em; 
+    font-weight:bold; 
+    vertical-align:middle; 
+    margin-right:0.7em; 
+    white-space:nowrap; 
+    line-height:1;
+}
+.estrellas {
+    font-size:1.05em; 
+    color:#FFD700; 
+    vertical-align:middle; 
+    margin-right:1em; 
+    white-space:nowrap;
+}
+.direccion {
+    font-size:0.98em; 
+    color:#444; 
+    margin-top:0.1em; 
+    line-height:1.2;
+}
 
 
+/* aside comentarios, puntuacion y map */
+.box-puntuacion {
+    margin: 1rem 0;
+    width: auto;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #f3f4f6;
+    box-shadow: 0 2px 8px #0001;
+}
 
+.box-comentarios {
+    width: auto;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #f3f4f6;
+    box-shadow: 0 2px 8px #0001;
+}
 
 
 /* Modal/Popup Styles */
@@ -353,113 +444,10 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
        
 
  /* poner aca main alojamiento y resto de etiquetas */
-#logo {
-    cursor: pointer;
-}
 
-.breadcrumb {
-    border-radius:8px; 
-    padding:0.7em 0; 
-    margin:1.5em 0;
-}
 
-#bc-inicio,
-#bc-tipo-aloj,
-#bc-ciudad-aloj,
-#bc-pais-aloj {
-    font-weight:bold; 
-    color:#16B0DA;
-    cursor: pointer;
-}
 
-#bc-nombre-aloj {
-    color:#1f2937; 
-    font-weight:normal;
-}
 
-.bc-items:hover {
-    text-shadow: #77d5f0 0px 0px 16px;
-}
-
-.breadcrumb-separator {
-    margin: 0 0.5em;
-    font-size: 1.2em;
-    user-select: none;
-}
-
- /* Search Bar Section */
- 
-/* #register-form h2, #login-form h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 1.75rem;
-  color: #1f2937;
-}
-
-#register-form .error-message,
-#register-form .success-message,
-#login-form .error-message,
-#login-form .success-message {
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 0.875rem;
-}
-
-.error-message{
-  background-color: #fee2e2;
-  color: #991b1b;
-}
-
-.success-message {
-  background-color: #daf5e4;
-  color: #166534;
-} */
-
-/* Campos del formulario */
-/* #register-form div ,5
-#login-form div {
-  margin-bottom: 1rem;
-}
-
-#register-form label ,
-#login-form label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-
-#register-form input ,
-#login-form input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-#register-form input:focus ,
-#login-form input:focus {
-  border-color: #02b5e2;
-  box-shadow: 0 0 0 2px rgba(2,181,226,0.3);
-}
-
-/* Botón */
-/* #register-form .btn , #login-form .btn {
-  width: 100%;
-  background-color: #02b5e2;
-  color: #ffffff;
-  padding: 0.75rem;
-  margin-bottom: 2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-} */ 
 
 
 /* Estilo para el contenedor principal */
@@ -498,69 +486,69 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
 
     /* Cambio de color al pasar el ratón */
 .boton:hover {
-        background-color: #CEEAF2;
-    }
+    background-color: #CEEAF2;
+}
 
 .hotel-card {
     border: 1px solid #ccc;
     padding: 15px;
     margin-bottom: 20px;
     position: relative;
-    }
+}
 
     /* Línea 1: Nombre y estrellas */
-    .line1 {
+.line1 {
     display: flex;
     align-items: center;
-gap: 8px; /* ajusta el espacio entre elementos */
-    }
+    gap: 8px; /* ajusta el espacio entre elementos */
+}
 
-    .nombre {
+.nombre {
     font-size: 1.5em;
     font-weight: bold;
-    }
+}
 
-    .estrellas {
+.estrellas {
     display: flex;
     gap: 5px;
     font-size: 24px; /* Para que sean más visibles */
     color: gold;     /* Color dorado para las estrellas */
-    }
+}
 
-    /* Línea 2: Mapa icono, dirección y enlace */
-    .line2 {
+/* Línea 2: Mapa icono, dirección y enlace */
+.line2 {
     display: flex;
     align-items: center;
     margin-top: 10px;
-    }
+}
 
-    .map-icon {
+.map-icon {
     margin-right: 8px;
-    }
+}
 
-    .direccion {
+.direccion {
     font-style: italic;
-    }
+}
 
-    .map-link {
+.map-link {
     margin-left: 10px;
     color: blue;
     text-decoration: underline;
     cursor: pointer;
-    }
+}
 
-    /* Estilo para la sección de acciones (favorito, compartir, reservar) */
-    .actions {
+/* Estilo para la sección de acciones (favorito, compartir, reservar) */
+.actions {
     position: absolute;
     top: 15px;
     right: 15px;
     display: flex;
     align-items: center;
     gap: 10px;
-    }
+}
 
-    /* Botón reservar */
-    .btn-reservar {
+/* Botón reservar */
+.btn-reservar {
     background-color: #007BFF;
     color: #fff;
     border: none;
@@ -568,13 +556,13 @@ gap: 8px; /* ajusta el espacio entre elementos */
     border-radius: 4px;
     cursor: pointer;
     font-size: 1em;
-    }
+}
 
 /* Iconos (usar iconos de Font Awesome o similares) */
-    .icon {
+.icon {
     font-size: 1.2em;
     cursor: pointer;
-    }
+}
 
 /* Contenedor principal que incluye todo el bloque */
 .main-container {
@@ -932,30 +920,6 @@ font-size: 1.2em;
     font-weight: bold;
     font-size: 24px;
     margin-bottom: 20px;
-}
-
-.box-puntuacion {
-    width: 100%;
-    max-width: 900px;
-    margin: 2rem 0 1.5rem 0;
-    background: #f3f4f6;
-    border-radius: 14px;
-    padding: 1.5rem 2rem;
-    min-height: 4.5em; /* Aproximadamente 3 líneas */
-    display: flex;
-    align-items: center;
-}
-
-.box-comentarios {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 0 2rem 0;
-    background: #f3f4f6;
-    border-radius: 14px;
-    padding: 2.5rem 2rem;
-    min-height: 9em; /* Aproximadamente 6 líneas */
-    display: flex;
-    align-items: center;
 }
 
 .texto-placeholder {
