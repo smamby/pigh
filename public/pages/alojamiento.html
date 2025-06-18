@@ -87,15 +87,131 @@
                 </form>
             </div>
         </div>
-        
+
 
         
         <div id="div-content">
             <div id="subdiv-content">
                 
             </div>
-        </div>            
+        </div>     
+
+        <div class="search-form-wrapper">
+            <div class="search-form-container">
+                <form class="search-form">
+                    <div class="form-group">
+                        <label>Check in</label>
+                        <input id="modifCheckinInput" type="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Check out</label>
+                        <input id="modifCheckoutInput" type="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="modiGuestsDisplay">Huéspedes</label>
+                        <div id="modifGuestsDisplay" class="custom-select">2 Adultos, 0 Niños, 1 Habitaciones</div>
+                        <input type="hidden" id="modifAdultsInput" value="2">
+                        <input type="hidden" id="modifChildrenInput" value="0">
+                        <input type="hidden" id="modifRoomsInput" value="1">
+                    </div>                        
+                    <div class="form-group">
+                        <button type="submit" class="search-button">Buscar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         
+        <table class="tabla-habitaciones" id="tabla-habitaciones">
+            <thead>
+                <tr>
+                    <th class="th0" rowspan="2">Tipo de Habitación</th>
+                    <th class="th1">Cant. Huéspedes</th>
+                    <th class="th1">Precio por 2 noches</th>
+                    <th class="th1">Tus opciones</th>
+                    <th class="th2">Elegir habitaciones</th>
+                    <th class="th3">Reservar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border-right:1.5px solid #4c76b2; background:#f8fafc;">
+                        <div style="font-weight:bold; color:#4c76b2; font-size:1.1em;"> Habitación Doble Clásica <span style="margin-left:0.3em;"></div>
+                        <div style="font-size:0.97em; color:#444; margin-bottom:0.5em;">2 camas individuales 🛏️🛏️</span> 
+                        <div style="font-size:0.97em; color:#444; margin-bottom:0.5em;">Habitación amplia con vista al jardín. Aire acondicionado, caja fuerte, escritorio.</div>
+                        <div style="margin-top:0.3em;">
+                            <span title="Metros cuadrados">📏 25 m²</span>
+                            <span title="Baño privado" style="margin-left:0.7em;">🛁 Baño privado</span>
+                            <span title="TV" style="margin-left:0.7em;">📺 TV pantalla plana</span>
+                            <span title="Desayuno" style="margin-left:0.7em;">🥐 Desayuno</span>
+                            <span title="WiFi" style="margin-left:0.7em;">📶 Wifi gratis</span>
+                        </div>
+                    </td>
+                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;"><span title="2 huéspedes">👤👤</span></td>
+                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;">
+                        $32.000
+                        <br>
+                        <span style="font-size:0.78em; color: #4c76b2; border-radius:5px; padding:1px 5px; margin-top:0.2em; display:inline-block;">+11% imp. <span title="Impuestos" style="cursor:pointer;">ℹ️</span></span>
+                    </td>
+                    <td>
+                        <div style="color:#176B4D; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">✔️</span>Desayuno Incluido</div>
+                        <div style="color:#176B4D; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">✔️</span>Incluye estacionamiento</div>
+                        <div style="color:#176B4D; font-weight:bold;"><span style="margin-right:0.3em;">✔️</span>Reembolsable</div>
+                    </td>
+                    <td style="text-align:center; border-top:1.5px solid #4c76b2; background:#f8fafc;">
+                        <select style="padding:0.3em 0.7em; border-radius:6px; border:1px solid #ccc;">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </td>
+                    <td id="reservar-ya-0">Reserva ya!</td>
+                </tr>  
+                <tr>
+                    <td style="border-right:1.5px solid #4c76b2; background:#f8fafc;">
+                        <div style="font-weight:bold; color:#4c76b2; font-size:1.1em;"> Habitación Doble Clásica <span style="margin-left:0.3em;"></div>
+                        <div style="font-size:0.97em; color:#444; margin-bottom:0.5em;">2 camas individuales 🛏️🛏️</span> 
+                        <div style="font-size:0.97em; color:#444; margin-bottom:0.5em;">Habitación amplia con vista al jardín. Aire acondicionado, caja fuerte, escritorio.</div>
+                        <div style="margin-top:0.3em;">
+                            <span title="Metros cuadrados">📏 25 m²</span>
+                            <span title="Baño privado" style="margin-left:0.7em;">🛁 Baño privado</span>
+                            <span title="TV" style="margin-left:0.7em;">📺 TV pantalla plana</span>
+                            <span title="Desayuno" style="margin-left:0.7em;">🥐 Desayuno</span>
+                            <span title="WiFi" style="margin-left:0.7em;">📶 Wifi gratis</span>
+                        </div>
+                    </td>
+                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;"><span title="2 huéspedes">👤👤</span></td>
+                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;">
+                        $32.000
+                        <br>
+                        <span style="font-size:0.78em; color: #4c76b2; border-radius:5px; padding:1px 5px; margin-top:0.2em; display:inline-block;">+11% imp. <span title="Impuestos" style="cursor:pointer;">ℹ️</span></span>
+                    </td>
+                    <td>
+                        <div style="color:#176B4D; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">✔️</span>Desayuno Incluido</div>
+                        <div style="color:#176B4D; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">✔️</span>Incluye estacionamiento</div>
+                        <div style="color:#176B4D; font-weight:bold;"><span style="margin-right:0.3em;">✔️</span>Reembolsable</div>
+                    </td>
+                    <td style="text-align:center; border-top:1.5px solid #4c76b2; background:#f8fafc;">
+                        <select style="padding:0.3em 0.7em; border-radius:6px; border:1px solid #ccc;">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </td>
+                    <td id="reservar-ya-1">Reserva ya!</td>
+                </tr>              
+            </tbody>
+        </table>    
+        
+        <h2 style="margin-top:2.5em;">Comentarios de los clientes</h2>
+        <div id="comentario-inferior"> </div>
+        <h2 style="margin-top:2.5em;">Normas de la Casa</h2>
+        <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
+            <span style="font-weight:bold; font-size:0.98em;">Detalle de las Normas de la Casa (horarios check in y check out, horario desayuno, parking, etc)</span>
+        </div>
 
 
         

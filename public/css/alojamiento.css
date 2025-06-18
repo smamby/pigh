@@ -483,7 +483,7 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     margin-bottom:2em;
     max-width: 1200px;
 }
-#subduv.content {
+#subdiv-content {
     flex:3; 
     max-width: 1200px;
 }
@@ -536,6 +536,7 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     display:flex; 
     gap:32px; 
     align-items:stretch; 
+    margin: 1.5rem 0 0 0;
     margin-bottom:2em;
 }
 
@@ -551,7 +552,6 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     justify-content:flex-start;
 }
 .box-puntuacion {
-    margin: 1rem 0 0 0;
     padding: 1em;
     width: auto;
     height: 100px;
@@ -671,17 +671,158 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
 
        
 
- /* poner aca main alojamiento y resto de etiquetas */
+ 
 
 
 
 
 
 
-/* Estilo para el contenedor principal */
 
 
-/* Responsive: en pantallas medianas, ocupa casi todo el ancho y se centra 
+
+
+
+.btn-reservar-ahora {
+    background: #16B0DA;
+    color: #fff;
+    border: none;
+    border-radius: 18px;
+    padding: 0.7rem 2rem;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.btn-reservar-ahora:hover {
+    background: #108bad;
+}
+
+#tabla-habitaciones {
+    border: 2px solid #108bad;
+    border-radius: 8px;
+    width: 1200px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    font-family: 'Inter', sans-serif;
+}
+#tabla-habitaciones thead {
+    background:#caeef2;
+    height: 4rem;
+    border-bottom:2px solid #16b5e0; 
+}
+
+#tabla-habitaciones .th0,
+#tabla-habitaciones .th1,
+#tabla-habitaciones .th2,
+#tabla-habitaciones .th3 {    
+    color:#1f2937; 
+    font-weight:bold;
+    transition:background 0.2s;
+} 
+
+#tabla-disponibilidad .th0 {
+    text-align:left;
+    padding:1em 1em; 
+     
+}
+#tabla-habitaciones .th1 {
+    text-align:center;    
+}
+
+
+.tabla-habitaciones td {
+    background: #f8fafc;
+    padding: 1rem 0.75rem;
+    text-align: center;
+    border-top: 1.5px solid #16b5e0;
+    border-right: 1.5px solid #16b5e0;
+}
+
+.tabla-habitaciones td:first-child {
+    text-align: left;
+}
+
+#reservar-ya {
+    background-color: #16B0DA;
+    font-weight: 600;
+    color: #e5e7eb;
+    border-right: none;
+    transition: background-color 0.3s ease-in-out;
+}
+#reservar-ya:hover {
+    background-color: #108bad;
+}
+
+.select-cantidad {
+    padding: 0.4rem 1rem;
+    border-radius: 12px;
+    border: 1px solid #b0b0b0;
+    font-size: 1rem;
+    background: #f8fafc;
+    color: #1f2937;
+    min-width: 60px;
+    cursor: pointer;
+}
+
+.titulo-comentarios-clientes{
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+
+.titulo-normas {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 2.5rem 0 1.5rem 0;
+    color: #1f2937;
+}
+
+.box-normas {
+    width: 100%;
+    max-width: 900px;
+    background: #f3f4f6;
+    border-radius: 14px;
+    padding: 1.5rem 2rem;
+    min-height: 4.5em; /* Aproximadamente 3 líneas */
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.box-puntuacion,
+.box-comentarios,
+.box-normas {
+    background: #e5e7eb; /* Gris más oscuro que #f3f4f6 */
+    border: 1.5px solid #d1d5db;
+    box-shadow: 0 2px 8px rgba(22,176,218,0.06);
+}
+
+#comentario-inferior {
+    background:#f3f4f6; 
+    border-radius:14px; 
+    border:1.5px solid #4c76b2; 
+    padding:1.2em 1.5em; 
+    margin-bottom:2em;
+}
+
+
+
+
+
+footer {
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+
+
+        /* Responsive: en pantallas medianas, ocupa casi todo el ancho y se centra 
 @media (max-width: 1100px) {
     .search-form-dispo-wrapper {
         justify-content: center;
@@ -734,7 +875,7 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
 
 
 
-/* .tabla-habitaciones-wrapper {
+/* .tabla-habitacioneses-wrapper {
     width: 100%;
     max-width: 1000px;
     margin: 2rem auto;
@@ -746,142 +887,3 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     align-items: center;
     margin-bottom: 0.5rem;
 } */
-
-.btn-reservar-ahora {
-    background: #16B0DA;
-    color: #fff;
-    border: none;
-    border-radius: 18px;
-    padding: 0.7rem 2rem;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-}
-.btn-reservar-ahora:hover {
-    background: #108bad;
-}
-
-#tabla-disponibilidad {
-    border: 2px solid #108bad;
-    border-radius: 8px;
-}
-.tabla-habitaciones {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    font-family: 'Inter', sans-serif;
-}
-
-#tabla-disponibilidad .th0,
-#tabla-disponibilidad .th1,
-#tabla-disponibilidad .th2,
-#tabla-disponibilidad .th3 {
-    background:#108bad;
-    color:#fff; 
-    font-weight:bold;
-    transition:background 0.2s;
-} 
-
-#tabla-disponibilidad .th0 {
-    text-align:left;
-    padding:1em 1em; 
-    border-right:2px solid #16b5e0; 
-}
-#tabla-disponibilidad .th1 {
-    text-align:center;
-    border-right:2px solid #16b5e0; 
-}
-#tabla-disponibilidad .th2 {     
-    text-align:center;    
-}
-
-.tabla-habitaciones th,
-.tabla-habitaciones td {
-    padding: 1rem 0.75rem;
-    text-align: left;
-    border-bottom: 1.5px solid #e5e7eb;
-}
-
-.tabla-habitaciones th {
-    background: #f3f4f6;
-    color: #16B0DA;
-    font-weight: bold;
-    font-size: 1rem;
-    border-bottom: 2.5px solid #16B0DA;
-}
-
-.tabla-habitaciones tr:last-child td {
-    border-bottom: none;
-}
-
-#tabla-disponibilidad th {
-    cursor:pointer;
-    transition:background 0.2s;
-}
-/* #tabla-disponibilidad th:hover {
-    background:#138bb3 !important;
-} */
-#tabla-disponibilidad td, #tabla-disponibilidad th {
-    border-bottom:1.5px solid #4c76b2;
-}
-#tabla-disponibilidad tr:last-child td {
-    border-bottom:none;
-}
-
-.select-cantidad {
-    padding: 0.4rem 1rem;
-    border-radius: 12px;
-    border: 1px solid #b0b0b0;
-    font-size: 1rem;
-    background: #f8fafc;
-    color: #1f2937;
-    min-width: 60px;
-    cursor: pointer;
-}
-
-.titulo-comentarios-clientes{
-    font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-
-.titulo-normas {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 2.5rem 0 1.5rem 0;
-    color: #1f2937;
-}
-
-.box-normas {
-    width: 100%;
-    max-width: 900px;
-    background: #f3f4f6;
-    border-radius: 14px;
-    padding: 1.5rem 2rem;
-    min-height: 4.5em; /* Aproximadamente 3 líneas */
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-}
-
-.box-puntuacion,
-.box-comentarios,
-.box-normas {
-    background: #e5e7eb; /* Gris más oscuro que #f3f4f6 */
-    border: 1.5px solid #d1d5db;
-    box-shadow: 0 2px 8px rgba(22,176,218,0.06);
-}
-
-
-
-
-
-footer {
-            margin: 2rem auto;
-            max-width: 1200px;
-        }

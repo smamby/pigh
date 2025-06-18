@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Renderizar lista de comentarios para la sección de comentarios
         const puntaje = puntajes[Math.floor(Math.random() * puntajes.length)];
         const comentarioHTML = puntaje
-            ? `<div class="texto-placeholder">★ <b>${puntaje.puntuacion}</b> — ${puntaje.comentario}<br><b>${puntaje.nombre} ${puntaje.apellido}</b></div>`
-            : '<span class="texto-placeholder">Sin comentarios aún.</span>';
+            ? `★ <b>${puntaje.puntuacion}</b> — ${puntaje.comentario}<br><b>${puntaje.nombre} ${puntaje.apellido}</b>`
+            : 'Sin comentarios aún.';
 
         const textScore = alojamiento.promedio_puntaje >= 8.6 ? 'Excelente' : 
                             alojamiento.promedio_puntaje >= 7.6 ? 'Muy Bueno' : 
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Botón reservar arriba, hace scroll a la tabla de disponibilidad
         const reservarBtn = `
-            <button onclick="document.getElementById('tabla-disponibilidad').scrollIntoView({behavior:'smooth'});" 
+            <button onclick="document.getElementById('tabla-habitaciones').scrollIntoView({behavior:'smooth'});" 
                 style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.7em 2em; font-weight:bold; font-size:1em; cursor:pointer; margin-left:2em;">
                 Reservar
             </button>
@@ -310,118 +310,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <hr style="margin:1.5em 0 0.5em 0; border:0; border-top:1.5px solid #e5e7eb;">
             </section>
             <h2 style="margin-top:2.5em;">Disponibilidad</h2>
-
-
-            <div class="search-form-wrapper">
-                <div class="search-form-container">
-                    <form class="search-form">
-                        <div class="form-group">
-                            <label>Check in</label>
-                            <input id="modifCheckinInput" type="date">
-                        </div>
-                        <div class="form-group">
-                            <label>Check out</label>
-                            <input id="modifCheckoutInput" type="date">
-                        </div>
-                        <div class="form-group">
-                            <label for="modiGuestsDisplay">Huéspedes</label>
-                            <div id="modifGuestsDisplay" class="custom-select">2 Adultos, 0 Niños, 1 Habitaciones</div>
-                            <input type="hidden" id="modifAdultsInput" value="2">
-                            <input type="hidden" id="modifChildrenInput" value="0">
-                            <input type="hidden" id="modifRoomsInput" value="1">
-                        </div>                        
-                        <div class="form-group">
-                            <button type="submit" class="search-button">Buscar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-
-            <div id="tabla-disponibilidad"></div>
-            <h2 style="margin-top:2.5em;">Comentarios de los clientes</h2>
-            <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
-                ${comentarioHTML}
-            </div>
-            <h2 style="margin-top:2.5em;">Normas de la Casa</h2>
-            <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
-                <span style="font-weight:bold; font-size:0.98em;">Detalle de las Normas de la Casa (horarios check in y check out, horario desayuno, parking, etc)</span>
-            </div>
         `;
 
-        // Render tabla de disponibilidad con formato y estilos
-        document.getElementById('tabla-disponibilidad').innerHTML = `
-        <table class="tabla-habitaciones">
-            <thead>
-                <tr>
-                    <th class="th0" rowspan="2">Tipo de Habitación</th>
-                    <th class="th1">Cant. Huéspedes</th>
-                    <th class="th1">Precio por 2 noches</th>
-                    <th class="th1">Tus opciones</th>
-                    <th class="th2">Elegir habitaciones</th>
-                    <th class="th3">Reservar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td rowspan="2" style="border-right:1.5px solid #4c76b2; background:#f8fafc;">
-                        <div style="font-weight:bold; color:#4c76b2; font-size:1.1em;"> Habitación Doble Clásica <span style="margin-left:0.3em;"></div>
-                        <div style="font-size:0.97em; color:#444; margin-bottom:0.5em;">2 camas individuales 🛏️🛏️</span> 
-                        <div style="font-size:0.97em; color:#444; margin-bottom:0.5em;">Habitación amplia con vista al jardín. Aire acondicionado, caja fuerte, escritorio.</div>
-                        <div style="margin-top:0.3em;">
-                            <span title="Metros cuadrados">📏 25 m²</span>
-                            <span title="Baño privado" style="margin-left:0.7em;">🛁 Baño privado</span>
-                            <span title="TV" style="margin-left:0.7em;">📺 TV pantalla plana</span>
-                            <span title="Desayuno" style="margin-left:0.7em;">🥐 Desayuno</span>
-                            <span title="WiFi" style="margin-left:0.7em;">📶 Wifi gratis</span>
-                        </div>
-                    </td>
-                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;"><span title="2 huéspedes">👤👤</span></td>
-                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;">
-                        $32.000
-                        <br>
-                        <span style="font-size:0.78em; color: #4c76b2; border-radius:5px; padding:1px 5px; margin-top:0.2em; display:inline-block;">+11% imp. <span title="Impuestos" style="cursor:pointer;">ℹ️</span></span>
-                    </td>
-                    <td style="border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;">
-                        <div style="color:#176B4D; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">✔️</span>Desayuno Incluido</div>
-                        <div style="color:#176B4D; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">✔️</span>Incluye estacionamiento</div>
-                        <div style="color:#176B4D; font-weight:bold;"><span style="margin-right:0.3em;">✔️</span>Reembolsable</div>
-                    </td>
-                    <td style="text-align:center; border-top:1.5px solid #4c76b2; background:#f8fafc;">
-                        <select style="padding:0.3em 0.7em; border-radius:6px; border:1px solid #ccc;">
-                            <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;"><span title="2 huéspedes">👤👤</span></td>
-                    <td style="text-align:center; border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;">
-                        $28.000
-                        <br>
-                        <span style="font-size:0.78em; color: #4c76b2; border-radius:5px; padding:1px 5px; margin-top:0.2em; display:inline-block;">+11% imp. <span title="Impuestos" style="cursor:pointer;">ℹ️</span></span>
-                    </td>
-                    <td style="border-right:1.5px solid #4c76b2; border-top:1.5px solid #4c76b2; background:#f8fafc;">
-                        <div style="color:#B00020; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">⛔</span>Sin desayuno</div>
-                        <div style="color:#176B4D; font-weight:bold; margin-bottom:0.3em;"><span style="margin-right:0.3em;">✔️</span>Incluye estacionamiento</div>
-                        <div style="color:#B00020; font-weight:bold;"><span style="margin-right:0.3em;">⛔</span>No reembolsable</div>
-                    </td>
-                    <td style="text-align:center; border-top:1.5px solid #4c76b2; background:#f8fafc;">
-                        <select style="padding:0.3em 0.7em; border-radius:6px; border:1px solid #ccc;">
-                            <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        `;
+        document.getElementById('comentario-inferior').innerHTML = comentarioHTML
 
         const modifCheckinInput = document.getElementById('modifCheckinInput');
         const modifCheckoutInput = document.getElementById('modifCheckoutInput');
