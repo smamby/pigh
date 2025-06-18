@@ -90,10 +90,10 @@ body {
     display: none;
 }
 
-#nav-register.unloged, #nav-login.unloged, #nav-mis-reservas.loged, 
+/* #nav-register.unloged, #nav-login.unloged, #nav-mis-reservas.loged, 
 #nav-alojamiento.loged, #nav-logout.loged{
     display: visible;
-}
+} */
 
 /* Modal/Popup Styles */
 .modal-overlay {
@@ -182,6 +182,138 @@ body {
 .custom-select::-ms-expand {
     display: none;
 }
+
+/* Modal login */
+#login-form {
+    display: none;
+    position: fixed;
+    z-index: 1001; /* High z-index to be on top */
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    grid-template-columns: 1fr;
+    gap: 1rem; 
+    background-color: #fefefe;
+    height: fit-content !important;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    width: 80%;
+    height: 60%;
+    max-width: 400px;    
+}
+#modal-cont-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+}
+.logo-image-modal {
+    width: 8rem;
+    margin-top: 1.4rem;
+}
+#login-form h2 {
+    text-align: center;
+    margin-top: 1.8rem;
+    font-size: 1.6rem;
+    color: #1f2937;
+}
+#cont-messagge {
+    height: 1.5rem;
+}
+#register-form, #login-form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+#register-form .error-message,
+#register-form .success-message,
+#login-form .error-message,
+#login-form .success-message {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.error-message{
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.success-message {
+  background-color: #daf5e4;
+  color: #166534;
+}
+
+/* Campos del formulario */
+#register-form div ,
+#login-form div {
+  margin-bottom: 1rem;
+}
+
+#register-form label ,
+#login-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+#register-form input ,
+#login-form input {
+  width: 93%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+#register-form input:focus ,
+#login-form input:focus {
+  border-color: #02b5e2;
+  box-shadow: 0 0 0 2px rgba(2,181,226,0.3);
+}
+
+/* Botón */
+#btn-login-modal {
+  width: 100%;
+  background-color: #02b5e2;
+  color: #ffffff;
+  padding: 0.75rem;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#btn-inicio-modal , #btn-register-modal {
+    width: 100%;
+    background-color: #b6e4f0;
+    color: cadetblue;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#register-form .btn:hover, #login-form .btn:hover {
+  background-color: #0191bd;
+}
+
 
 
 /* Main, y todo alojamiento esta de aca hacia abajo */
@@ -547,296 +679,7 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
 
 
 /* Estilo para el contenedor principal */
-.botonera   {
-    position: absolute;
-    width: 1269px;
-    height: 4180px;
-    top: 3137px;
-    left: -156px;
-    background-color: #f0f0f0; /* Puedes cambiar el fondo si quieres */
-    padding: 20px;
-    box-sizing: border-box;
-   /* Opcional: agregar overflow para que los botones no se salgan */
-}
 
-/* Estilo para los botones */
-.boton {
-    display: inline-block;
-    width: 200px; /* Ajusta el tamaño para que quepan bien */
-    height: 40px; /* Ajusta la altura si quieres */
-    margin: 10px;
-    background-color: #ffffff; /* Blanco sin borde */
-    color: #16B0DA;
-    font-family: Inter, sans-serif;
-    font-weight: bold;
-    font-size: 13px;
-    line-height: 17px;
-    letter-spacing: 0%;
-    text-align: center;
-    line-height: 40px; /* para centrar verticalmente el texto */
-    cursor: pointer;
-    border: none;
-    border-radius: 4px; /* opcional, para esquinas redondeadas */
-    transition: background-color 0.3s;
-}
-
-    /* Cambio de color al pasar el ratón */
-.boton:hover {
-    background-color: #CEEAF2;
-}
-
-.hotel-card {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 20px;
-    position: relative;
-}
-
-    /* Línea 1: Nombre y estrellas */
-.line1 {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* ajusta el espacio entre elementos */
-}
-
-.nombre {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.estrellas {
-    display: flex;
-    gap: 5px;
-    font-size: 24px; /* Para que sean más visibles */
-    color: gold;     /* Color dorado para las estrellas */
-}
-
-/* Línea 2: Mapa icono, dirección y enlace */
-.line2 {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.map-icon {
-    margin-right: 8px;
-}
-
-.direccion {
-    font-style: italic;
-}
-
-.map-link {
-    margin-left: 10px;
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-/* Estilo para la sección de acciones (favorito, compartir, reservar) */
-.actions {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* Botón reservar */
-.btn-reservar {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1em;
-}
-
-/* Iconos (usar iconos de Font Awesome o similares) */
-.icon {
-    font-size: 1.2em;
-    cursor: pointer;
-}
-
-/* Contenedor principal que incluye todo el bloque */
-.main-container {
-position: absolute;
-width: 847px;
-height: 483px;
-top: 3575px;
-left: -97px;
-display: flex;
-gap: 10px; /* espaciado entre bloques */
-}
-
-/* Contenedor de la parte izquierda: fotos y rectángulos */
-.left-block {
-position: relative;
-width: 100%;
-height: 100%;
-display: flex;
-flex-direction: column;
-}
-
-/* Gran rectángulo a la izquierda con foto */
-.big-photo-container {
-display: flex;
-width: 100%;
-height: 50%;
-}
-
-.large-photo {
-width: 50%;
-height: 100%;
-background-color: #e0e0e0; /* placeholder gris */
-border: 1px solid #ccc;
-}
-
-/* Rectángulos pequeños a la derecha de la grande */
-.small-rectangles {
-display: flex;
-width: 50%;
-height: 100%;
-gap: 10px;
-}
-
-.small-rectangle {
-width: 33.33%;
-height: 100%;
-background-color: #d0d0d0; /* placeholder gris */
-border: 1px solid #ccc;
-}
-
-/* Línea de 5 rectángulos debajo de las anteriores */
-.bottom-rects {
-display: flex;
-width: 100%;
-height: 50%;
-margin-top: 10px;
-}
-
-.bottom-rectangle {
-flex: 1;
-background-color: #f0f0f0; /* placeholder gris */
-border: 1px solid #ccc;
-margin-right: 5px;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-
-/* Último rectángulo con texto "37 fotos más" */
-.more-photos {
-flex: 1;
-background-color: #f0f0f0;
-border: 1px solid #ccc;
-margin-left: 5px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-weight: bold;
-}
-
-/* Contenedor derecho con borde y fondo blanco */
-.right-block {
-position: relative;
-width: 1269px;
-height: 4180px;
-border: 1px solid #16B0DA;
-background-color: #fff;
-box-sizing: border-box;
-padding: 10px;
-}
-
-/* Rectángulo superior derecho pequeño */
-.top-right-rect {
-position: absolute;
-width: 180px;
-height: 97.65px;
-top: 3594.35px;
-left: 857px;
-border-radius: 8px;
-background-color: #fff;
-border: 1px solid #ccc;
-padding: 10px;
-box-sizing: border-box;
-}
-
-.top-right-rect h3 {
-margin: 0;
-font-size: 1.2em;
-}
-
-/* Título Servicios */
-.titulo-servicios {
-    font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.servicios-lista {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px 0;
-}
-
-.servicio-item {
-    background-color: #EBEBEB;
-    border-radius: 18px;
-    padding: 10px 18px;
-    color: #9A9A9A;
-    font-weight: bold;
-    font-size: small;
-    min-width: 120px;
-    text-align: center;
-    white-space: nowrap;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-    border: 2px solid #ebebeb;
-    margin-bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Texto descriptivo de experiencia */
-.texto-descriptivo {
-    font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-/* Texto de detalles del hotel */
-.detalles-hotel {
-    font-size: 14px;
-    line-height: 1.5;
-}
-
- .search-form-dispo-wrapper {
-            /*position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translate(-50%, 33.33%); /* -translate-x-1/2 translate-y-1/3 */
-            width: 100%;
-            max-width: 900px; /* max-w-4xl (approximate) */
-            padding-left: 1rem; /* px-4 */
-            padding-right: 1rem; /* px-4 */
-            z-index: 20; /* z-20 */
-        }
-
-        .search-form-container-dispo {
-            background-color: #ffffff; /* bg-white */
-            padding: 1.5rem; /* p-6 */
-            border-radius: 0.5rem; /* rounded-lg */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
-            color: #1f2937; /* text-gray-800 */
-            transition: scale 1s ease;
-            margin-top: 2rem; 
-        }
 
 /* Responsive: en pantallas medianas, ocupa casi todo el ancho y se centra 
 @media (max-width: 1100px) {
@@ -868,7 +711,7 @@ font-size: 1.2em;
     }
 }    NO SE SI FUNCIONA */ 
 
-.foto-principal-detalle {
+/* .foto-principal-detalle {
     width: 100%;
     max-width: 400px;
     border-radius: 12px;
@@ -887,11 +730,11 @@ font-size: 1.2em;
     object-fit: cover;
     border-radius: 8px;
     border: 1px solid #e5e7eb;
-}
+} */
 
 
 
-.tabla-habitaciones-wrapper {
+/* .tabla-habitaciones-wrapper {
     width: 100%;
     max-width: 1000px;
     margin: 2rem auto;
@@ -902,7 +745,7 @@ font-size: 1.2em;
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 0.5rem;
-}
+} */
 
 .btn-reservar-ahora {
     background: #16B0DA;
@@ -935,7 +778,8 @@ font-size: 1.2em;
 
 #tabla-disponibilidad .th0,
 #tabla-disponibilidad .th1,
-#tabla-disponibilidad .th2 {
+#tabla-disponibilidad .th2,
+#tabla-disponibilidad .th3 {
     background:#108bad;
     color:#fff; 
     font-weight:bold;
@@ -978,9 +822,9 @@ font-size: 1.2em;
     cursor:pointer;
     transition:background 0.2s;
 }
-#tabla-disponibilidad th:hover {
+/* #tabla-disponibilidad th:hover {
     background:#138bb3 !important;
-}
+} */
 #tabla-disponibilidad td, #tabla-disponibilidad th {
     border-bottom:1.5px solid #4c76b2;
 }

@@ -88,6 +88,8 @@
             </div>
         </div>
         
+
+        
         <div id="div-content">
             <div id="subdiv-content">
                 
@@ -123,13 +125,41 @@
         </div>
     </div>
 
+         
+        <form id="login-form"> <!-- reutiliza el CSS del formulario de registro -->
+            <div id="modal-cont-logo" class="logo">
+                <img src="../assets/logo-check-inn.png" alt="Check-inn" class="logo-image-modal">
+            </div>
+            <h2>Accede a tu cuenta</h2>
+            <div id="cont-messagge">
+                <div id="login-error-message" class="error-message" style="display: none;"></div>
+                <div id="login-success-message" class="success-message" style="display: none;"></div>
+            </div>
+
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+            </div>
+            <div>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required />
+            </div>
+
+            <button type="submit" class="btn" id="btn-login-modal">Ingresar</button>
+            <button type="button" onclick="location.href='../index.html'" id="btn-inicio-modal" class="btn-ax">Inicio</button>
+            <button type="button" onclick="location.href='register.html'" id="btn-register-modal" class="btn-ax">Crear cuenta</button>
+        </form>    
+    
+
+    
     <footer>
         <p>&copy; <span id="currentYear"></span> Booking MVP Latam. Todos los derechos reservados.</p>
     </footer>
-
+    
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
     <script src="../js/alojamiento_detalle.js" defer></script>
+    <script src="../js/login.js"></script>
 </body>
 </html>

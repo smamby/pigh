@@ -10,7 +10,8 @@ const tipo_alojamientosRoutes = require('./routes/tipo_alojamientos.routes');
 const img_alojamientosRoutes = require('./routes/img_alojamientos.routes');
 const reservasRoutes = require('./routes/reservas.routes');
 const caracteristicasRoutes = require('./routes/caracteristicas.routes');
-const puntajeRoutes = require('./routes/puntajes.routes'); // ¡Tu nueva ruta de puntajes!
+const puntajeRoutes = require('./routes/puntajes.routes'); 
+const habitacionRoutes = require('./routes/habitaciones.routes');
 
 // Montar cada conjunto de rutas bajo su respectivo prefijo de API
 router.use('/auth', authRoutes);
@@ -20,5 +21,6 @@ router.use('/reservas', reservasRoutes);
 router.use('/img_alojamientos', img_alojamientosRoutes);
 router.use('/caracteristicas', caracteristicasRoutes);
 router.use('/puntajes', puntajeRoutes);
+router.use('/habitaciones', habitacionRoutes);
 
 module.exports = router; // Exportamos el router principal

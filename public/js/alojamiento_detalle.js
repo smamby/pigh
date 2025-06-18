@@ -206,46 +206,65 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log('alojamientos', alojamiento);
             busquedaTabulada(queryString);
         });
+
+        const resServices = await fetch(`http://localhost:3001/api/caracteristicas/search/${alojamientoId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        if (!resServices.ok) {
+            throw new Error('Error al obtener servicios');
+        }
+        const services = await resServices.json();
+        console.log('servicios:', services);
+
+        const resHabitaciones = await fetch(`http://localhost:3001/api/alojamiento/habitaciones/${alojamientoId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
         
 
         // Galería y side info al mismo nivel y largo
 
 
         const galeriaYSideHTML = `
-        <div id="galery">
-            <div style="flex:3; min-width:0;">
-                <div class="galeria-fotos">
-                    <img src="${fotos[0]}" alt="Foto principal">
-                    <div>
-                        <img src="${fotos[1]}" alt="">
-                        <img src="${fotos[2]}" alt="">
-                        <img src="${fotos[3]}" alt="">
-                        <img src="${fotos[4]}" alt="">
-                        <img src="${fotos[5]}" alt="">
+            <div id="galery">
+                <div style="flex:3; min-width:0;">
+                    <div class="galeria-fotos">
+                        <img src="${fotos[0]}" alt="Foto principal">
+                        <div>
+                            <img src="${fotos[1]}" alt="">
+                            <img src="${fotos[2]}" alt="">
+                            <img src="${fotos[3]}" alt="">
+                            <img src="${fotos[4]}" alt="">
+                            <img src="${fotos[5]}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="cont-opinion">
+                    <div class="box-puntuacion">
+                        <div>${textScore}</div>
+                        <div>${puntajePromedio}</div>
+                    </div>
+                    <div class="box-comentarios">
+                        <span id="texto-placeholder" >
+                            ${comentarioHTML }
+                        </span>
+                    </div>
+                    <div id="cont-map">
+                        <a href="https://maps.google.com/?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}" target="_blank" style="display:block; width:100%; height:100%;">
+                            <iframe
+                                src="https://maps.google.com/maps?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}&z=15&output=embed"
+                                width="100%" height="100%" style="border-radius:10px; border:0;"
+                                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="cont-opinion">
-                <div class="box-puntuacion">
-                    <div>${textScore}</div>
-                    <div>${puntajePromedio}</div>
-                </div>
-                <div class="box-comentarios">
-                    <span id="texto-placeholder" >
-                        ${comentarioHTML }
-                    </span>
-                </div>
-                <div id="cont-map">
-                    <a href="https://maps.google.com/?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}" target="_blank" style="display:block; width:100%; height:100%;">
-                        <iframe
-                            src="https://maps.google.com/maps?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}&z=15&output=embed"
-                            width="100%" height="100%" style="border-radius:10px; border:0;"
-                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </a>
-                </div>
-            </div>
-        </div>
         `;
 
         // Botón reservar arriba, hace scroll a la tabla de disponibilidad
@@ -257,77 +276,77 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
 
         // Render principal
-        contenedor.innerHTML = `
-            
-            
-                    <div class="hotel-card">
-                        <div id="name-address" style="">
-                            <div id="name">
-                                <span class="nombre">
-                                    ${alojamiento.nombre}
-                                </span>
-                                <span class="estrellas">${'★'.repeat(alojamiento.estrellas || 1)}</span>
-                            </div>
-                            <div class="direccion">
-                                ${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}
-                                <a href="https://maps.google.com/?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}" target="_blank" style="font-weight:bold; color:#16B0DA; margin-left:0.7em; text-decoration:none; font-size:0.97em;">Mapa</a>
-                            </div>
+        contenedor.innerHTML = `            
+            <div class="hotel-card">
+                <div id="name-address" style="">
+                    <div id="name">
+                        <span class="nombre">
+                            ${alojamiento.nombre}
+                        </span>
+                        <span class="estrellas">${'★'.repeat(alojamiento.estrellas || 1)}</span>
+                    </div>
+                    <div class="direccion">
+                        ${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}
+                        <a href="https://maps.google.com/?q=${encodeURIComponent(`${alojamiento.direccion}, ${alojamiento.ciudad}, ${alojamiento.pais}`)}" target="_blank" style="font-weight:bold; color:#16B0DA; margin-left:0.7em; text-decoration:none; font-size:0.97em;">Mapa</a>
+                    </div>
+                </div>
+                <div id="btn-like-comp" style="display:flex; align-items:center; gap:1em;">
+                    <div class="icon" title="Like" style="cursor:pointer;"><i class="far fa-heart icon-heart"></i></div>
+                    <a href="#" class="icon" title="Compartir" style="color:#16B0DA;"><i class="fa-solid fa-share-nodes icon-share"></i></a>
+                    ${reservarBtn}
+                </div>
+            </div>
+
+            ${galeriaYSideHTML}
+            <h3 class="titulo-servicios" style="margin-top:2em;">Servicios</h3>
+            <ul class="servicios-lista">
+                ${(services).map(service =>
+                        `<li class="servicio-item">${service.caracteristica_nombre}</li>`
+                ).join('')}
+            </ul>
+            <section class="detalle-info" style="margin-top:2em;">
+                <h2>Descripción</h2>
+                <p>${alojamiento.descripcion || 'No disponible.'}</p>
+                <hr style="margin:1.5em 0 0.5em 0; border:0; border-top:1.5px solid #e5e7eb;">
+            </section>
+            <h2 style="margin-top:2.5em;">Disponibilidad</h2>
+
+
+            <div class="search-form-wrapper">
+                <div class="search-form-container">
+                    <form class="search-form">
+                        <div class="form-group">
+                            <label>Check in</label>
+                            <input id="modifCheckinInput" type="date">
                         </div>
-                        <div id="btn-like-comp" style="display:flex; align-items:center; gap:1em;">
-                            <div class="icon" title="Like" style="cursor:pointer;"><i class="far fa-heart icon-heart"></i></div>
-                            <a href="#" class="icon" title="Compartir" style="color:#16B0DA;"><i class="fa-solid fa-share-nodes icon-share"></i></a>
-                            ${reservarBtn}
+                        <div class="form-group">
+                            <label>Check out</label>
+                            <input id="modifCheckoutInput" type="date">
                         </div>
-                    </div>
-
-                    ${galeriaYSideHTML}
-                    <h3 class="titulo-servicios" style="margin-top:2em;">Servicios</h3>
-                    <ul class="servicios-lista">
-                        ${(alojamiento.servicios || ['WiFi','Desayuno','Estacionamiento','Piscina']).map(s => `<li class="servicio-item">${s}</li>`).join('')}
-                    </ul>
-                    <section class="detalle-info" style="margin-top:2em;">
-                        <h2>Descripción</h2>
-                        <p>${alojamiento.descripcion || 'No disponible.'}</p>
-                        <hr style="margin:1.5em 0 0.5em 0; border:0; border-top:1.5px solid #e5e7eb;">
-                    </section>
-                    <h2 style="margin-top:2.5em;">Disponibilidad</h2>
-
-
-                    <div class="search-form-wrapper">
-                        <div class="search-form-container">
-                            <form class="search-form">
-                                <div class="form-group">
-                                    <label>Check in</label>
-                                    <input id="modifCheckinInput" type="date">
-                                </div>
-                                <div class="form-group">
-                                    <label>Check out</label>
-                                    <input id="modifCheckoutInput" type="date">
-                                </div>
-                                <div class="form-group">
-                                    <label for="modiGuestsDisplay">Huéspedes</label>
-                                    <div id="modifGuestsDisplay" class="custom-select">2 Adultos, 0 Niños, 1 Habitaciones</div>
-                                    <input type="hidden" id="modifAdultsInput" value="2">
-                                    <input type="hidden" id="modifChildrenInput" value="0">
-                                    <input type="hidden" id="modifRoomsInput" value="1">
-                                </div>                        
-                                <div class="form-group">
-                                    <button type="submit" class="search-button">Buscar</button>
-                                </div>
-                            </form>
+                        <div class="form-group">
+                            <label for="modiGuestsDisplay">Huéspedes</label>
+                            <div id="modifGuestsDisplay" class="custom-select">2 Adultos, 0 Niños, 1 Habitaciones</div>
+                            <input type="hidden" id="modifAdultsInput" value="2">
+                            <input type="hidden" id="modifChildrenInput" value="0">
+                            <input type="hidden" id="modifRoomsInput" value="1">
+                        </div>                        
+                        <div class="form-group">
+                            <button type="submit" class="search-button">Buscar</button>
                         </div>
-                    </div>
+                    </form>
+                </div>
+            </div>
 
 
-                    <div id="tabla-disponibilidad"></div>
-                    <h2 style="margin-top:2.5em;">Comentarios de los clientes</h2>
-                    <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
-                        ${comentarioHTML}
-                    </div>
-                    <h2 style="margin-top:2.5em;">Normas de la Casa</h2>
-                    <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
-                        <span style="font-weight:bold; font-size:0.98em;">Detalle de las Normas de la Casa (horarios check in y check out, horario desayuno, parking, etc)</span>
-                    </div>
+            <div id="tabla-disponibilidad"></div>
+            <h2 style="margin-top:2.5em;">Comentarios de los clientes</h2>
+            <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
+                ${comentarioHTML}
+            </div>
+            <h2 style="margin-top:2.5em;">Normas de la Casa</h2>
+            <div style="background:#f3f4f6; border-radius:14px; border:1.5px solid #4c76b2; padding:1.2em 1.5em; margin-bottom:2em;">
+                <span style="font-weight:bold; font-size:0.98em;">Detalle de las Normas de la Casa (horarios check in y check out, horario desayuno, parking, etc)</span>
+            </div>
         `;
 
         // Render tabla de disponibilidad con formato y estilos
@@ -340,6 +359,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <th class="th1">Precio por 2 noches</th>
                     <th class="th1">Tus opciones</th>
                     <th class="th2">Elegir habitaciones</th>
+                    <th class="th3">Reservar</th>
                 </tr>
             </thead>
             <tbody>
@@ -479,4 +499,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Error al cargar detalle:', error);
     }
     
+});
+
+const btnLogin = document.getElementById('nav-login');
+const modalLogin = document.getElementById('login-form');
+btnLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    modalLogin.style.display = 'grid';
+});
+
+document.getElementById('btn-login-modal').addEventListener('click', () => {
+
+});
+
+document.getElementById('nav-logout').addEventListener('click', function (e) {
+    e.preventDefault(); // Evita que navegue inmediatamente
+
+    // Borra datos del localStorage
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+
+    // Redirige manualmente
+    window.location.href = "../index.html";
 });

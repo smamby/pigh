@@ -177,26 +177,54 @@ CREATE TABLE IF NOT EXISTS `tipo_habitacion` (
   PRIMARY KEY (`id_tipo_habitacion`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Insert some common room types
-INSERT INTO `tipo_habitacion` (`nombre`, `descripcion`, `capacidad_adultos`, `capacidad_menores`, `precio_base`) VALUES
-('Habitación Estándar Doble', 'Una habitación cómoda con dos camas individuales o una doble.', 2, 0, 80.00),
-('Habitación Deluxe King', 'Habitación espaciosa con una cama king-size y vista panorámica.', 2, 1, 120.00),
-('Suite Ejecutiva', 'Suite de lujo con sala de estar separada y comodidades premium.', 2, 2, 250.00),
-('Habitación Familiar', 'Ideal para familias, con espacio para hasta 4 personas.', 2, 2, 150.00);
 
-INSERT INTO `tipo_habitacion` (`nombre`, `descripcion`, `capacidad_adultos`, `capacidad_menores`, `tamanio_m2`, `camas_detalle`, `precio_base`) VALUES
-('Habitación Superior con Terraza', 'Habitación amplia con terraza privada y vistas a la ciudad.', 2, 1, 28.50, '1 Cama King Size', 180.00),
-('Suite Nupcial', 'Suite romántica con jacuzzi, decoración premium y detalles especiales.', 2, 0, 45.00, '1 Cama King Size con dosel', 350.00),
-('Habitación Triple', 'Habitación con tres camas individuales, ideal para grupos.', 3, 0, 24.00, '3 Camas Individuales', 110.00),
-('Suite Familiar Deluxe', 'Amplia suite con dos habitaciones separadas y baño compartido.', 4, 2, 60.00, '1 Cama King + 2 Camas Individuales', 280.00),
-('Habitación Accesible', 'Habitación adaptada para personas con movilidad reducida.', 2, 0, 30.00, '1 Cama Queen Size', 90.00),
-('Habitación Económica Individual', 'Habitación compacta con todas las comodidades básicas.', 1, 0, 12.00, '1 Cama Individual', 50.00),
-('Suite Presidencial', 'La máxima categoría del hotel con servicios exclusivos.', 2, 0, 120.00, '1 Cama King Size de lujo', 800.00),
-('Habitación con Jacuzzi', 'Habitación con jacuzzi privado en la habitación.', 2, 0, 35.00, '1 Cama King Size', 300.00),
-('Habitación Connecting', 'Dos habitaciones estándar conectadas por puerta interior.', 4, 2, 40.00, '2 Camas Dobles en cada habitación', 220.00),
-('Dormitorio Colectivo', 'Opción económica con camas en dormitorio compartido.', 6, 0, 25.00, '6 Camas Individuales', 30.00);
+ALTER TABLE `tipo_habitacion` 
+ADD COLUMN `politica_cancelacion` ENUM('flexible', 'moderada', 'estricta', 'temp_alta', 'temp_baja') DEFAULT 'moderada',
+ADD COLUMN `incluye_desayuno` BOOLEAN DEFAULT FALSE,
+ADD COLUMN `horario_checkin` TIME DEFAULT '15:00:00',
+ADD COLUMN `horario_checkout` TIME DEFAULT '11:00:00';
 
-select count(*) from tipo_habitacion;
+-- politicas de cancelacion, no sera mejor en una tabla a parte, y que cada alojamiento diseñe las suyas?
+
+-- create table politicas_cancelacion
+-- id_politica INT AUTO INCREMENT,
+-- costo DECIMAL(10,2) NOT NULL,
+-- limite_dias INT,
+-- id_alojamiento INT,
+-- id_tipo_habitacion INT,
+-- FOREIGN KEYS AND CONSTRAINT
+
+CREATE TABLE IF NOT EXISTS `precios_habitacion` (
+  `id_precio` INT NOT NULL AUTO_INCREMENT,
+  `id_tipo_habitacion` INT NOT NULL,
+  `fecha_inicio` DATE NOT NULL,  -- Desde cuándo aplica el precio
+  `fecha_fin` DATE NULL,         -- Hasta cuándo (NULL = precio indefinido)
+  `precio_noche` DECIMAL(10, 2) NOT NULL,
+  `moneda` VARCHAR(3) DEFAULT 'USD',
+  `es_promo` BOOLEAN DEFAULT FALSE, -- ¿Es una promoción?
+  `notas` TEXT NULL,
+  PRIMARY KEY (`id_precio`),
+  INDEX `idx_tipo_fechas` (`id_tipo_habitacion`, `fecha_inicio`, `fecha_fin`),
+  CONSTRAINT `fk_precio_tipo_habitacion`
+    FOREIGN KEY (`id_tipo_habitacion`)
+    REFERENCES `tipo_habitacion` (`id_tipo_habitacion`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+select * from tipo_habitacion;
+
+CREATE TABLE IF NOT EXISTS `caracteristicas_habitacion` (
+  `id_caracteristica` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) NOT NULL UNIQUE,  -- Ej: "WiFi Gratis", "Aire Acondicionado"
+  `icono` VARCHAR(50) NULL,               -- Opcional: Para mostrar un icono (ej: "wifi", "snowflake")
+  `descripcion` TEXT NULL,                -- Detalles adicionales
+  `es_prioritario` BOOLEAN DEFAULT FALSE, -- Si aparece destacado en listados
+  PRIMARY KEY (`id_caracteristica`)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- -----------------------------------------------------
 -- Table `habitacion_tipo_caracteristica`
 -- Many-to-many relationship between room types and features
@@ -214,12 +242,16 @@ CREATE TABLE IF NOT EXISTS `habitacion_tipo_caracteristica` (
     ON UPDATE CASCADE,
   CONSTRAINT `fk_habitacion_tipo_caracteristica_caracteristica`
     FOREIGN KEY (`id_caracteristica`)
-    REFERENCES `caracteristica` (`id_caracteristica`)
+    REFERENCES `caracteristicas_habitacion` (`id_caracteristica`)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 select * from habitacion_tipo_caracteristica;
+select * from habitaciones;
+select * from tipo_habitacion;
+select * from habitacion_carcteristicas;
 -- -----------------------------------------------------
 -- Table `habitacion_inventario`
 -- Tracks the number of available rooms of a specific `tipo_habitacion`
@@ -275,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `habitaciones` (
   `id_tipo_habitacion` INT NOT NULL,    
   `plazas` INT NOT NULL CHECK (plazas > 0),
   `precio` decimal (10,2),
-  `estado` ENUM('libre', 'ocupada', 'reservada', 'deshabilitada', 'mantenimiento', 'limpieza') NOT NULL DEFAULT 'libre',
+  `estado` ENUM('habilitada', 'mantenimiento', 'clausurada') NOT NULL DEFAULT 'libre',
   `id_alojamiento` INT NOT NULL,     
   `fecha_actualizacion` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
   `notas` TEXT NULL,                           
@@ -368,17 +400,6 @@ CREATE TABLE avatares (
     INDEX (id_usuario) COMMENT 'Índice para búsquedas por usuario'
 );
     
-CREATE TABLE mensaje (
-    id_mensaje INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL UNIQUE,
-    id_alojamiento INT NOT NULL UNIQUE,
-    mensaje VARCHAR(265) NOT NULL,
-    calificacion TINYINT UNSIGNED, -- Por ejemplo, de 1 a 5 estrellas
-    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    es_publico BOOLEAN DEFAULT TRUE, -- Para moderar visibilidad si es necesario
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
-    FOREIGN KEY (id_alojamiento) REFERENCES alojamientos(id_alojamiento) ON DELETE CASCADE
-);
 select id_habitacion from habitaciones where id_alojamiento = 21 or id_alojamiento = 22 or id_alojamiento = 23;
 
 CREATE TABLE reservas (

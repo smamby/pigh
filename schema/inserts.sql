@@ -98,207 +98,147 @@ WHERE id_alojamiento = 17;
 
 select id_alojamiento, nombre, ciudad, pais, estrellas from alojamientos where id_alojamiento > 0;
 
-select * from alojamientos;
+select * from alojamientos where id_tipo_alojamiento = 4;
+
+-- Insert tipos de habitacion
+INSERT INTO `tipo_habitacion` (`nombre`, `descripcion`, `capacidad_adultos`, `capacidad_menores`,`tamanio_m2`, `camas_detalle`, `precio_base`) VALUES
+('Habitación Estándar Doble', 'Una habitación cómoda con dos camas individuales o una doble.', 2, 0, 80.00, '2 Camas Individuales', 80.00),
+('Habitación Deluxe King', 'Habitación espaciosa con una cama king-size y vista panorámica.', 2, 1, 120.00, '1 Cama King Size', 120.00),
+('Suite Ejecutiva', 'Suite de lujo con sala de estar separada y comodidades premium.', 2, 2, 250.00, '1 Cama King Size', 250.00),
+('Habitación Familiar', 'Ideal para familias, con espacio para hasta 4 personas.', 2, 2, 150.00, '1 Cama King + 2 Camas Individuales', 150.00),
+('Habitación Superior con Terraza', 'Habitación amplia con terraza privada y vistas a la ciudad.', 2, 1, 28.50, '1 Cama King Size', 180.00),
+('Suite Nupcial', 'Suite romántica con jacuzzi, decoración premium y detalles especiales.', 2, 0, 45.00, '1 Cama King Size con dosel', 350.00),
+('Habitación Triple', 'Habitación con tres camas individuales, ideal para grupos.', 3, 0, 24.00, '3 Camas Individuales', 110.00),
+('Suite Familiar Deluxe', 'Amplia suite con dos habitaciones separadas y baño compartido.', 4, 2, 60.00, '1 Cama King + 2 Camas Individuales', 280.00),
+('Habitación Accesible', 'Habitación adaptada para personas con movilidad reducida.', 2, 0, 30.00, '1 Cama Queen Size', 90.00),
+('Habitación Económica Individual', 'Habitación compacta con todas las comodidades básicas.', 1, 0, 12.00, '1 Cama Individual', 50.00),
+('Suite Presidencial', 'La máxima categoría del hotel con servicios exclusivos.', 2, 0, 120.00, '1 Cama King Size de lujo', 800.00),
+('Habitación con Jacuzzi', 'Habitación con jacuzzi privado en la habitación.', 2, 0, 35.00, '1 Cama King Size', 300.00),
+('Habitación Connecting', 'Dos habitaciones estándar conectadas por puerta interior.', 4, 2, 40.00, '2 Camas Dobles en cada habitación', 220.00),
+('Dormitorio Colectivo', 'Opción económica con camas en dormitorio compartido.', 6, 0, 25.00, '6 Camas Individuales', 30.00);
 
 -- Alojamiento 1: Hotel Patios de Córdoba (España)
 INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('101', 1, 'libre', 1, 'Vista al patio interior, piso bajo'),
-('201', 2, 'libre', 1, 'Vista a la calle, cama king size');
-
+('101', 1, 'habilitada', 1, 'Vista al patio interior, piso bajo'),
+('201', 2, 'habilitada', 1, 'Vista a la calle, cama king size'),
 -- Alojamiento 2: Gran Hotel Córdoba Argentina
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('501', 3, 'libre', 2, 'Suite con jacuzzi, piso alto'),
-('302', 4, 'libre', 2, 'Habitación familiar, conexión para niños');
-
+('501', 3, 'habilitada', 2, 'Suite con jacuzzi, piso alto'),
+('302', 4, 'habilitada', 2, 'Habitación familiar, conexión para niños'),
 -- Alojamiento 3: Rosario Plaza Hotel (Argentina)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('12A', 1, 'libre', 3, 'Vista al río Paraná'),
-('15B', 2, 'ocupada', 3, 'Habitación deluxe, minibar incluido');
-
+('12A', 1, 'habilitada', 3, 'Vista al río Paraná'),
+('15B', 2, 'habilitada', 3, 'Habitación deluxe, minibar incluido'),
 -- Alojamiento 4: Hotel Rosario Colombia
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('102', 1, 'libre', 4, 'Vista a la piscina'),
-('205', 5, 'libre', 4, 'Habitación accesible, cerca del ascensor');
-
+('102', 1, 'habilitada', 4, 'Vista a la piscina'),
+('205', 5, 'habilitada', 4, 'Habitación accesible, cerca del ascensor'),
 -- Alojamiento 5: Hotel Valencia Palace (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('301', 3, 'libre', 5, 'Suite con terraza privada'),
-('412', 6, 'reservada', 5, 'Habitación económica, vista interior');
-
+('301', 3, 'habilitada', 5, 'Suite con terraza privada'),
+('412', 6, 'habilitada', 5, 'Habitación económica, vista interior'),
 -- Alojamiento 6: Valencia Suites (Venezuela)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('S1', 3, 'libre', 6, 'Suite principal con sala de estar'),
-('S5', 7, 'libre', 6, 'Suite presidencial, servicio VIP');
-
+('S1', 3, 'habilitada', 6, 'Suite principal con sala de estar'),
+('S5', 7, 'habilitada', 6, 'Suite presidencial, servicio VIP'),
 -- Alojamiento 7: Hotel Lima Perú
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('OC1', 2, 'libre', 7, 'Vista al océano Pacífico'),
-('IC3', 1, 'libre', 7, 'Habitación estándar, vista interior');
-
+('OC1', 2, 'habilitada', 7, 'Vista al océano Pacífico'),
+('IC3', 1, 'habilitada', 7, 'Habitación estándar, vista interior'),
 -- Alojamiento 8: Lima Inn Ohio (EEUU)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('10', 6, 'libre', 8, 'Habitación individual, wifi rápido'),
-('21', 1, 'libre', 8, 'Habitación doble estándar');
-
+('10', 6, 'habilitada', 8, 'Habitación individual, wifi rápido'),
+('21', 1, 'habilitada', 8, 'Habitación doble estándar'),
 -- Alojamiento 9: Parador de Granada (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('AL1', 3, 'reservada', 9, 'Suite con vistas directas a la Alhambra'),
-('CL2', 2, 'libre', 9, 'Habitación deluxe, estilo árabe');
-
+('AL1', 3, 'habilitada', 9, 'Suite con vistas directas a la Alhambra'),
+('CL2', 2, 'habilitada', 9, 'Habitación deluxe, estilo árabe'),
 -- Alojamiento 10: Granada Hotel Nicaragua
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('G1', 2, 'libre', 10, 'Vista al lago Cocibolca'),
-('G5', 8, 'libre', 10, 'Habitación con jacuzzi privado');
-
+('G1', 2, 'habilitada', 10, 'Vista al lago Cocibolca'),
+('G5', 8, 'habilitada', 10, 'Habitación con jacuzzi privado'),
 -- Alojamiento 11: Hotel Medellín Colombia
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('POB101', 2, 'libre', 11, 'Vista al barrio El Poblado'),
-('POB205', 4, 'libre', 11, 'Habitación familiar, piso alto');
-
+('POB101', 2, 'habilitada', 11, 'Vista al barrio El Poblado'),
+('POB205', 4, 'habilitada', 11, 'Habitación familiar, piso alto'),
 -- Alojamiento 12: Medellín Rural House (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('C1', 9, 'libre', 12, 'Casa completa, 3 dormitorios'),
-('C2', 10, 'libre', 12, 'Dormitorio colectivo, 6 camas');
-
+('C1', 9, 'habilitada', 12, 'Casa completa, 3 dormitorios'),
+('C2', 10, 'habilitada', 12, 'Dormitorio colectivo, 6 camas'),
 -- Alojamiento 13: Hotel Toledo España
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('T101', 2, 'libre', 13, 'Vista a la catedral'),
-('T202', 3, 'libre', 13, 'Suite en antigua celda monacal');
-
+('T101', 2, 'habilitada', 13, 'Vista a la catedral'),
+('T202', 3, 'habilitada', 13, 'Suite en antigua celda monacal'),
 -- Alojamiento 14: Toledo Grand Hotel (EEUU)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('OH1', 1, 'libre', 14, 'Habitación estándar doble'),
-('OH5', 2, 'libre', 14, 'Habitación ejecutiva, escritorio amplio');
-
+('OH1', 1, 'habilitada', 14, 'Habitación estándar doble'),
+('OH5', 2, 'habilitada', 14, 'Habitación ejecutiva, escritorio amplio'),
 -- Alojamiento 15: Hotel Málaga Palacio (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('MP101', 2, 'libre', 15, 'Vista al puerto deportivo'),
-('MP301', 3, 'libre', 15, 'Suite con balcón panorámico');
-
+('MP101', 2, 'habilitada', 15, 'Vista al puerto deportivo'),
+('MP301', 3, 'habilitada', 15, 'Suite con balcón panorámico'),
 -- Alojamiento 16: Málaga Hostel Colombia
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('D1', 10, 'libre', 16, 'Dormitorio femenino, 4 camas'),
-('D2', 10, 'libre', 16, 'Dormitorio mixto, 6 camas');
-
+('D1', 10, 'habilitada', 16, 'Dormitorio femenino, 4 camas'),
+('D2', 10, 'habilitada', 16, 'Dormitorio mixto, 6 camas'),
 -- Alojamiento 17: Hotel Salamanca Plaza (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('SP1', 2, 'libre', 17, 'Vista a la Plaza Mayor'),
-('SP3', 1, 'libre', 17, 'Habitación clásica, decoración tradicional');
-
+('SP1', 2, 'habilitada', 17, 'Vista a la Plaza Mayor'),
+('SP3', 1, 'habilitada', 17, 'Habitación clásica, decoración tradicional'),
 -- Alojamiento 18: Salamanca Grand México
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('SG101', 1, 'libre', 18, 'Habitación estándar para ejecutivos'),
-('SG201', 2, 'libre', 18, 'Habitación deluxe, zona de trabajo');
-
+('SG101', 1, 'habilitada', 18, 'Habitación estándar para ejecutivos'),
+('SG201', 2, 'habilitada', 18, 'Habitación deluxe, zona de trabajo'),
 -- Alojamiento 19: Hotel Burgos Centro (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('BC1', 1, 'libre', 19, 'Vista lateral a la catedral'),
-('BC5', 2, 'libre', 19, 'Habitación superior, cama king');
-
+('BC1', 1, 'habilitada', 19, 'Vista lateral a la catedral'),
+('BC5', 2, 'habilitada', 19, 'Habitación superior, cama king'),
 -- Alojamiento 20: Burgos Hostel Colombia
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('BH1', 10, 'libre', 20, 'Dormitorio con hamacas'),
-('BH2', 10, 'libre', 20, 'Dormitorio con literas');
-
+('BH1', 10, 'habilitada', 20, 'Dormitorio con hamacas'),
+('BH2', 10, 'habilitada', 20, 'Dormitorio con literas'),
 -- Alojamiento 21: Hotel Santa Cruz Tenerife (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('T101', 2, 'libre', 21, 'Vista al océano Atlántico, balcón privado'),
-('T205', 3, 'reservada', 21, 'Suite con jacuzzi, piscina en azotea');
-
+('T101', 2, 'habilitada', 21, 'Vista al océano Atlántico, balcón privado'),
+('T205', 3, 'reservada', 21, 'Suite con jacuzzi, piscina en azotea'),
 -- Alojamiento 22: Santa Cruz Inn Bolivia
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('B1', 1, 'libre', 22, 'Habitación económica, ventilador de techo'),
-('B5', 6, 'libre', 22, 'Habitación superior, aire acondicionado');
-
+('B1', 1, 'habilitada', 22, 'Habitación económica, ventilador de techo'),
+('B5', 6, 'habilitada', 22, 'Habitación superior, aire acondicionado'),
 -- Alojamiento 23: Santa Cruz Beach Hotel (EEUU)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('SB101', 2, 'ocupada', 23, 'Primera línea de playa, salida directa'),
-('SB302', 8, 'libre', 23, 'Suite con fogata privada en terraza');
-
+('SB101', 2, 'habilitada', 23, 'Primera línea de playa, salida directa'),
+('SB302', 8, 'habilitada', 23, 'Suite con fogata privada en terraza'),
 -- Alojamiento 24: Hotel San José Costa Rica
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('CR101', 2, 'libre', 24, 'Vista al jardín tropical'),
-('CR201', 4, 'libre', 24, 'Habitación familiar, hamacas en balcón');
-
+('CR101', 2, 'habilitada', 24, 'Vista al jardín tropical'),
+('CR201', 4, 'habilitada', 24, 'Habitación familiar, hamacas en balcón'),
 -- Alojamiento 25: San José Inn California (EEUU)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('SJ101', 7, 'libre', 25, 'Habitación tecnológica, escritorio ejecutivo'),
-('SJ202', 1, 'libre', 25, 'Habitación estándar, conexión VPN premium');
-
+('SJ101', 7, 'habilitada', 25, 'Habitación tecnológica, escritorio ejecutivo'),
+('SJ202', 1, 'habilitada', 25, 'Habitación estándar, conexión VPN premium'),
 -- Alojamiento 26: Hotel Palencia España
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('PL1', 1, 'libre', 26, 'Vista a la calle Mayor, bicicleta incluida'),
-('PL3', 2, 'libre', 26, 'Habitación deluxe, cama king size');
-
+('PL1', 1, 'habilitada', 26, 'Vista a la calle Mayor, bicicleta incluida'),
+('PL3', 2, 'habilitada', 26, 'Habitación deluxe, cama king size'),
 -- Alojamiento 27: Palencia Suites México
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('MX1', 3, 'libre', 27, 'Suite con decoración yucateca'),
-('MX5', 3, 'libre', 27, 'Suite con excursión a cenote incluida');
-
+('MX1', 3, 'habilitada', 27, 'Suite con decoración yucateca'),
+('MX5', 3, 'habilitada', 27, 'Suite con excursión a cenote incluida'),
 -- Alojamiento 28: Hotel León España
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('LN1', 2, 'libre', 28, 'Vista a la catedral gótica'),
-('LN3', 5, 'libre', 28, 'Habitación temática leonesa, menú degustación');
-
+('LN1', 2, 'habilitada', 28, 'Vista a la catedral gótica'),
+('LN3', 5, 'habilitada', 28, 'Habitación temática leonesa, menú degustación'),
 -- Alojamiento 29: León Plaza México
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('LM1', 2, 'libre', 29, 'Habitación ejecutiva, zona de trabajo'),
-('LM4', 9, 'libre', 29, 'Suite con taller de artesanías en piel');
-
+('LM1', 2, 'habilitada', 29, 'Habitación ejecutiva, zona de trabajo'),
+('LM4', 9, 'habilitada', 29, 'Suite con taller de artesanías en piel'),
 -- Alojamiento 30: Hotel León Nicaragua
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('NI1', 1, 'libre', 30, 'Habitación colonial, patio interior'),
-('NI3', 2, 'libre', 30, 'Habitación con clases de español incluidas');
-
+('NI1', 1, 'habilitada', 30, 'Habitación colonial, patio interior'),
+('NI3', 2, 'habilitada', 30, 'Habitación con clases de español incluidas'),
 -- Alojamiento 31: Hotel Sevilla España
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('SV1', 2, 'libre', 31, 'Vista al barrio de Santa Cruz'),
-('SV3', 3, 'libre', 31, 'Suite con espectáculo flamenco privado');
-
+('SV1', 2, 'habilitada', 31, 'Vista al barrio de Santa Cruz'),
+('SV3', 3, 'habilitada', 31, 'Suite con espectáculo flamenco privado'),
 -- Alojamiento 32: Sevilla Hostal Colombia
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('SH1', 10, 'libre', 32, 'Dormitorio con terraza comunitaria'),
-('SH2', 10, 'libre', 32, 'Dormitorio con actividades culturales');
-
+('SH1', 10, 'habilitada', 32, 'Dormitorio con terraza comunitaria'),
+('SH2', 10, 'habilitada', 32, 'Dormitorio con actividades culturales'),
 -- Alojamiento 33: Gran Hotel Córdoba Center (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('GC101', 2, 'libre', 33, 'Vista panorámica de la ciudad'),
-('GC301', 3, 'libre', 33, 'Suite con acceso a piscina exterior');
-
+('GC101', 2, 'habilitada', 33, 'Vista panorámica de la ciudad'),
+('GC301', 3, 'habilitada', 33, 'Suite con acceso a piscina exterior'),
 -- Alojamiento 34: Hostal Los Arcos de Córdoba (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('CA1', 1, 'libre', 34, 'Habitación sencilla cerca de la Mezquita'),
-('CA3', 1, 'libre', 34, 'Habitación doble, estilo andaluz');
-
+('CA1', 1, 'habilitada', 34, 'Habitación sencilla cerca de la Mezquita'),
+('CA3', 1, 'habilitada', 34, 'Habitación doble, estilo andaluz'),
 -- Alojamiento 35: Hotel Sevilla Palace (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('SP101', 3, 'libre', 35, 'Suite de lujo con spa privado'),
-('SP201', 2, 'libre', 35, 'Habitación deluxe, plaza Nueva vista');
-
+('SP101', 3, 'habilitada', 35, 'Suite de lujo con spa privado'),
+('SP201', 2, 'habilitada', 35, 'Habitación deluxe, plaza Nueva vista'),
 -- Alojamiento 36: Hostal Santa Cruz Sevilla (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('SC1', 1, 'libre', 36, 'Habitación con desayuno incluido'),
-('SC3', 1, 'libre', 36, 'Habitación estilo tradicional sevillano');
-
+('SC1', 1, 'habilitada', 36, 'Habitación con desayuno incluido'),
+('SC3', 1, 'habilitada', 36, 'Habitación estilo tradicional sevillano'),
 -- Alojamiento 37: Hotel Ribera de Triana (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('RT1', 2, 'libre', 37, 'Vista al río Guadalquivir'),
-('RT3', 2, 'libre', 37, 'Habitación con parking reservado');
-
+('RT1', 2, 'habilitada', 37, 'Vista al río Guadalquivir'),
+('RT3', 2, 'habilitada', 37, 'Habitación con parking reservado'),
 -- Alojamiento 38: Gran Hotel Granada (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('GR1', 3, 'libre', 38, 'Suite con vistas directas a la Alhambra'),
-('GR3', 2, 'libre', 38, 'Habitación deluxe, terraza privada');
-
+('GR1', 3, 'habilitada', 38, 'Suite con vistas directas a la Alhambra'),
+('GR3', 2, 'habilitada', 38, 'Habitación deluxe, terraza privada'),
 -- Alojamiento 39: Hostal Darro Granada (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('DR1', 1, 'libre', 39, 'Habitación no fumadores, ambiente familiar'),
-('DR3', 1, 'libre', 39, 'Habitación con vistas al río Darro');
-
+('DR1', 1, 'habilitada', 39, 'Habitación no fumadores, ambiente familiar'),
+('DR3', 1, 'habilitada', 39, 'Habitación con vistas al río Darro'),
 -- Alojamiento 40: Hotel Albaicín Premium (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('AL1', 3, 'libre', 40, 'Suite premium con vistas al Albaicín'),
-('AL3', 2, 'libre', 40, 'Habitación con restaurante gourmet');
+('AL1', 3, 'habilitada', 40, 'Suite premium con vistas al Albaicín'),
+('AL3', 2, 'habilitada', 40, 'Habitación con restaurante gourmet');
+
 
 select * from habitaciones;
 
@@ -309,6 +249,46 @@ JOIN (
 ) a ON h.id_alojamiento = a.id_alojamiento
 SET h.precio = a.precio;
 
+
+-- Habitación Estándar Doble (ID 1)
+INSERT INTO `habitacion_tipo_caracteristica` (`id_tipo_habitacion`, `id_caracteristica`) VALUES
+(1, 1), (1, 2), (1, 3), (1, 12), (1, 15),
+-- Habitación Deluxe King (ID 2)
+(2, 1), (2, 2), (2, 3), (2, 4), (2, 7), (2, 15),
+-- Suite Ejecutiva (ID 3)
+(3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 9), (3, 13),
+-- Habitación Familiar (ID 4)
+(4, 1), (4, 2), (4, 3), (4, 12), (4, 14), (4, 15),
+-- Habitación Superior con Terraza (ID 5)
+(5, 1), (5, 2), (5, 3), (5, 7), (5, 8), (5, 13),
+-- Suite Nupcial (ID 6)
+(6, 1), (6, 2), (6, 3), (6, 4), (6, 6), (6, 9), (6, 10),
+-- Habitación Triple (ID 7)
+(7, 1), (7, 2), (7, 3), (7, 12), (7, 15),
+-- Suite Familiar Deluxe (ID 8)
+(8, 1), (8, 2), (8, 3), (8, 4), (8, 5), (8, 9), (8, 13),
+-- Habitación Accesible (ID 9)
+(9, 1), (9, 2), (9, 3), (9, 11), (9, 12), (9, 15),
+-- Habitación Económica Individual (ID 10)
+(10, 1), (10, 12), (10, 15),
+-- Suite Presidencial (ID 11)
+(11, 1), (11, 2), (11, 3), (11, 4), (11, 5), (11, 6), (11, 9), (11, 10), (11, 13),
+-- Habitación con Jacuzzi (ID 12)
+(12, 1), (12, 2), (12, 3), (12, 6), (12, 10), (12, 13),
+-- Habitación Connecting (ID 13)
+(13, 1), (13, 2), (13, 3), (13, 12), (13, 14), (13, 15),
+-- Dormitorio Colectivo (ID 14)
+(14, 1), (14, 12), (14, 15);
+
+-- Ver ralaciones de caracteristicas con tipo_habitacion
+SELECT 
+  th.nombre AS tipo_habitacion,
+  GROUP_CONCAT(ch.nombre SEPARATOR ', ') AS caracteristicas,
+  COUNT(*) AS total_caracteristicas
+FROM tipo_habitacion th
+JOIN habitacion_tipo_caracteristica htc ON th.id_tipo_habitacion = htc.id_tipo_habitacion
+JOIN caracteristicas_habitacion ch ON htc.id_caracteristica = ch.id_caracteristica
+GROUP BY th.id_tipo_habitacion;
 
 -- inserts para las caracteristicas que tiene cada alojamiento
 INSERT INTO alojamiento_caracteristica VALUES
@@ -360,8 +340,28 @@ join alojamiento_caracteristica ac on c.id_caracteristica = ac.id_caracteristica
 join alojamientos a on a.id_alojamiento = ac.id_alojamiento
 where a.id_alojamiento = 21;
 
+INSERT INTO `caracteristicas_habitacion` (`nombre`, `icono`, `es_prioritario`) VALUES
+('WiFi Gratis', 'wifi', TRUE),
+('Aire Acondicionado', 'snowflake', TRUE),
+('Televisión Pantalla Plana', 'tv', TRUE),
+('Minibar', 'glass-martini-alt', FALSE),
+('Caja Fuerte', 'lock', FALSE),
+('Jacuzzi Privado', 'hot-tub', TRUE),
+('Vista al Mar', 'mountain', TRUE),
+('Balcón/Terraza', 'door-open', FALSE),
+('Room Service 24h', 'concierge-bell', FALSE),
+('Bañera Hidromasaje', 'bath', FALSE),
+('Adaptado para Movilidad Reducida', 'wheelchair', TRUE),
+('Calefacción', 'temperature-low', FALSE),
+('Cafetera Nespresso', 'coffee', FALSE),
+('Plancha y Tabla de Planchar', 'iron', FALSE),
+('Secador de Pelo', 'wind', FALSE);
 
-INSERT INTO puntaje (id_alojamiento, puntuacion, comentario, is_usuario) VALUES
+select * from caracteristicas_habitacion;
+
+INSERT INTO puntaje (id_alojamiento, puntuacion, comentario, id_usuario) VALUES
+(23, 7.7, 'Muy buena atencion, exelentes vistas naturales.', 5),
+(23, 8.4, 'Volvere el año que viene, muy buena relacion precio calidad.', 7),
 -- Hoteles con puntajes altos (8.0+)
 (3, 9.2, 'Excelente ubicación con vistas impresionantes al río. El servicio fue impecable y las instalaciones muy limpias.', 3),
 (10, 8.5, 'Hermoso hotel colonial con un ambiente muy auténtico. La terraza con vista al lago es increíble.', 4),
@@ -417,6 +417,11 @@ select * from puntaje;
 select * from puntaje where id_alojamiento = 21;
 
 select * from alojamientos where id_alojamiento = 21;
+
+SELECT puntaje.*, usuarios.nombre, usuarios.apellido FROM puntaje
+JOIN usuarios ON puntaje.id_usuario = usuarios.id_usuario
+JOIN alojamientos ON puntaje.id_alojamiento = alojamientos.id_alojamiento
+WHERE puntaje.id_alojamiento = 23;
 
 
 INSERT INTO reservas (id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, habitaciones, estado, precio_total)

@@ -59,9 +59,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Redirigir después de un breve momento para que el usuario vea el mensaje
                     setTimeout(() => {
-                        window.location.href = '../index.html'; // Ajusta la URL de redirección si es necesario
-                    }, 1000); // 1,3 segundos de espera
-
+                        //window.location.href = '../index.html';
+                        if (window.location.pathname.includes('login.html')) {
+                            window.location.href = '../index.html';
+                        } else if (window.location.pathname.includes('alojamiento.html')) {
+                            const navregister = document.getElementById("nav-register")
+                            const navlogin = document.getElementById("nav-login")
+                            const navmis = document.getElementById("nav-mis-reservas")
+                            const navlogout = document.getElementById("nav-logout")
+                            const navavatar = document.getElementById("avatar-img")
+                            document.getElementById('login-form').style.display = 'none';
+                            const user = JSON.parse(sessionStorage.getItem('user'));
+                            const userName = document.getElementById('username');
+                            userName.textContent = `${user.nombre} ${user.apellido}`;
+                            navmis.classList.remove('unloged')
+                            navlogout.classList.remove('unloged')
+                            navregister.classList.add('loged')
+                            navlogin.classList.add('loged')
+                            navmis.classList.add('loged')
+                            navlogout.classList.add('loged')
+                            // navavatar.classList.add('loged')
+                            navavatar.src = '../assets/pic/avatar1.png'
+                            console.log(user.nombre + " loged");
+                        }
+                    }, 1000); // 1,3 segundos de espera                    
+                    
                 } else {
                     mostrarMensajeUI(errorMessageDiv, data.message || `Error: ${response.status}`, 'error-message');
                 }
