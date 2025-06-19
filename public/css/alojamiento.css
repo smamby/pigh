@@ -736,7 +736,6 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
 
 
 .tabla-habitaciones td {
-    background: #f8fafc;
     padding: 1rem 0.75rem;
     text-align: center;
     border-top: 1.5px solid #16b5e0;
@@ -746,15 +745,60 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
 .tabla-habitaciones td:first-child {
     text-align: left;
 }
+.especificaciones {
+    background:#f8fafc;
+}
+.hab-name {
+    font-size:1.1em;
+    color:#4c76b2;
+    font-weight: 600;
+}
+.comodidades {
+    font-size:0.97em; 
+    color:#444; 
+    margin-bottom:0.5em;
+}
+.comodidades-detalle {
+    margin-top:0.3em;
+}
+.cel-huespedes, .cel-costo {
+    text-align:center;
+    background:#f8fafc;
+}
+.task {
+    font-size:0.78em; 
+    color: #4c76b2; 
+    border-radius:5px; 
+    padding:1px 5px; 
+    margin-top:0.2em; 
+    display:inline-block;
+}
+.opcion {
+    color:#176B4D; 
+    font-weight:bold; 
+    margin-bottom:0.3em;
+}
+.opcion span {
+    margin-right:0.3em;
+}
+.cel-select-habitaciones {
+    text-align:center; 
+    background:#f8fafc;
+}
+.select-cant {
+    padding:0.3em 0.7em; 
+    border-radius:6px; 
+    border:1px solid #ccc;
+}
 
-#reservar-ya {
+.reservar-ya {
     background-color: #16B0DA;
     font-weight: 600;
     color: #e5e7eb;
     border-right: none;
     transition: background-color 0.3s ease-in-out;
 }
-#reservar-ya:hover {
+.reservar-ya:hover {
     background-color: #108bad;
 }
 
