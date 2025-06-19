@@ -552,7 +552,7 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     justify-content:flex-start;
 }
 .box-puntuacion {
-    padding: 1em;
+    padding: 1.2em;
     width: auto;
     height: 100px;
     display: flex;
@@ -560,23 +560,22 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     align-items: center;
     justify-content: center;
     border-radius: 14px;
-    background: #f3f4f6;
     box-shadow: 0 2px 8px #0001;
 }
 .box-puntuacion div:nth-child(1) {
     font-weight:bold; 
     font-size:1em; 
-    color:#176B4D; 
+    color:#1f2937; 
     margin-bottom:0.2em;
 }
 .box-puntuacion div:nth-child(2) {
-    color:#fff; 
-    background:#16B0DA; 
+    color:#16B0DA; 
+    background:#caeef2; 
     border-radius:8px; 
     height: 2.5em;
-    padding:0.2em 0.7em;
+    padding:0.2em 0.5em;
     margin-top: 1em; 
-    font-size:1.15em; 
+    font-size:1.5em; 
     font-weight:bold;
     align-content: center;
 }
@@ -590,7 +589,6 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     align-items: center;
     justify-content: center;
     border-radius: 14px;
-    background: #f3f4f6;
     box-shadow: 0 2px 8px #0001;
 }
 #texto-placeholder {
@@ -842,7 +840,7 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
 .box-puntuacion,
 .box-comentarios,
 .box-normas {
-    background: #e5e7eb; /* Gris más oscuro que #f3f4f6 */
+    background: #fff; /* Gris más oscuro que #f3f4f6 */
     border: 1.5px solid #d1d5db;
     box-shadow: 0 2px 8px rgba(22,176,218,0.06);
 }

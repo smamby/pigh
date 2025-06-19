@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `alojamientos` (
   INDEX `idx_ubicacion` (latitud, longitud)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+ALTER TABLE `alojamientos` DROP COLUMN `precio`;
     
 ALTER TABLE alojamientos
 ADD COLUMN promedio_puntaje DECIMAL(2,1) DEFAULT 6,
@@ -359,19 +359,25 @@ SET plazas = 2;
 SET SQL_SAFE_UPDATES = 0;
 
 select * from habitaciones
-where id_alojamiento = 1;
+where id_alojamiento = 23;
 
-INSERT INTO habitaciones (numero_habitacion, id_tipo_habitacion, plazas, estado, id_alojamiento) VALUES (
-  '103B', 1, 3, 'habilitada', 1
-);
 
 UPDATE habitaciones
-SET notas = 'Vista al parque'
-WHERE id_habitacion = 81;
+SET precio = 190
+WHERE id_habitacion = 127;
 
 UPDATE habitaciones
 SET notas = CONCAT(notas, ', cama queen size más una cama individual')
 WHERE id_habitacion = 81;
+
+INSERT INTO `habitaciones` (
+  `numero_habitacion`, `id_tipo_habitacion`, `plazas`, `precio`, 
+  `estado`, `id_alojamiento`, `notas`
+) VALUES (
+  'SB355', 3, 2, 280.00, 
+  'habilitada', 23, 'Sala de trabajo independiente, minibar premium'
+);
+select * from tipo_habitacion where nombre = 'suite ejecutiva';
 
 CREATE TABLE usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY ,
@@ -400,7 +406,7 @@ CREATE TABLE avatares (
     INDEX (id_usuario) COMMENT 'Índice para búsquedas por usuario'
 );
     
-select id_habitacion from habitaciones where id_alojamiento = 21 or id_alojamiento = 22 or id_alojamiento = 23;
+select * from habitaciones where id_alojamiento = 21 or id_alojamiento = 22 or id_alojamiento = 23;
 
 CREATE TABLE reservas (
     id INT AUTO_INCREMENT PRIMARY KEY,

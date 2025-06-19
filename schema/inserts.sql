@@ -187,6 +187,7 @@ INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`,
 -- Alojamiento 23: Santa Cruz Beach Hotel (EEUU)
 ('SB101', 2, 'habilitada', 23, 'Primera línea de playa, salida directa'),
 ('SB302', 8, 'habilitada', 23, 'Suite con fogata privada en terraza'),
+('SB355', 3, 2, 280.00, 'habilitada', 23, 'Sala de trabajo independiente, minibar premium'),
 -- Alojamiento 24: Hotel San José Costa Rica
 ('CR101', 2, 'habilitada', 24, 'Vista al jardín tropical'),
 ('CR201', 4, 'habilitada', 24, 'Habitación familiar, hamacas en balcón'),
