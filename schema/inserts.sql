@@ -102,10 +102,10 @@ select * from alojamientos where id_tipo_alojamiento = 4;
 
 -- Insert tipos de habitacion
 INSERT INTO `tipo_habitacion` (`nombre`, `descripcion`, `capacidad_adultos`, `capacidad_menores`,`tamanio_m2`, `camas_detalle`, `precio_base`) VALUES
-('Habitación Estándar Doble', 'Una habitación cómoda con dos camas individuales o una doble.', 2, 0, 80.00, '2 Camas Individuales', 80.00),
-('Habitación Deluxe King', 'Habitación espaciosa con una cama king-size y vista panorámica.', 2, 1, 120.00, '1 Cama King Size', 120.00),
-('Suite Ejecutiva', 'Suite de lujo con sala de estar separada y comodidades premium.', 2, 2, 250.00, '1 Cama King Size', 250.00),
-('Habitación Familiar', 'Ideal para familias, con espacio para hasta 4 personas.', 2, 2, 150.00, '1 Cama King + 2 Camas Individuales', 150.00),
+('Habitación Estándar Doble', 'Una habitación cómoda con dos camas individuales o una doble.', 2, 0, 35.00, '2 Camas Individuales', 80.00),
+('Habitación Deluxe King', 'Habitación espaciosa con una cama king-size y vista panorámica.', 2, 1, 65.00, '1 Cama King Size', 120.00),
+('Suite Ejecutiva', 'Suite de lujo con sala de estar separada y comodidades premium.', 2, 2, 80.00, '1 Cama King Size', 250.00),
+('Habitación Familiar', 'Ideal para familias, con espacio para hasta 4 personas.', 2, 2, 70.00, '1 Cama King + 2 Camas Individuales', 150.00),
 ('Habitación Superior con Terraza', 'Habitación amplia con terraza privada y vistas a la ciudad.', 2, 1, 28.50, '1 Cama King Size', 180.00),
 ('Suite Nupcial', 'Suite romántica con jacuzzi, decoración premium y detalles especiales.', 2, 0, 45.00, '1 Cama King Size con dosel', 350.00),
 ('Habitación Triple', 'Habitación con tres camas individuales, ideal para grupos.', 3, 0, 24.00, '3 Camas Individuales', 110.00),
@@ -116,6 +116,28 @@ INSERT INTO `tipo_habitacion` (`nombre`, `descripcion`, `capacidad_adultos`, `ca
 ('Habitación con Jacuzzi', 'Habitación con jacuzzi privado en la habitación.', 2, 0, 35.00, '1 Cama King Size', 300.00),
 ('Habitación Connecting', 'Dos habitaciones estándar conectadas por puerta interior.', 4, 2, 40.00, '2 Camas Dobles en cada habitación', 220.00),
 ('Dormitorio Colectivo', 'Opción económica con camas en dormitorio compartido.', 6, 0, 25.00, '6 Camas Individuales', 30.00);
+
+select * from tipo_habitacion;
+
+UPDATE `tipo_habitacion` 
+SET 
+  `tamanio_m2` = 70.00,
+  `camas_detalle` = '1 Cama King + 2 Camas Individuales'
+WHERE `id_tipo_habitacion` = 4;
+
+UPDATE `tipo_habitacion` 
+SET 
+  `tamanio_m2` = 70.00,
+  `camas_detalle` = '1 Cama King + 2 Camas Individuales'
+WHERE `id_tipo_habitacion` = 4;
+
+ALTER TABLE `habitacion` 
+DROP COLUMN plazas;
+
+ALTER TABLE `tipo_habitacion` 
+CHANGE COLUMN `capacidad_adultos` `plazas` TINYINT NOT NULL DEFAULT 2;
+
+select * from reservas;
 
 -- Alojamiento 1: Hotel Patios de Córdoba (España)
 INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
@@ -185,8 +207,8 @@ INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`,
 ('B1', 1, 'habilitada', 22, 'Habitación económica, ventilador de techo'),
 ('B5', 6, 'habilitada', 22, 'Habitación superior, aire acondicionado'),
 -- Alojamiento 23: Santa Cruz Beach Hotel (EEUU)
-('SB101', 2, 'habilitada', 23, 'Primera línea de playa, salida directa'),
-('SB302', 8, 'habilitada', 23, 'Suite con fogata privada en terraza'),
+('SB101', 2, 2, 160.00, 'habilitada', 23, 'Primera línea de playa, salida directa'),
+('SB302', 8, 2, 190.00,'habilitada', 23, 'Suite con fogata privada en terraza'),
 ('SB355', 3, 2, 280.00, 'habilitada', 23, 'Sala de trabajo independiente, minibar premium'),
 -- Alojamiento 24: Hotel San José Costa Rica
 ('CR101', 2, 'habilitada', 24, 'Vista al jardín tropical'),
@@ -239,7 +261,6 @@ INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`,
 -- Alojamiento 40: Hotel Albaicín Premium (España)
 ('AL1', 3, 'habilitada', 40, 'Suite premium con vistas al Albaicín'),
 ('AL3', 2, 'habilitada', 40, 'Habitación con restaurante gourmet');
-
 
 select * from habitaciones;
 

@@ -8,7 +8,7 @@ const Habitacion = {
       const [habitaciones] = await db.query(`
         SELECT h.*, th.nombre AS tipo_habitacion_nombre, 
                th.descripcion AS tipo_habitacion_descripcion,
-               th.capacidad_adultos, th.capacidad_menores,
+               th.plazas,
                th.tamanio_m2, th.camas_detalle, th.precio_base
         FROM habitaciones h
         JOIN tipo_habitacion th ON h.id_tipo_habitacion = th.id_tipo_habitacion
@@ -31,7 +31,7 @@ const Habitacion = {
 
           // Obtener reservas para esta habitación
           const [reservas] = await db.query(`
-            SELECT id, id_usuario, checkin, checkout, adultos, menores, estado, precio_total
+            SELECT id, id_usuario, checkin, checkout, estado, precio_total
             FROM reservas
             WHERE id_habitacion = ? AND estado IN ('activa', 'reservada', 'pagada')
           `, [habitacion.id_habitacion]);
@@ -58,7 +58,7 @@ const Habitacion = {
       const [habitaciones] = await db.query(`
         SELECT h.*, th.nombre AS tipo_habitacion_nombre, 
                th.descripcion AS tipo_habitacion_descripcion,
-               th.capacidad_adultos, th.capacidad_menores,
+               th.plazas,
                th.tamanio_m2, th.camas_detalle, th.precio_base
         FROM habitaciones h
         JOIN tipo_habitacion th ON h.id_tipo_habitacion = th.id_tipo_habitacion
@@ -81,7 +81,7 @@ const Habitacion = {
 
       // Obtener reservas
       const [reservas] = await db.query(`
-        SELECT id, id_usuario, checkin, checkout, adultos, menores, estado, precio_total
+        SELECT id, id_usuario, checkin, checkout, estado, precio_total
         FROM reservas
         WHERE id_habitacion = ?
         ORDER BY checkin
@@ -103,8 +103,7 @@ const Habitacion = {
     try {
       const { 
         numero_habitacion, 
-        id_tipo_habitacion, 
-        plazas, 
+        id_tipo_habitacion,
         precio,
         id_alojamiento,
         notas = null
@@ -112,7 +111,7 @@ const Habitacion = {
 
       const [result] = await db.query(
         `INSERT INTO habitaciones 
-        (numero_habitacion, id_tipo_habitacion, plazas, precio, id_alojamiento, notas)
+        (numero_habitacion, id_tipo_habitacion, precio, id_alojamiento, notas)
         VALUES (?, ?, ?, ?, ?, ?)`,
         [numero_habitacion, id_tipo_habitacion, plazas, precio, id_alojamiento, notas]
       );
@@ -129,8 +128,7 @@ const Habitacion = {
     try {
       const { 
         numero_habitacion, 
-        id_tipo_habitacion, 
-        plazas, 
+        id_tipo_habitacion,
         precio,
         estado,
         id_alojamiento,
@@ -141,7 +139,6 @@ const Habitacion = {
         `UPDATE habitaciones SET
           numero_habitacion = ?,
           id_tipo_habitacion = ?,
-          plazas = ?,
           precio = ?,
           estado = ?,
           id_alojamiento = ?,

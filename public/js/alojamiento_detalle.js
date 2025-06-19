@@ -219,12 +219,83 @@ document.addEventListener('DOMContentLoaded', async () => {
         const services = await resServices.json();
         console.log('servicios:', services);
 
-        const resHabitaciones = await fetch(`http://localhost:3001/api/alojamiento/habitaciones/${alojamientoId}`, {
+        const resHabitaciones = await fetch(`http://localhost:3001/api/habitaciones/alojamiento/${alojamientoId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
         });
+        const habitaciones = await resHabitaciones.json();
+        console.log('habitaciones:', habitaciones);
+        
+        const tbHabitaciones = document.getElementById('tbody-habitaciones');
+        
+        habitaciones.forEach((h, index) => {
+            let caract = h.caracteristicas.map(c => {
+                return `<span class="caracteristica-item">
+                <i class="fa-solid fa-${c.icono}"></i> ${c.nombre}</span>`
+            })
+            let row = `<tr>
+                <td class="especificaciones">
+                    <div class="hab-name hab1">${h.tipo_habitacion_nombre}</div>
+                    <div class="comodidades hab1">${h.camas_detalle} 🛏️🛏️</div> 
+                    <div class="comodidades hab1">${h.tipo_habitacion_descripcion}</div>
+                    <div class="comodidades-detalle hab1">                        
+                        <span class="caracteristica-item" title="Metros cuadrados">📏 ${h.tamanio_m2} m&sup2</span>
+                        ${caract}
+                    </div>
+                </td>
+                <td class="cel-huespedes hab1"><span title="2 huéspedes">👤👤</span></td>
+                <td class="cel-costo hab1">
+                    $32.000
+                    <br>
+                    <span class="task hab1">+11% imp. <span title="Impuestos" style="cursor:pointer;">ℹ️</span></span>
+                </td>
+                <td class="cel-opciones hab1">
+                    <div class="opcion" ><span>✔️</span>Desayuno Incluido</div>
+                    <div class="opcion"><span>✔️</span>Incluye estacionamiento</div>
+                    <div class="opcion"><span>✔️</span>Reembolsable</div>
+                </td>
+                <td class="select-habitaciones hab1">
+                    <select class="select-cant hab1">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </td>
+                <td class="reservar-ya id="res-hab${index}">Reserva ya!</td>
+            </tr> `
+            tbHabitaciones.innerHTML += row; 
+
+        })
+        
+        document.getElementsByClassName('reservar-ya').addEventListener('click' , async () => {
+            let nuevaReserva = { 
+                reserva_id,
+                usuario_id, 
+                alojamiento_id, 
+                fecha_inicio, 
+                fecha_fin, 
+                tipo_habitación,
+                numero_habitacion,
+                precio_total, 
+                estado:'Pendiente' 
+            };
+
+            let resReserva = await fetch('http://localhost:3001/reservas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: nuevaReserva
+            });
+
+            const data = resReserva.json();
+        })
+
+
         
 
         // Galería y side info al mismo nivel y largo

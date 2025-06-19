@@ -752,12 +752,24 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     font-weight: 600;
 }
 .comodidades {
-    font-size:0.97em; 
-    color:#444; 
+    font-size:1.1em; 
+    color:#1f2937; 
     margin-bottom:0.5em;
 }
 .comodidades-detalle {
+    display: flex;
+    flex-wrap: wrap;
     margin-top:0.3em;
+}
+.caracteristica-item {
+    font-size:0.95em; 
+    color:#555454; 
+    margin-right: 1rem;
+    margin-top: 0.4rem;
+    white-space: nowrap; 
+}
+.caracteristica-item i {
+    color:#19212c;
 }
 .cel-huespedes, .cel-costo {
     text-align:center;

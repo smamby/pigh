@@ -114,7 +114,7 @@ Alojamiento.getAll = async (filtros = {}) => {
     SELECT distinct
       a.*,
       h.id_tipo_habitacion,    
-      h.plazas,
+      th.plazas,
       h.precio,
       h.estado,
       h.id_alojamiento,     
@@ -166,11 +166,7 @@ Alojamiento.getAll = async (filtros = {}) => {
     params.push(filtros.precio_max);
   }
 
-  // if (filtros.adultos || filtros.menores) {
-  //   const totalHuespedes = (filtros.adultos || 0) + (filtros.menores || 0);
-  //   query += ' AND (th.capacidad_adultos + th.capacidad_menores) >= ?';
-  //   params.push(totalHuespedes);
-  // }
+
 
   // //--- Agrupación y Orden ---
   // query += `
