@@ -438,7 +438,9 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     cursor: text;
 }
 
-
+.form-group {
+    height: 57px;
+}
 #destinationSelect:focus,
 .form-group select:focus,
 .form-group input[type="date"]:focus {
@@ -446,7 +448,7 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     box-shadow: 0 0 0 1px #02b5e2 , 0 0 0 2px rgba(2, 181, 226, 0.5); 
 }
 .custom-select{
-    width: 90%;
+    width: 70%;
     font-size: small;
     cursor: pointer;
     
@@ -770,6 +772,10 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
 }
 .caracteristica-item i {
     color:#19212c;
+}
+span > .fa-solid .fa-user {
+    font-size:0.75em; 
+    color:#555454;
 }
 .cel-huespedes, .cel-costo {
     text-align:center;

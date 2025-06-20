@@ -305,7 +305,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log(cantXTipo[h.id_tipo_habitacion]);
             let optionsHTML = crearOptions(cantXTipo[h.id_tipo_habitacion])
                 
-            let idInice='res-hab'+index;
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td class="especificaciones">
@@ -317,9 +316,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                         ${caract}
                     </div>
                 </td>
-                <td class="cel-huespedes hab1"><span title="2 huéspedes">👤👤</span></td>
-                <td class="cel-costo hab1">
-                    $32.000
+                <td class="cel-huespedes hab1"><span title="plazas">${'👤'.repeat(h.plazas)}</span></td>
+                <td class="cel-costo hab1" id="cel-costo${index}">
+                    $${h.precio * sessionStorage.getItem('rooms') * sessionStorage.getItem('days')}
                     <br>
                     <span class="task hab1">+11% imp. <span title="Impuestos" style="cursor:pointer;">ℹ️</span></span>
                 </td>
@@ -329,15 +328,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="opcion"><span>✔️</span>Reembolsable</div>
                 </td>
                 <td class="select-habitaciones hab1">
-                    <select class="select-cant hab1">
+                    <select class="select-cant hab${index}" data-class="${h.id_tipo_habitacion}">
                         ${optionsHTML}
                     </select>
                 </td>
-                <td class="reservar-ya" data-class="${h.id_tipo_habitacion}" id="${idInice}">Reserva ya!</td>
+                <td class="reservar-ya" data-class="${h.id_tipo_habitacion}" id="res-hab${index}">Reserva ya!</td>
             `
             tbHabitaciones.appendChild(row);
             const select = row.querySelector('.select-cant');
-            select.value = parseInt(sessionStorage.getItem('rooms') || 1); 
+            let roomsSel = parseInt(sessionStorage.getItem('rooms'));
+            if (cantXTipo[h.id_tipo_habitacion] > roomsSel)  {
+                select.value = roomsSel; 
+            } else {
+                select.value = cantXTipo[h.id_tipo_habitacion]
+                alert(`No hay ${roomsSel} habitaciones disponibles para todas las opciones de habitaciones`)
+            }
         })
 
         document.querySelectorAll('td.reservar-ya').forEach((h, index) => {
@@ -347,6 +352,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             });
         });
+
+        document.querySelectorAll('.select-cant').forEach((option, index) => {
+            option.addEventListener('change', () => {
+                console.log('select change', option.value, index)
+                const mensajeTask = `<br>
+                    <span class="task hab1">+11% imp. <span title="Impuestos" style="cursor:pointer;">ℹ️</span></span>`
+                let celCosto = document.getElementById(`cel-costo${index}`)
+                celCosto.textContent = habitaciones[index].precio * option.value * sessionStorage.getItem('rooms');
+                celCosto.innerHTML += mensajeTask
+            })
+        })
        
 
 
