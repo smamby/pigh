@@ -262,6 +262,7 @@ INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`,
 ('AL1', 3, 'habilitada', 40, 'Suite premium con vistas al Albaicín'),
 ('AL3', 2, 'habilitada', 40, 'Habitación con restaurante gourmet');
 
+
 select * from habitaciones;
 
 UPDATE habitaciones h
@@ -271,6 +272,19 @@ JOIN (
 ) a ON h.id_alojamiento = a.id_alojamiento
 SET h.precio = a.precio;
 
+INSERT INTO `habitaciones` (
+  `numero_habitacion`, `id_tipo_habitacion`, `plazas`, `precio`, 
+  `estado`, `id_alojamiento`, `notas`
+) VALUES 
+('SB102', 2, 2, 160.00, 'habilitada', 23, 'Primera línea de playa, salida directa'),
+('SB303', 8, 2, 190.00, 'habilitada', 23, 'Suite con fogata privada en terraza'),
+('SB356', 3, 2, 280.00, 'habilitada', 23, 'Sala de trabajo independiente, minibar premium'),
+('SB103', 2, 2, 160.00, 'habilitada', 23, 'Primera línea de playa, salida directa'),
+('SB304', 8, 2, 190.00, 'habilitada', 23, 'Suite con fogata privada en terraza'),
+('SB357', 3, 2, 280.00, 'habilitada', 23, 'Sala de trabajo independiente, minibar premium'),
+('SB104', 2, 2, 160.00, 'habilitada', 23, 'Primera línea de playa, salida directa'),
+('SB305', 8, 2, 190.00, 'habilitada', 23, 'Suite con fogata privada en terraza'),
+('SB358', 3, 2, 280.00, 'habilitada', 23, 'Sala de trabajo independiente, minibar premium');
 
 -- Habitación Estándar Doble (ID 1)
 INSERT INTO `habitacion_tipo_caracteristica` (`id_tipo_habitacion`, `id_caracteristica`) VALUES

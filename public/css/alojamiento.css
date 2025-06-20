@@ -800,14 +800,23 @@ font-size: 1.2em; /* opcional, ajusta el tamaño */
     border-radius:6px; 
     border:1px solid #ccc;
 }
-
+.select-cant option[selected] {
+  font-weight: bold;
+  background-color: #e6f7ff;
+}
 .reservar-ya {
+    cursor: pointer;
+    padding: 1em;
     background-color: #16B0DA;
     font-weight: 600;
     color: #e5e7eb;
-    border-right: none;
+    border-bottom: 2px solid #caeef2;
     transition: background-color 0.3s ease-in-out;
 }
+.reservar-ya:last-child {
+    border-bottom: none;
+}
+
 .reservar-ya:hover {
     background-color: #108bad;
 }

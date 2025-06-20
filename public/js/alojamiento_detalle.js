@@ -225,17 +225,89 @@ document.addEventListener('DOMContentLoaded', async () => {
                 'Content-Type': 'application/json'
             },
         });
-        const habitaciones = await resHabitaciones.json();
+        const habitacionesTotales = await resHabitaciones.json();
+
+       // Filtrar habiotaciones por disponibilidad
+        const fechaCheckin = new Date(sessionStorage.getItem('checkin'));
+        const fechaCheckout = new Date(sessionStorage.getItem('checkout'));
+        
+        let cantXTipo = {};
+        let habitacionesDisponibles = [];
+
+        habitacionesTotales.forEach(h => {
+             cantXTipo[h.id_tipo_habitacion] = (cantXTipo[h.id_tipo_habitacion] || 0) + 1;
+        });
+
+        habitacionesTotales.forEach(h => {
+            let estaDisponible = true;
+            let habReservadas = 0;
+
+            h.reservas.forEach( reserva => {
+                const reservaCheckin = new Date(reserva.checkin);
+                const reservaCheckout = new Date(reserva.checkout);
+
+                console.log('fechaCheckin', fechaCheckin);
+                console.log('fechaCheckout',fechaCheckout);       
+                console.log('reservaCheckin',reservaCheckin)    
+                console.log('reservaCheckout',reservaCheckout)
+
+                if (
+                    (fechaCheckin < reservaCheckout && fechaCheckout > reservaCheckin) ||
+                    (fechaCheckin >= reservaCheckin && fechaCheckin < reservaCheckout) ||
+                    (fechaCheckout > reservaCheckin && fechaCheckout <= reservaCheckout)
+                ) {
+                    estaDisponible = false;
+                    habReservadas = reserva.habitaciones;
+                }
+            });
+            console.log('disponible', estaDisponible)
+            if (estaDisponible) {
+                habitacionesDisponibles.push(h);
+            } else {
+                cantXTipo[h.id_tipo_habitacion] -= habReservadas;
+            }            
+        });
+
+
+        const habitaciones = [];
+        const tiposContados = new Set();
+
+        habitacionesDisponibles.forEach(h => {
+            if (!tiposContados.has(h.id_tipo_habitacion)) {
+                tiposContados.add(h.id_tipo_habitacion);
+                habitaciones.push(h);
+            }
+        });
+
         console.log('habitaciones:', habitaciones);
+        console.log('cantidades', cantXTipo)
+
         
         const tbHabitaciones = document.getElementById('tbody-habitaciones');
+        tbHabitaciones.innerHTML = '';
         
+        function crearOptions(cantidad) {
+            let optSelect = ``;
+            for (let i=0; i <= cantidad; i++) {
+                optSelect += `<option value="${i}">${i}</option>`
+                
+            };
+            return optSelect;
+        };
+
         habitaciones.forEach((h, index) => {
-            let caract = h.caracteristicas.map(c => {
-                return `<span class="caracteristica-item">
-                <i class="fa-solid fa-${c.icono}"></i> ${c.nombre}</span>`
-            })
-            let row = `<tr>
+            let caract = h.caracteristicas.map(c => `<span class="caracteristica-item">
+                    <i class="fa-solid fa-${c.icono}"></i>${c.nombre}
+                </span>`
+            ).join('');
+
+
+            console.log(cantXTipo[h.id_tipo_habitacion]);
+            let optionsHTML = crearOptions(cantXTipo[h.id_tipo_habitacion])
+                
+            let idInice='res-hab'+index;
+            const row = document.createElement('tr');
+            row.innerHTML = `
                 <td class="especificaciones">
                     <div class="hab-name hab1">${h.tipo_habitacion_nombre}</div>
                     <div class="comodidades hab1">${h.camas_detalle} 🛏️🛏️</div> 
@@ -258,42 +330,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </td>
                 <td class="select-habitaciones hab1">
                     <select class="select-cant hab1">
-                        <option>0</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                        ${optionsHTML}
                     </select>
                 </td>
-                <td class="reservar-ya id="res-hab${index}">Reserva ya!</td>
-            </tr> `
-            tbHabitaciones.innerHTML += row; 
-
+                <td class="reservar-ya" data-class="${h.id_tipo_habitacion}" id="${idInice}">Reserva ya!</td>
+            `
+            tbHabitaciones.appendChild(row);
+            const select = row.querySelector('.select-cant');
+            select.value = parseInt(sessionStorage.getItem('rooms') || 1); 
         })
-        
-        document.getElementsByClassName('reservar-ya').addEventListener('click' , async () => {
-            let nuevaReserva = { 
-                reserva_id,
-                usuario_id, 
-                alojamiento_id, 
-                fecha_inicio, 
-                fecha_fin, 
-                tipo_habitación,
-                numero_habitacion,
-                precio_total, 
-                estado:'Pendiente' 
-            };
 
-            let resReserva = await fetch('http://localhost:3001/reservas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: nuevaReserva
+        document.querySelectorAll('td.reservar-ya').forEach((h, index) => {
+            h.addEventListener('click', () => {
+                const tipoHabitacion = h.getAttribute('data-class');
+                console.log('Tipo habitacion elegida', tipoHabitacion);
+
             });
-
-            const data = resReserva.json();
-        })
+        });
+       
 
 
         
