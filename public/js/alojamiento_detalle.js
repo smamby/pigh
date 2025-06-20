@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             tbHabitaciones.appendChild(row);
             const select = row.querySelector('.select-cant');
             let roomsSel = parseInt(sessionStorage.getItem('rooms'));
-            if (cantXTipo[h.id_tipo_habitacion] > roomsSel)  {
+            if (cantXTipo[h.id_tipo_habitacion] >= roomsSel)  {
                 select.value = roomsSel; 
             } else {
                 select.value = cantXTipo[h.id_tipo_habitacion]
@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Botón reservar arriba, hace scroll a la tabla de disponibilidad
         const reservarBtn = `
-            <button onclick="document.getElementById('tabla-habitaciones').scrollIntoView({behavior:'smooth'});" 
+            <button onclick="document.getElementById('disponibilidad').scrollIntoView({behavior:'smooth'});" 
                 style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.7em 2em; font-weight:bold; font-size:1em; cursor:pointer; margin-left:2em;">
                 Reservar
             </button>
@@ -450,7 +450,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <p>${alojamiento.descripcion || 'No disponible.'}</p>
                 <hr style="margin:1.5em 0 0.5em 0; border:0; border-top:1.5px solid #e5e7eb;">
             </section>
-            <h2 style="margin-top:2.5em;">Disponibilidad</h2>
+            <h2 id="disponibilidad" style="margin-top:2.5em;">Disponibilidad</h2>
         `;
 
         document.getElementById('comentario-inferior').innerHTML = comentarioHTML
