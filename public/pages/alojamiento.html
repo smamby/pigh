@@ -68,11 +68,11 @@
                     </div>
                     <div class="form-group">
                         <label for="checkin">Check-in</label>
-                        <input type="date" id="checkinInput">
+                        <input class="input-date-in" type="date" id="checkinInput">
                     </div>
                     <div class="form-group">
                         <label for="checkout">Check-out</label>
-                        <input type="date" id="checkoutInput">
+                        <input class="input-date-out" type="date" id="checkoutInput">
                     </div>
                     <div class="form-group">
                         <label for="guestsDisplay">Huéspedes</label>
@@ -101,11 +101,11 @@
                 <form class="search-form">
                     <div class="form-group">
                         <label>Check in</label>
-                        <input id="modifCheckinInput" type="date">
+                        <input class="input-date-in" id="modifCheckinInput" type="date">
                     </div>
                     <div class="form-group">
                         <label>Check out</label>
-                        <input id="modifCheckoutInput" type="date">
+                        <input class="input-date-out" id="modifCheckoutInput" type="date">
                     </div>
                     <div class="form-group">
                         <label for="modiGuestsDisplay">Huéspedes</label>
@@ -172,8 +172,9 @@
         </div>
     </div>
 
-         
+    <div class="login-overlay" id="loginModal">
         <form id="login-form"> <!-- reutiliza el CSS del formulario de registro -->
+            <span class="modal-close-button-login" id="closeModalBtnLogin">&times;</span>
             <div id="modal-cont-logo" class="logo">
                 <img src="../assets/logo-check-inn.png" alt="Check-inn" class="logo-image-modal">
             </div>
@@ -195,7 +196,8 @@
             <button type="submit" class="btn" id="btn-login-modal">Ingresar</button>
             <button type="button" onclick="location.href='../index.html'" id="btn-inicio-modal" class="btn-ax">Inicio</button>
             <button type="button" onclick="location.href='register.html'" id="btn-register-modal" class="btn-ax">Crear cuenta</button>
-        </form>    
+        </form>
+    </div>  
     
 
     

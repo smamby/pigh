@@ -265,26 +265,26 @@ checkin.min = today;
 checkin.addEventListener('change', () => {
 const checkinDate = new Date(checkin.value);
 
-if (!isNaN(checkinDate)) {
-    // Activar el input de checkout
-    checkout.disabled = false;
+    if (!isNaN(checkinDate)) {
+        // Activar el input de checkout
+        checkout.disabled = false;
 
-    // Agregar 1 día
-    checkinDate.setDate(checkinDate.getDate() + 1);
+        // Agregar 1 día
+        checkinDate.setDate(checkinDate.getDate() + 1);
 
-    // Formatear en YYYY-MM-DD
-    const minCheckout = checkinDate.toISOString().split('T')[0];
-    checkout.min = minCheckout;
+        // Formatear en YYYY-MM-DD
+        const minCheckout = checkinDate.toISOString().split('T')[0];
+        checkout.min = minCheckout;
 
-    // (Opcional) Resetear valor si quedó anterior al nuevo mínimo
-    if (checkout.value < minCheckout) {
-    checkout.value = minCheckout;
+        // (Opcional) Resetear valor si quedó anterior al nuevo mínimo
+        if (checkout.value < minCheckout) {
+        checkout.value = minCheckout;
+        }
+    } else {
+        // Si se borra el valor de checkin, deshabilita checkout
+        checkout.disabled = true;
+        checkout.value = '';
     }
-} else {
-    // Si se borra el valor de checkin, deshabilita checkout
-    checkout.disabled = true;
-    checkout.value = '';
-}
 });
 
 // busquedas con cards tipo alojamiento

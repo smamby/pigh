@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const API_BASE_URL = 'http://localhost:3001/api';
     const contenedor = document.getElementById('subdiv-content');
     const urlParams = new URLSearchParams(window.location.search);
-    const alojamientoId = urlParams.get('id');
+    const alojamientoId = sessionStorage.getItem('alojamientoId');
 
     if (!alojamientoId) {
         contenedor.innerHTML = '<p class="error">No se especificó un ID de alojamiento.</p>';
@@ -33,13 +33,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (e) {
             puntajes = [];
         }
-
-        // // Calcular promedio dinámico si hay puntajes
-        // const promedio = puntajes.length
-        //     ? (puntajes.reduce((acc, p) => acc + parseFloat(p.puntuacion), 0) / puntajes.length).toFixed(1)
-        //     : (alojamiento.promedio_puntaje || 8.7);
-
-        // Comentario destacado (el más reciente con comentario)
         
         // Renderizar lista de comentarios para la sección de comentarios
         const puntaje = puntajes[Math.floor(Math.random() * puntajes.length)];
@@ -72,6 +65,93 @@ document.addEventListener('DOMContentLoaded', async () => {
         let RoomsInput = sessionStorage.getItem('rooms');
         let checkinInput = document.getElementById('checkinInput');
         let checkoutInput = document.getElementById('checkoutInput');
+        let modifCheckinInput = document.getElementById('modifCheckinInput');        
+        let modifCheckoutInput = document.getElementById('modifCheckoutInput');
+
+        // logica de calendario        
+        const today = new Date().toISOString().split('T')[0];
+        checkinInput.min = today;
+        modifCheckinInput.min = today
+
+        let checkinDate = new Date(sessionStorage.getItem('checkin'));
+        checkinDate.setDate(checkinDate.getDate() + 1)
+        let minCheckout = checkinDate.toISOString().split('T')[0];
+        checkoutInput.min = minCheckout;
+        modifCheckoutInput.min = minCheckout;
+
+        checkinInput.addEventListener('change', () => {
+            const checkinDate = new Date(checkinInput.value);
+
+            if (!isNaN(checkinDate)) {
+                // Activar el input de checkout
+                checkoutInput.disabled = false;
+
+                // Agregar 1 día
+                checkinDate.setDate(checkinDate.getDate() + 1);
+
+                // Formatear en YYYY-MM-DD
+                const minCheckout = checkinDate.toISOString().split('T')[0];
+                checkoutInput.min = minCheckout;
+                modifCheckoutInput.min = minCheckout;
+                console.log(checkoutInput)
+
+                // (Opcional) Resetear valor si quedó anterior al nuevo mínimo
+                if (checkoutInput.value < minCheckout) {
+                checkoutInput.value = minCheckout;
+                modifCheckoutInput.value = minCheckout;
+                }
+                sessionStorage.setItem('checkin', checkinInput.value)    
+                sessionStorage.setItem('checkout', checkoutInput.value)
+            } else {
+                // Si se borra el valor de checkin, deshabilita checkout
+                checkoutInput.disabled = true;
+                checkoutInput.value = '';
+            }
+        });
+        modifCheckinInput.addEventListener('change', () => {
+            const modifCheckinDate = new Date(modifCheckinInput.value);
+
+            if (!isNaN(modifCheckinDate)) {
+                // Activar el input de checkout
+                modifCheckoutInput.disabled = false;
+
+                // Agregar 1 día
+                modifCheckinDate.setDate(modifCheckinDate.getDate() + 1);
+
+                // Formatear en YYYY-MM-DD
+                const minCheckout = modifCheckinDate.toISOString().split('T')[0];
+                modifCheckoutInput.min = minCheckout;
+                checkoutInput.min = minCheckout;
+
+                // (Opcional) Resetear valor si quedó anterior al nuevo mínimo
+                if (modifCheckoutInput.value < minCheckout) {
+                modifCheckoutInput.value = minCheckout;
+                checkoutInput.value = minCheckout;
+                }
+                sessionStorage.setItem('checkin', modifCheckinInput.value)    
+                sessionStorage.setItem('checkout', modifCheckoutInput.value)
+            } else {
+                // Si se borra el valor de checkin, deshabilita checkout
+                modifCheckoutInput.disabled = true;
+                modifCheckoutInput.value = '';
+            }
+        });
+        document.querySelectorAll('.input-date-in').forEach( input => {
+            input.addEventListener('change', () => {
+                //console.log('date chaged', checkinInput.value);
+                sessionStorage.setItem('checkin', input.value);
+                checkinInput.value = input.value
+                modifCheckinInput.value = input.value;
+            });
+        })
+        document.querySelectorAll('.input-date-out').forEach( input => {
+            input.addEventListener('change', () => {
+                //console.log('date chaged', checkoutInput.value);
+                sessionStorage.setItem('checkout', input.value);
+                checkoutInput.value = input.value;
+                modifCheckoutInput.value = input.value;
+            });
+        })
 
         // Breadcrumb
         let idTipoAloj = alojamiento.tipo_alojamiento_id;
@@ -83,37 +163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         tipoAloj.textContent = tipoAlojamiento;
         paisAloj.textContent = alojamiento.pais;
         ciudadAloj.textContent = alojamiento.ciudad;
-        nombreAloj.textContent += alojamiento.nombre;
-        
-        // Logica de calendarios para checkin checkout
-        // Establecer mínimo para hoy
-        const today = new Date().toISOString().split('T')[0];
-        checkinInput.min = today;
-
-        checkinInput.addEventListener('change', () => {
-        const checkinDate = new Date(checkinInput.value);
-
-        if (!isNaN(checkinDate)) {
-            // Activar el input de checkout
-            checkoutInput.disabled = false;
-
-            // Agregar 1 día
-            checkinDate.setDate(checkinDate.getDate() + 1);
-
-            // Formatear en YYYY-MM-DD
-            const minCheckout = checkinDate.toISOString().split('T')[0];
-            checkoutInput.min = minCheckout;
-
-            // (Opcional) Resetear valor si quedó anterior al nuevo mínimo
-            if (checkoutInput.value < minCheckout) {
-            checkoutInput.value = minCheckout;
-            }
-        } else {
-            // Si se borra el valor de checkin, deshabilita checkout
-            checkoutInput.disabled = true;
-            checkoutInput.value = '';
-        }
-        });
+        nombreAloj.textContent += alojamiento.nombre;        
 
         // Busqueda desde breadcrumb
         inicio.addEventListener('click', () => {
@@ -455,9 +505,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         document.getElementById('comentario-inferior').innerHTML = comentarioHTML
 
-        const modifCheckinInput = document.getElementById('modifCheckinInput');
-        const modifCheckoutInput = document.getElementById('modifCheckoutInput');
-
         checkinInput.value = sessionStorage.getItem('checkin');
         checkoutInput.value = sessionStorage.getItem('checkout');
         modifCheckinInput.value = sessionStorage.getItem('checkin');
@@ -512,11 +559,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             adultsHiddenInput.value = AdultsInput;
             childrenHiddenInput.value = ChildrenInput;
             roomsHiddenInput.value = RoomsInput;
+
+            sessionStorage.setItem('adults', AdultsInput)
+            sessionStorage.setItem('children', ChildrenInput)
+            sessionStorage.setItem('rooms', RoomsInput)
+            console.log('save guest btn')
         
             // Update the display text
             guestsDisplay.textContent = `${AdultsInput} adultos, ${ChildrenInput} menores, ${RoomsInput} habitación${RoomsInput !== 1 ? 'es' : ''}`;
             modifGuestsDisplayText.textContent = `${AdultsInput} Adultos, ${ChildrenInput} Niños, ${RoomsInput} Habitaciones`;
-            guestsModal.style.display = 'none'; // Hide the modal
+            guestsModal.style.display = 'none'; 
         });
         
         // Close modal if clicking outside
@@ -534,15 +586,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 const btnLogin = document.getElementById('nav-login');
-const modalLogin = document.getElementById('login-form');
+const modalLogin = document.getElementById('loginModal');
+const closeLoginBtn = document.getElementById('closeModalBtnLogin');
 btnLogin.addEventListener('click', (e) => {
     e.preventDefault();
     modalLogin.style.display = 'grid';
 });
-
-document.getElementById('btn-login-modal').addEventListener('click', () => {
-
+modalLogin.addEventListener('click', (event) => {
+    if (event.target === modalLogin) {
+        modalLogin.style.display = 'none';
+    }
 });
+closeLoginBtn.addEventListener('click', () => {
+    modalLogin.style.display = 'none'; 
+});
+
 
 document.getElementById('nav-logout').addEventListener('click', function (e) {
     e.preventDefault(); // Evita que navegue inmediatamente
