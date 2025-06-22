@@ -1,4 +1,4 @@
-<img src="public/assets/logo-check-inn.png" height="50" alt="checkinn logo">
+<img src="public/assets/logo-check-inn.png" height="100" alt="checkinn logo">
 
 # CheckInn 🏨
 
