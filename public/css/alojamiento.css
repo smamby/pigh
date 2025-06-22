@@ -910,6 +910,18 @@ span > .fa-solid .fa-user {
     margin-bottom:2em;
 }
 
+.custom-swal-popup {
+    border-radius: 8px !important;
+}
+
+.custom-swal-icon {
+    color: #caeef2 !important;
+}
+
+.swal2-styled.swal2-confirm {
+    border-radius: 8px !important;
+}
+
 
 
 

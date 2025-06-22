@@ -483,6 +483,7 @@ where checkin > '2025-06-04' and checkout < '2025-06-08';
 select * from habitaciones where id_alojamiento = 21 or id_alojamiento = 22 or id_alojamiento = 23;
 select * from alojamientos where id_alojamiento = 21 or id_alojamiento = 22 or id_alojamiento = 23;
 select * from habitaciones where id_tipo_habitacion = 2 && id_alojamiento = 23;
+select * from habitaciones where id_habitacion = 130 && id_alojamiento = 25;
 
 SELECT 
       a.id_alojamiento,

@@ -438,10 +438,33 @@ document.addEventListener('DOMContentLoaded', async () => {
                     })                    
                 });
                 const respuestaReserva = await resultReserva.json();
+                
+                // if (respuestaReserva.ok) {
+                //     alert(`Reserva, realizada con exito: ${respuestaReserva['message']}`);
+                // }
                 console.log(respuestaReserva);
-            });
-        });
-
+                const grupo = respuestaReserva.reserva.reserva;
+                let precioTotal = grupo[0].precioFinalParaGuardar * sessionStorage.getItem('days')
+                Swal.fire({
+                title: '✅ Reserva Confirmada',
+                html: `
+                    <b>Habitaciones:</b> ${grupo.map(r => r.numero_habitacion).join(', ')}<br/>
+                    <b>Check-in:</b> ${grupo[0].checkin}<br/>
+                    <b>Check-out:</b> ${grupo[0].checkout}<br/>
+                    <b>Precio total:</b> $${precioTotal}
+                `,
+                icon: 'success',
+                customClass: {
+                    popup: 'custom-swal-popup',
+                    icon: 'custom-swal-icon'
+                },
+                confirmButtonColor: '#16B0DA',
+                buttonsStyling: true,
+                confirmButtonAriaLabel: 'OK'
+                });
+            })            
+        })
+        
         document.querySelectorAll('.select-cant').forEach((option, index) => {
             option.addEventListener('change', () => {
                 console.log('select change', option.value, index)
