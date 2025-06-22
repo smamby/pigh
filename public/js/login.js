@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             // navavatar.classList.add('loged')
                             navavatar.src = '../assets/pic/avatar1.png'
                             console.log(user.nombre + " loged");
+                            modalLogin.style.display = 'none';
                         }
                     }, 1000); // 1,3 segundos de espera                    
                     

@@ -81,7 +81,7 @@ const Habitacion = {
 
       // Obtener reservas
       const [reservas] = await db.query(`
-        SELECT id, id_usuario, checkin, checkout, estado, precio_total
+        SELECT id, id_usuario, checkin, checkout, estado
         FROM reservas
         WHERE id_habitacion = ?
         ORDER BY checkin

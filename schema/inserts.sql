@@ -460,7 +460,7 @@ JOIN alojamientos ON puntaje.id_alojamiento = alojamientos.id_alojamiento
 WHERE puntaje.id_alojamiento = 23;
 
 
-INSERT INTO reservas (id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado, precio_total)
+INSERT INTO reservas (id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado)
 VALUES
 (6, 163, 23, '2025-06-25', '2025-06-27', 3, 0, 'pendiente', 160.00),
 (6, 126, 23, '2025-06-25', '2025-06-27', 3, 0, 'pendiente', 160.00),

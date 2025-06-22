@@ -417,6 +417,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 modalLogin.style.display = 'none';
                 let checkinRes = sessionStorage.getItem('checkin');
                 let checkoutRes = sessionStorage.getItem('checkout');
+                const user = JSON.parse(sessionStorage.getItem('user'));
                 const resultReserva = await fetch('http://localhost:3001/api/reservas/', {
                     method: 'POST',
                     headers: {
@@ -424,17 +425,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                         'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                     },
                     body: JSON.stringify({                         
-                        id_usuario: sessionStorage.getItem('user.id_usuario'), 
-                        id_alojamiento: h.id_alojamiento,
-                        id_tipo_habitacion: h.id_tipo_alojamiento, 
-                        id_habitacion: h.id_habitacion,
+                        id_usuario: user['id_usuario'],
+                        id_alojamiento: sessionStorage.getItem('alojamientoId'),
+                        id_tipo_habitacion: tipoHabitacion, 
                         checkin: checkinRes, 
                         checkout: checkoutRes, 
                         adultos: Number(sessionStorage.getItem('adults')), 
                         menores: Number(sessionStorage.getItem('clildren')),
                         days: Math.ceil((new Date(checkoutRes) - new Date(checkinRes)) / (1000 * 60 * 60 * 24)),
-                        estado : 'reservada'
-                    })
+                        estado : 'reservada',
+                        cantidadBuscada: cantHabRes.value
+                    })                    
                 });
                 const respuestaReserva = await resultReserva.json();
                 console.log(respuestaReserva);

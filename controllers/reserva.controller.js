@@ -6,32 +6,34 @@ const Alojamiento = require('../models/alojamiento.model'); // Para obtener dato
 // Crear una nueva reserva
 exports.createReserva = async (req, res) => {
   try {
-    const usuario_id = req.user.id; // Obtenido del token JWT (middleware authenticateToken)
-    const { alojamiento_id, fecha_inicio, fecha_fin } = req.body;
+    const usuario_id = req.usuario_id; // Obtenido del token JWT (middleware authenticateToken)
+    //const { alojamiento_id, fecha_inicio, fecha_fin } = req.body;
 
     // Validaciones básicas
-    if (!alojamiento_id || !fecha_inicio || !fecha_fin) {
-      return res.status(400).json({ message: 'El ID del alojamiento, fecha de inicio y fecha de fin son obligatorios.' });
-    }
+    // if (!alojamiento_id || !fecha_inicio || !fecha_fin) {
+    //   return res.status(400).json({ message: 'El ID del alojamiento, fecha de inicio y fecha de fin son obligatorios.' });
+    // }
 
     // Convertir fechas a formato YYYY-MM-DD por si vienen en otro formato,
     // aunque el input type="date" del HTML suele enviar este formato.
     // Es buena práctica asegurarse o validar el formato esperado por MySQL.
-    const formattedFechaInicio = new Date(fecha_inicio).toISOString().slice(0, 10);
-    const formattedFechaFin = new Date(fecha_fin).toISOString().slice(0, 10);
+    // const formattedFechaInicio = new Date(fecha_inicio).toISOString().slice(0, 10);
+    // const formattedFechaFin = new Date(fecha_fin).toISOString().slice(0, 10);
 
 
-    const nuevaReservaData = {
-      usuario_id,
-      alojamiento_id: parseInt(alojamiento_id),
-      fecha_inicio: formattedFechaInicio,
-      fecha_fin: formattedFechaFin,
+    // const nuevaReservaData = {
+    //   usuario_id,
+    //   alojamiento_id: parseInt(alojamiento_id),
+    //   fecha_inicio: formattedFechaInicio,
+    //   fecha_fin: formattedFechaFin,
       // precio_total se calculará en el modelo
       // estado por defecto es 'Pendiente' en el modelo
-    };
-
-    const reserva = await Reserva.create(nuevaReservaData);
-    res.status(201).json({ message: 'Reserva creada exitosamente.', reserva });
+      //};
+      
+      //const reserva = await Reserva.create(nuevaReservaData);
+      console.log('controller-req.body', req.body);
+      const reserva = await Reserva.create(req.body);
+      res.status(201).json({ message: 'Reserva creada exitosamente.', reserva });
 
   } catch (error) {
     console.error('Error al crear reserva:', error);
