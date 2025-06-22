@@ -1,4 +1,4 @@
-![checkinn logo](public\assets\logo-check-inn.png)
+![checkinn logo](public/assets/logo-check-inn.png)
 
 # CheckInn 🏨
 
