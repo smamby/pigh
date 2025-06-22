@@ -1,3 +1,5 @@
+![checkinn logo]('public\assets\logo-check-inn.png)
+
 # CheckInn 🏨
 
 Plataforma web integral diseñada para la gestión completa de alojamientos turísticos. CheckInn facilita la conexión entre huéspedes, propietarios de alojamientos y administradores del sistema, proporcionando herramientas especializadas para cada tipo de usuario.
