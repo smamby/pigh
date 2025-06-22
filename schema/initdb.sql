@@ -406,7 +406,10 @@ CREATE TABLE avatares (
     INDEX (id_usuario) COMMENT 'Índice para búsquedas por usuario'
 );
     
-select * from habitaciones where id_alojamiento = 21 or id_alojamiento = 22 or id_alojamiento = 23;
+select * from habitaciones where id_alojamiento = 23;
+select count(*) from habitaciones h
+        WHERE id_alojamiento = 23
+        AND h.id_tipo_habitacion = 2;
 
 CREATE TABLE reservas (
     id INT AUTO_INCREMENT PRIMARY KEY,

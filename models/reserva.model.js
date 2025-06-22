@@ -35,122 +35,158 @@ Reserva.create = async (nuevaReserva) => {
     const connection = await db.getConnection();
     await connection.beginTransaction();
 
-    try {
-      // 1. Verificar si el alojamiento está disponible para esas fechas (evitar superposiciones)
-      // Esta consulta busca si existe alguna reserva para el mismo alojamiento que se solape con las fechas deseadas.
-      // Dos periodos [A, B] y [C, D] se solapan si A < D y C < B.
-      const [reservasSuperpuestas] = await connection.query(
-        `SELECT * FROM reservas r 
-        JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
-         WHERE r.id_alojamiento = ?
-           AND h.id_tipo_habitacion = ?
-           AND r.estado IN ('pendiente', 'confirmada', 'reservada', 'activa', 'pagada')
-           AND r.checkin < ?
-           AND r.checkout > ?`,
-        [id_alojamiento, id_tipo_habitacion, checkout, checkin]
-      );
+    const today = new Date().toISOString().split('T')[0];
+    const [hayReservas] = await connection.query(
+      `SELECT r.id FROM reservas r
+      JOIN tipo_habitacion th ON r.id_habitacion = th.id_tipo_habitacion
+      WHERE checkin >= ?
+      AND id_alojamiento = ?
+      AND id_tipo_habitacion = ?`,
+      [checkin, id_alojamiento, id_tipo_habitacion]
+    )
 
-      const [rows] = await connection.query(
-        `select count(*) AS habitaciones_existentes from habitaciones h
-        WHERE id_alojamiento = ?
-        AND h.id_tipo_habitacion = ?`,
-        [id_alojamiento, id_tipo_habitacion]
-      )
-      const habitacionesExistentes = rows[0].habitaciones_existentes;
+    let precioFinalParaGuardar = 0;
 
-      const [reservas] = await connection.query(
-        `SELECT  r.* FROM reservas r
-         JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
-         WHERE h.id_alojamiento = ?
-          AND h.id_tipo_habitacion = ?`,
-        [id_alojamiento, id_tipo_habitacion]
-      );
-      
-      console.log((Number(reservasSuperpuestas.length) + Number(cantidadBuscada)) > Number(habitacionesExistentes))
-
-      console.log('reservas', reservas)
-
-      if ((Number(reservasSuperpuestas.length) + Number(cantidadBuscada)) > Number(habitacionesExistentes.length)) {
-        await connection.rollback(); // Deshacer transacción
-        connection.release();
-        throw new Error('El alojamiento no está disponible para las fechas seleccionadas.');
-      }
-
-      // Optimizacion en la asignacion de habitaciones para minimizar la fragmentación
-      function mejoreCandidata () {
-
-        function diferenciaDias(date1, date2) {
-          const ms = Math.abs(new Date(date1) - new Date(date2));
-          return ms / (1000 * 60 * 60 * 24);
-        }
-        
-        const candidatas = [];
+    if (hayReservas.length > 0) {
+      try {
+        // 1. Verificar si el alojamiento está disponible para esas fechas (evitar superposiciones)
+        // Esta consulta busca si existe alguna reserva para el mismo alojamiento que se solape con las fechas deseadas.
+        // Dos periodos [A, B] y [C, D] se solapan si A < D y C < B.
+        const [reservasSuperpuestas] = await connection.query(
+          `SELECT * FROM reservas r 
+          JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
+           WHERE r.id_alojamiento = ?
+             AND h.id_tipo_habitacion = ?
+             AND r.estado IN ('pendiente', 'confirmada', 'reservada', 'activa', 'pagada')
+             AND r.checkin < ?
+             AND r.checkout > ?`,
+          [id_alojamiento, id_tipo_habitacion, checkout, checkin]
+        );
   
-        for (const r of reservas) {          
-          // Encuentra la reserva más cercana en días
-          const diferencias = []; //reserva.map(r =>
-            diferencias.push(Math.min(
-              diferenciaDias(r.checkin, nuevaReserva.checkout),
-              diferenciaDias(r.checkout, nuevaReserva.checkin)
-          //  )
-          ))
-
-          const minProximidad = diferencias.length > 0 ? Math.min(...diferencias) : Infinity;
-
-          candidatas.push({
-            id: r.id_habitacion,
-            proximidad: minProximidad
-          });          
-        };
-
-        console.log('candidatas', candidatas)
-
-        if (candidatas.length === 0) return null;
-
-        candidatas.sort((a, b) => a.proximidad - b.proximidad);
+        const [rows] = await connection.query(
+          `select count(*) AS habitaciones_existentes from habitaciones h
+          WHERE id_alojamiento = ?
+          AND h.id_tipo_habitacion = ?`,
+          [id_alojamiento, id_tipo_habitacion]
+        )
+        const habitacionesExistentes = rows[0].habitaciones_existentes;
+  
+        const [reservas] = await connection.query(
+          `SELECT  r.* FROM reservas r
+           JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
+           WHERE h.id_alojamiento = ?
+            AND h.id_tipo_habitacion = ?`,
+          [id_alojamiento, id_tipo_habitacion]
+        );
+        
+        console.log((Number(reservasSuperpuestas.length) + Number(cantidadBuscada)) > Number(habitacionesExistentes))
+  
+        console.log('reservas', reservas)
+  
+        if ((Number(reservasSuperpuestas.length) + Number(cantidadBuscada)) > Number(habitacionesExistentes.length)) {
+          await connection.rollback(); // Deshacer transacción
+          connection.release();
+          throw new Error('El alojamiento no está disponible para las fechas seleccionadas.');
+        }
+        if (reservas.length != 0) {
+  
+          // Optimizacion en la asignacion de habitaciones para minimizar la fragmentación
+          function mejoreCandidata () {
+    
+            function diferenciaDias(date1, date2) {
+              const ms = Math.abs(new Date(date1) - new Date(date2));
+              return ms / (1000 * 60 * 60 * 24);
+            }
+            
+            const candidatas = [];
+      
+            for (const r of reservas) {          
+              // Encuentra la reserva más cercana en días
+              const diferencias = []; //reserva.map(r =>
+                diferencias.push(Math.min(
+                  diferenciaDias(r.checkin, nuevaReserva.checkout),
+                  diferenciaDias(r.checkout, nuevaReserva.checkin)
+              //  )
+              ))
+    
+              const minProximidad = diferencias.length > 0 ? Math.min(...diferencias) : Infinity;
+    
+              candidatas.push({
+                id: r.id_habitacion,
+                proximidad: minProximidad
+              });          
+            };
+    
+            console.log('candidatas', candidatas)
+    
+            if (candidatas.length === 0) return null;
+    
+            candidatas.sort((a, b) => a.proximidad - b.proximidad);
+    
+            
+            //const candidataId = candidatas[0].id;
+            return candidatas;
+          };
+          const candidatas = mejoreCandidata();
+        }
+  
+        const candidatasFinal = []; // se recojera los id's de las habitaciones seleccionadas para la reserva
+        for (let i = 1; i<= cantidadBuscada; i++) {
+          candidatasFinal.push(candidatas[0]['id']);
+          candidatas.shift()
+        }
+        console.log('candidata final', candidatasFinal)
+  
+        const dataHabitaciones = [];
+        
+  
+        for (c of candidatasFinal) {
+          let habitacionAReservar = await habitacionesCRUD.getById(c)
+          dataHabitaciones.push(habitacionAReservar);
+          precioFinalParaGuardar += parseInt(habitacionAReservar['precio']);
+          console.log('habitacionAReservar', habitacionAReservar)
+        }
+        console.log('habitaciones para reservar:', dataHabitaciones.id_habitaciones);
+        console.log('Precio total sin impuestos:', precioFinalParaGuardar)
+        
+      } catch (error) {
+        await connection.rollback();
+        connection.release();
+        throw error;
+      };
+  }  
+    for (let i = 0; i< cantidadBuscada; i++) {      
+      try {        
+        const [idHabitacionAReservar] = await connection.query(
+          `SELECT id_habitacion FROM habitaciones
+          WHERE id_alojamiento = ?
+          AND id_tipo_habitacion = ?`,
+          [id_alojamiento, id_tipo_habitacion]
+        );
+        console.log('idHabitacionAReservar', idHabitacionAReservar);
+        // 3. Insertar la reserva
+        let id_habitacion = idHabitacionAReservar[i]?.id_habitacion;
 
         
-        //const candidataId = candidatas[0].id;
-        return candidatas;
-      };
-      const candidatas = mejoreCandidata();
+        const [result] = await connection.query(
+          'INSERT INTO reservas (id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+          [id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado]
+        );
 
-      const candidatasFinal = []; // se recojera los id's de las habitaciones seleccionadas para la reserva
-      for (let i = 1; i<= cantidadBuscada; i++) {
-        candidatasFinal.push(candidatas[0]['id']);
-        candidatas.shift()
+  
+        await connection.commit(); // Confirmar transacción
+        connection.release();
+  
+        return { id: result.insertId, id_usuario, id_alojamiento, id_habitacion, checkin, checkout, adultos, menores, estado, precioFinalParaGuardar };
+  
+      } catch (error) {
+        await connection.rollback(); // Deshacer transacción en caso de error interno
+        connection.release();
+        throw error; // Re-lanzar el error para que lo maneje el controlador
       }
-      console.log('candidata final', candidatasFinal)
 
-      const dataHabitaciones = [];
-      let precioFinalParaGuardar = 0;
-
-      for (c of candidatasFinal) {
-        let habitacionAReservar = await habitacionesCRUD.getById(c)
-        dataHabitaciones.push(habitacionAReservar);
-        precioFinalParaGuardar += parseInt(habitacionAReservar['precio']);
-        console.log('habitacionAReservar', habitacionAReservar)
-      }
-      //console.log('habitaciones para reservar:', dataHabitaciones);
-      console.log('Precio total sin impuestos:', precioFinalParaGuardar);
-      return
-
-      // 3. Insertar la reserva
-      const [result] = await connection.query(
-        'INSERT INTO reservas (id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-        [id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado]
-      );
-
-      await connection.commit(); // Confirmar transacción
-      connection.release();
-
-      return { id: result.insertId, usuario_id, alojamiento_id, fecha_inicio, fecha_fin, precio_total: precioFinalParaGuardar, estado };
-
-    } catch (error) {
-      await connection.rollback(); // Deshacer transacción en caso de error interno
-      connection.release();
-      throw error; // Re-lanzar el error para que lo maneje el controlador
     }
+     
   } catch (error) {
     console.error("Error al crear reserva en BD:", error);
     throw error;
