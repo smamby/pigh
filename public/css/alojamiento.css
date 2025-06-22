@@ -923,7 +923,16 @@ span > .fa-solid .fa-user {
 }
 
 
+.custom-swal-popup-error {
+    border-radius: 8px !important;
+    border: 1px solid #f5e5e6 !important;
+    background: #f5e5e6 !important;
+    color: #721c24;
+}
 
+.custom-swal-icon-error {
+    color: #dc3545 !important;
+}
 
 
 footer {

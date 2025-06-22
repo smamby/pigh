@@ -189,19 +189,20 @@ Reserva.create = async (nuevaReserva) => {
             [id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado]
           );
 
-          // 🔍 Obtener el número de la habitación
+          // 🔍 Obtener el número de la habitación y precio
           const [habitacionData] = await connection.query(
-            'SELECT numero_habitacion FROM habitaciones WHERE id_habitacion = ?',
+            'SELECT numero_habitacion, precio FROM habitaciones WHERE id_habitacion = ?',
             [id_habitacion]
           );
 
           const numero_habitacion = habitacionData[0]?.numero_habitacion || null;
+          const precio_habitacion = habitacionData[0]?.precio || null;
           console.log(`Reserva dentro del if ${i+1} de ${cantidadBuscada}`)    
           
           grupoDeReservas.push({ id: result.insertId, id_usuario,
                                  id_alojamiento, id_habitacion, numero_habitacion,
                                  checkin, checkout, adultos, menores,
-                                 estado, precioFinalParaGuardar });
+                                 estado, precio_habitacion });
         }   
         
         await connection.commit(); // Confirmar transacción
@@ -222,7 +223,9 @@ Reserva.create = async (nuevaReserva) => {
     };
 
     for (let i = 0; i< cantidadBuscada; i++) {      
-      try {        
+      try {  
+        const grupoDeReservas = [];
+        
         const [idHabitacionAReservar] = await connection.query(
           `SELECT id_habitacion FROM habitaciones
           WHERE id_alojamiento = ?
@@ -235,15 +238,34 @@ Reserva.create = async (nuevaReserva) => {
 
         
         const [result] = await connection.query(
-          'INSERT INTO reservas (id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-          [id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado]
-        );
-        console.log(`Reserva fuera del if ${i+1} de ${cantidadBuscada}`)
+            'INSERT INTO reservas (id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            [id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado]
+          );
 
-      
-        
-  
-        return { id: result.insertId, id_usuario, id_alojamiento, id_habitacion, checkin, checkout, adultos, menores, estado, precioFinalParaGuardar };
+          // 🔍 Obtener el número de la habitación y precio
+          const [habitacionData] = await connection.query(
+            'SELECT numero_habitacion, precio FROM habitaciones WHERE id_habitacion = ?',
+            [id_habitacion]
+          );
+
+          const numero_habitacion = habitacionData[0]?.numero_habitacion || null;
+          const precio_habitacion = habitacionData[0]?.precio || null;  
+          
+          grupoDeReservas.push({ id: result.insertId, id_usuario,
+                                 id_alojamiento, id_habitacion, numero_habitacion,
+                                 checkin, checkout, adultos, menores,
+                                 estado, precio_habitacion });
+          console.log(`Reserva fuera del if ${i+1} de ${cantidadBuscada}`)
+
+        await connection.commit(); // Confirmar transacción
+        connection.release();
+
+        //return grupoDeReservas;
+        return {
+            ok: true,
+            message: 'Reserva creada exitosamente.',
+            reserva: grupoDeReservas
+        };
   
       } catch (error) {
         await connection.rollback(); // Deshacer transacción en caso de error interno

@@ -401,10 +401,32 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         document.querySelectorAll('td.reservar-ya').forEach((h, index) => {
             h.addEventListener('click', async() => {
+                let roomsSel = parseInt(sessionStorage.getItem('rooms'));
                 const dataReservaBtn = JSON.parse(h.dataset.reserva);
                 const tipoHabitacion = dataReservaBtn["id-tipo"];
                 const indexRow = dataReservaBtn["index-row"];
                 const cantHabRes = document.getElementById(`ix-tipo-hab${indexRow}`);
+
+                console.log((cantXTipo[tipoHabitacion] < roomsSel), cantXTipo[tipoHabitacion], roomsSel)
+                if (cantXTipo[tipoHabitacion] === undefined || cantXTipo[tipoHabitacion] < roomsSel){
+                    Swal.fire({
+                        title: '❌ No hay disponibilidad',
+                        html: `
+                            <div style="text-align: left; color: #721c24;">
+                            <p style="margin-top: 10px; font-weight: bold;">No hay suficientes habitaciones disponibles para este tipo</p>
+                            </div>
+                        `,
+                        icon: 'error',
+                        confirmButtonColor: '#dc3545',
+                        background: '#f5e5e6',
+                        customClass: {
+                            popup: 'custom-swal-popup-error',
+                            icon: 'custom-swal-icon-error'
+                        }
+                    });
+                    return;
+                }
+                
                 console.log('Tipo habitacion elegida', tipoHabitacion, cantHabRes.value);
                 if (!sessionStorage.getItem('user')) {
                     console.log("LOGEARSE");
@@ -418,6 +440,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 let checkinRes = sessionStorage.getItem('checkin');
                 let checkoutRes = sessionStorage.getItem('checkout');
                 const user = JSON.parse(sessionStorage.getItem('user'));
+
                 const resultReserva = await fetch('http://localhost:3001/api/reservas/', {
                     method: 'POST',
                     headers: {
@@ -439,12 +462,29 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
                 const respuestaReserva = await resultReserva.json();
                 
-                // if (respuestaReserva.ok) {
-                //     alert(`Reserva, realizada con exito: ${respuestaReserva['message']}`);
-                // }
+                if (!respuestaReserva.reserva) {
+                    Swal.fire({
+                        title: '❌ No hay disponibilidad',
+                        html: `
+                            <div style="text-align: left; color: #721c24;">
+                            <p>No se pudo completar la reserva.</p>
+                            <p>${respuestaReserva.message || 'Por favor, intente más tarde.'}</p>
+                        </div>
+                        `,
+                        icon: 'error',
+                        confirmButtonColor: '#dc3545',
+                        background: '#f8d7da',
+                        customClass: {
+                            popup: 'custom-swal-popup-error',
+                            icon: 'custom-swal-icon-error'
+                        }
+                    });
+                    return;
+                }
+
                 console.log(respuestaReserva);
                 const grupo = respuestaReserva.reserva.reserva;
-                let precioTotal = grupo[0].precioFinalParaGuardar * sessionStorage.getItem('days')
+                let precioTotal = grupo[0].precio_habitacion * sessionStorage.getItem('days') * sessionStorage.getItem('rooms');
                 Swal.fire({
                 title: '✅ Reserva Confirmada',
                 html: `
