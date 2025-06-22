@@ -1,30 +1,30 @@
 // models/reserva.model.js
 
 const db = require('../db');
-const Alojamiento = require('./alojamiento.model'); // Para verificar precio y disponibilidad
+const habiotacionesCRUD = require('./habitacion.model'); // Para verificar precio y disponibilidad
 
 const Reserva = {};
 
 // Crear una nueva reserva
-Reserva.create = async (nuevaReserva) => {
+Reserva.create = async (nuevaReserva, cantidadDisponible, cantidadBuscada) => {
   const { 
-    reserva_id,
-    usuario_id, 
-    alojamiento_id, 
-    fecha_inicio, 
-    fecha_fin, 
-    tipo_habitación,
-    numero_habitacion,
-    precio_total, 
-    estado = 'Pendiente' 
+    id_usuario, 
+    id_alojamiento,
+    id_tipo_habitacion, 
+    id_habitacion,
+    checkin, 
+    checkout, 
+    adultos, 
+    menores,
+    estado = 'reservada'
   } = nuevaReserva;
 
   // Validar que las fechas sean lógicas (aunque ya tengamos un CHECK en la BD, es bueno validar aquí)
-  if (new Date(fecha_inicio) >= new Date(fecha_fin)) {
+  if (new Date(checkin) >= new Date(checkout)) {
     throw new Error('La fecha de inicio debe ser anterior a la fecha de fin.');
   }
   // Validar que las fechas no sean en el pasado
-  if (new Date(fecha_inicio) < new Date().setHours(0,0,0,0)) { // Comparar con el inicio del día actual
+  if (new Date(checkin) < new Date().setHours(0,0,0,0)) { // Comparar con el inicio del día actual
     throw new Error('La fecha de inicio no puede ser en el pasado.');
   }
 
@@ -38,53 +38,107 @@ Reserva.create = async (nuevaReserva) => {
       // Esta consulta busca si existe alguna reserva para el mismo alojamiento que se solape con las fechas deseadas.
       // Dos periodos [A, B] y [C, D] se solapan si A < D y C < B.
       const [reservasSuperpuestas] = await connection.query(
-        `SELECT id FROM reservas
-         WHERE alojamiento_id = ?
-           AND tipo_habitación = ?
-           AND numero_habitacion = ?
-           AND estado IN ('Pendiente', 'Confirmada') -- Solo considerar reservas activas
-           AND fecha_inicio < ?
-           AND fecha_fin > ?`,
-        [alojamiento_id, tipo_habitación, numero_habitacion, fecha_fin, fecha_inicio]
+        `SELECT * FROM reservas
+         WHERE id_alojamiento = ?
+           AND id_tipo_habitacion = ?
+           AND estado IN ('pendiente', 'confirmada', 'reservada', 'activa', 'pagada') -- Solo considerar reservas activas
+           AND checkin < ?
+           AND checkout > ?`,
+        [id_alojamiento, id_tipo_habitacion, checkout, checkin]
       );
 
-      if (reservasSuperpuestas.length > 0) {
+      const [habitacionesExistentes] = await connection.query(
+        `SELECT h.id_habitacion, h.reservas FROM habitaciones h
+         JOIN reservas r ON r.id_habitacion = h.id_habitacion
+         WHERE id_alojamiento = ?
+          AND id_tipo_habitacion = ?`,
+        [id_alojamiento, id_tipo_habitacion]
+      );
+
+      if (reservasSuperpuestas.length + cantidadBuscada > habitacionesExistentes.length) {
         await connection.rollback(); // Deshacer transacción
         connection.release();
         throw new Error('El alojamiento no está disponible para las fechas seleccionadas.');
+      }
+
+      // Optimizacion en la asignacion de habitaciones para minimizar la fragmentación
+      function mejoreCandidata () {
+
+        function diferenciaDias(date1, date2) {
+          const ms = Math.abs(new Date(date1) - new Date(date2));
+          return ms / (1000 * 60 * 60 * 24);
+        }
+  
+        const candidatas = [];
+  
+        for (const hab of habitacionesExistentes) {
+          if (!hayConflicto(hab.reservas, nuevaReserva)) {
+            // Encuentra la reserva más cercana en días
+            const diferencias = hab.reservas.map(r =>
+              Math.min(
+                diferenciaDias(r.checkin, nuevaReserva.checkout),
+                diferenciaDias(r.checkout, nuevaReserva.checkin)
+              )
+            );
+  
+            const minProximidad = diferencias.length > 0 ? Math.min(...diferencias) : Infinity;
+  
+            candidatas.push({
+              id: hab.id,
+              reservas: hab.reservas,
+              proximidad: minProximidad
+            });
+          }
+        }
+        if (candidatas.length === 0) return null;
+        candidatas.sort((a, b) => a.proximidad - b.proximidad);
+        const candidataId = candidatas[0].id;
+        return candidataId;
+      }
+      const candidatasFinal = []; // se recojera los id's de las habitaciones seleccionadas para la reserva
+      for (let i = 1; i<= cantidadBuscada; i++) {
+        candidatasFinal.push(mejoreCandidata());
       }
 
       // 2. Obtener el precio por noche del alojamiento para calcular el precio total (si no se proveyó)
       //    o para verificar el precio_total enviado.
       //    En un MVP, podríamos confiar en el precio_total calculado en el frontend
       //    pero es más seguro recalcularlo o verificarlo en el backend.
-      const alojamiento = await Alojamiento.findById(alojamiento_id); // Usando el modelo Alojamiento existente
-      if (!alojamiento) {
-        await connection.rollback();
-        connection.release();
-        throw new Error('Alojamiento no encontrado.');
-      }
-      if (!alojamiento.disponible) { // Verificación adicional por si acaso
-        await connection.rollback();
-        connection.release();
-        throw new Error('El alojamiento no se encuentra disponible actualmente.');
-      }
+      // const alojamiento = await Alojamiento.findById(alojamiento_id); // Usando el modelo Alojamiento existente
+      // if (!alojamiento) {
+      //   await connection.rollback();
+      //   connection.release();
+      //   throw new Error('Alojamiento no encontrado.');
+      // }
+      // if (!alojamiento.disponible) { // Verificación adicional por si acaso
+      //   await connection.rollback();
+      //   connection.release();
+      //   throw new Error('El alojamiento no se encuentra disponible actualmente.');
+      // }
 
-      const noches = Math.ceil((new Date(fecha_fin) - new Date(fecha_inicio)) / (1000 * 60 * 60 * 24));
-      if (noches <= 0) { // Debería ser cubierto por la validación de fechas, pero doble check.
-          await connection.rollback();
-          connection.release();
-          throw new Error('La duración de la estadía debe ser de al menos una noche.');
-      }
-      const precioCalculado = noches * alojamiento.precio_por_noche;
+      // const noches = Math.ceil((new Date(fecha_fin) - new Date(fecha_inicio)) / (1000 * 60 * 60 * 24));
+      // if (noches <= 0) { // Debería ser cubierto por la validación de fechas, pero doble check.
+      //     await connection.rollback();
+      //     connection.release();
+      //     throw new Error('La duración de la estadía debe ser de al menos una noche.');
+      // }
+      // const precioCalculado = noches * alojamiento.precio_por_noche;
 
       // Comparar si el precio_total enviado es correcto (opcional, pero recomendado)
       // if (precio_total !== precioCalculado) {
       //   console.warn(`Advertencia: El precio_total enviado (${precio_total}) difiere del calculado (${precioCalculado}). Se usará el calculado.`);
       // }
       // Para el MVP, vamos a usar el precio calculado en el backend
-      const precioFinalParaGuardar = precioCalculado;
-
+      const dataHabitaciones = [];
+      const precioFinalParaGuardar = 0;
+      for (candidata of candidatasFinal) {
+        let habitacionAReservar = habiotacionesCRUD.getById(candidata)
+        dataHabitaciones.push(habitacionAReservar);
+        precioFinalParaGuardar += habitacionAReservar.precio;
+      }
+      console.log('habitaciones para reservar:', dataHabitaciones);
+      console.log('Precio total sin impuestos:', precioFinalParaGuardar);
+      return
 
       // 3. Insertar la reserva
       const [result] = await connection.query(
@@ -129,17 +183,18 @@ Reserva.findByUserId = async (usuarioId) => {
 };
 
 // Obtener todas las reservas de un alojamiento específico por su id_alojamiento
-Reserva.findByAlojamientoId = async (alojamientoId) => {
+Reserva.findByAlojamientoId = async (id_alojamiento) => {
   try {
     const [rows] = await db.query(
-      `SELECT r.*, a.nombre_aloj AS nombre_alojamiento, a.ciudad, a.pais, h.numero_habitacion, th.nombre
+      `SELECT r.*, a.nombre_aloj AS nombre_alojamiento, a.ciudad, a.pais, h.numero_habitacion, th.nombre, u.nombre, u.apellido, u.email
       FROM reservas r
-      JOIN usuarios u ON r.id_alojamiento = a.id_alojamiento
+      JOIN alojamientos a ON r.id_alojamiento = a.id_alojamiento
+      JOIN usuarios u ON r.id_usuario = u.id_usuario
       JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
       JOIN tipo_habitacion th ON th.id_tipo_habitacion = h.id_tipo_habitacion
       WHERE a.id_alojamiento = ?
       ORDER BY r.checkin DESC`,
-      [alojamientoId]
+      [id_alojamiento]
     );
     return rows;
   } catch (error) {

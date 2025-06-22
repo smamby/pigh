@@ -460,18 +460,20 @@ JOIN alojamientos ON puntaje.id_alojamiento = alojamientos.id_alojamiento
 WHERE puntaje.id_alojamiento = 23;
 
 
-INSERT INTO reservas (id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, habitaciones, estado, precio_total)
+INSERT INTO reservas (id_usuario, id_habitacion, id_alojamiento, checkin, checkout, adultos, menores, estado, precio_total)
 VALUES
-(3, 122, 21, '2025-06-05', '2025-06-07', 2, 1, 1, 'reservada', 220.00),
-(4, 123, 22, '2025-06-06', '2025-06-10', 1, 0, 1, 'pagada', 180.00),
-(5, 124, 23, '2025-06-08', '2025-06-12', 2, 2, 2, 'pendiente', 640.00),
-(6, 125, 21, '2025-06-09', '2025-06-11', 1, 0, 1, 'activa', 220.00),
-(7, 126, 22, '2025-06-10', '2025-06-13', 2, 1, 1, 'reservada', 135.00),
-(8, 127, 23, '2025-06-11', '2025-06-15', 3, 0, 2, 'pendiente', 640.00),
-(3, 122, 21, '2025-06-12', '2025-06-14', 2, 2, 1, 'pagada', 220.00),
-(4, 123, 22, '2025-06-13', '2025-06-16', 1, 0, 1, 'cancelada', 135.00),
-(5, 124, 23, '2025-06-14', '2025-06-17', 2, 0, 1, 'reservada', 480.00),
-(6, 125, 21, '2025-06-15', '2025-06-18', 2, 1, 2, 'activa', 330.00);
+(6, 163, 23, '2025-06-25', '2025-06-27', 3, 0, 'pendiente', 160.00),
+(6, 126, 23, '2025-06-25', '2025-06-27', 3, 0, 'pendiente', 160.00),
+(3, 122, 21, '2025-06-05', '2025-06-07', 2, 1, 'reservada', 220.00),
+(4, 123, 22, '2025-06-06', '2025-06-10', 1, 0, 'pagada', 180.00),
+(5, 124, 23, '2025-06-27', '2025-06-30', 2, 2, 'pendiente', 160.00),
+(6, 125, 21, '2025-06-09', '2025-06-11', 1, 0, 'activa', 220.00),
+(7, 126, 22, '2025-06-10', '2025-06-13', 2, 1, 'reservada', 135.00),
+(8, 127, 23, '2025-06-11', '2025-06-15', 3, 0, 'pendiente', 320.00),
+(3, 122, 21, '2025-06-12', '2025-06-14', 2, 2, 'pagada', 220.00),
+(4, 123, 22, '2025-06-13', '2025-06-16', 1, 0, 'cancelada', 135.00),
+(5, 124, 23, '2025-06-14', '2025-06-17', 2, 0, 'reservada', 480.00),
+(6, 125, 21, '2025-06-15', '2025-06-18', 2, 1, 'activa', 330.00);
 
 delete from reservas where id > 0;
 
@@ -480,11 +482,11 @@ where checkin > '2025-06-04' and checkout < '2025-06-08';
 
 select * from habitaciones where id_alojamiento = 21 or id_alojamiento = 22 or id_alojamiento = 23;
 select * from alojamientos where id_alojamiento = 21 or id_alojamiento = 22 or id_alojamiento = 23;
-
+select * from habitaciones where id_tipo_habitacion = 2 && id_alojamiento = 23;
 
 SELECT 
       a.id_alojamiento,
-      a.nombre,
+      a.nombre_aloj,
       a.ciudad,
       a.pais,
       a.estrellas,

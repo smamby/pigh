@@ -417,9 +417,7 @@ CREATE TABLE reservas (
     checkout DATE NOT NULL,
     adultos INT NOT NULL DEFAULT 1,
     menores INT NOT NULL DEFAULT 0,
-    habitaciones INT NOT NULL DEFAULT 1,
     estado ENUM ('pausada','activa','pendiente', 'reservada','pagada','cancelada','caduca') NOT NULL DEFAULT 'pendiente',
-    precio_total DECIMAL(10, 2) NOT NULL,
     fecha_reserva TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
@@ -428,16 +426,41 @@ CREATE TABLE reservas (
     
     CONSTRAINT chk_fechas CHECK (fecha_fin > fecha_inicio)
 );
- 
 
+ALTER TABLE reservas
+DROP COLUMN precio_total;
+ 
+SHOW COLUMNS FROM reservas;
 select * from reservas;
 
 select * from reservas where id_alojamiento = 23;
+
+SELECT r.*, a.nombre_aloj AS nombre_alojamiento, a.ciudad, a.pais, h.numero_habitacion, th.nombre
+FROM reservas r
+JOIN alojamientos a ON r.id_alojamiento = a.id_alojamiento
+JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
+JOIN tipo_habitacion th ON th.id_tipo_habitacion = h.id_tipo_habitacion
+WHERE r.id_usuario = 6
+ORDER BY r.checkin DESC;
+
+SELECT r.*, a.nombre_aloj AS nombre_alojamiento, a.ciudad, a.pais, h.numero_habitacion, th.nombre, u.nombre, u.apellido, u.email
+FROM reservas r
+JOIN alojamientos a ON r.id_alojamiento = a.id_alojamiento
+JOIN usuarios u ON r.id_usuario = u.id_usuario
+JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
+JOIN tipo_habitacion th ON th.id_tipo_habitacion = h.id_tipo_habitacion
+WHERE a.id_alojamiento = 23
+ORDER BY r.checkin DESC;
+
+UPDATE reservas
+set habitaciones = 1;
 
 CREATE INDEX idx_reservas_habitacion_fechas ON reservas(id_habitacion, checkin, checkout);
 CREATE INDEX idx_habitaciones_alojamiento_tipo ON habitaciones(id_alojamiento, id_tipo_habitacion);
 SHOW INDEX FROM reservas;
 SHOW INDEX FROM habitaciones;
+
+
 
 
 select * from usuarios;

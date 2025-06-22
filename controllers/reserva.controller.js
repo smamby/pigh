@@ -51,9 +51,19 @@ exports.createReserva = async (req, res) => {
 // Listar las reservas del usuario autenticado
 exports.getMisReservas = async (req, res) => {
   try {
-    const usuario_id = req.user.id;
-    console.log('[[[ reserva.controller.getMisReservas. parametro id_usuario]]]', usuario_id)
-    const reservas = await Reserva.findByUserId(usuario_id);
+    const id_usuario = req.user.id;
+    const reservas = await Reserva.findByUserId(id_usuario);
+    res.status(200).json(reservas);
+  } catch (error) {
+    console.error('Error al obtener mis reservas:', error);
+    res.status(500).json({ message: 'Error interno del servidor.', error: error.message });
+  }
+};
+// 
+exports.getReservasAlojamiento = async (req, res) => {
+  try {
+    const id_alojamiento = req.alojamiento.id;
+    const reservas = await Reserva.findByAlojamientoId(id_alojamiento);
     res.status(200).json(reservas);
   } catch (error) {
     console.error('Error al obtener mis reservas:', error);

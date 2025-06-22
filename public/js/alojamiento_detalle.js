@@ -280,6 +280,7 @@ document.addEventListener('DOMContentLoaded', async () => {
        // Filtrar habiotaciones por disponibilidad
         const fechaCheckin = new Date(sessionStorage.getItem('checkin'));
         const fechaCheckout = new Date(sessionStorage.getItem('checkout'));
+        sessionStorage.setItem('days', Math.ceil((new Date(fechaCheckout) - new Date(fechaCheckin)) / (1000 * 60 * 60 * 24)))
         
         let cantXTipo = {};
         let habitacionesDisponibles = [];
@@ -307,14 +308,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                     (fechaCheckout > reservaCheckin && fechaCheckout <= reservaCheckout)
                 ) {
                     estaDisponible = false;
-                    habReservadas = reserva.habitaciones;
+                    //habReservadas = reserva.habitaciones;
                 }
             });
             console.log('disponible', estaDisponible)
             if (estaDisponible) {
                 habitacionesDisponibles.push(h);
             } else {
-                cantXTipo[h.id_tipo_habitacion] -= habReservadas;
+                cantXTipo[h.id_tipo_habitacion] -= 1; //habReservadas;
             }            
         });
 
@@ -399,14 +400,44 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
 
         document.querySelectorAll('td.reservar-ya').forEach((h, index) => {
-            h.addEventListener('click', () => {
+            h.addEventListener('click', async() => {
                 const dataReservaBtn = JSON.parse(h.dataset.reserva);
                 const tipoHabitacion = dataReservaBtn["id-tipo"];
                 const indexRow = dataReservaBtn["index-row"];
                 const cantHabRes = document.getElementById(`ix-tipo-hab${indexRow}`);
                 console.log('Tipo habitacion elegida', tipoHabitacion, cantHabRes.value);
-
-
+                if (!sessionStorage.getItem('user')) {
+                    console.log("LOGEARSE");
+                    // const modalLogin = document.getElementById('loginModal');
+                    // const closeLoginBtn = document.getElementById('closeModalBtnLogin');
+                    const modalLogin = document.getElementById('loginModal');
+                    modalLogin.style.display = 'grid';                    
+                    return
+                }
+                modalLogin.style.display = 'none';
+                let checkinRes = sessionStorage.getItem('checkin');
+                let checkoutRes = sessionStorage.getItem('checkout');
+                const resultReserva = await fetch('http://localhost:3001/api/reservas/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({                         
+                        id_usuario: sessionStorage.getItem('user.id_usuario'), 
+                        id_alojamiento: h.id_alojamiento,
+                        id_tipo_habitacion: h.id_tipo_alojamiento, 
+                        id_habitacion: h.id_habitacion,
+                        checkin: checkinRes, 
+                        checkout: checkoutRes, 
+                        adultos: Number(sessionStorage.getItem('adults')), 
+                        menores: Number(sessionStorage.getItem('clildren')),
+                        days: Math.ceil((new Date(checkoutRes) - new Date(checkinRes)) / (1000 * 60 * 60 * 24)),
+                        estado : 'reservada'
+                    })
+                });
+                const respuestaReserva = await resultReserva.json();
+                console.log(respuestaReserva);
             });
         });
 

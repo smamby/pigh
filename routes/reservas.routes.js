@@ -13,6 +13,9 @@ router.post('/', authenticateToken, reservaController.createReserva);
 // GET /api/reservas/mis-reservas - Listar las reservas del usuario autenticado
 router.get('/mis-reservas/', authenticateToken, reservaController.getMisReservas);
 
+// GET /api/reservas/mis-reservas - Listar las reservas del alojamiento
+router.get('/mis-reservas/alojamiento/:id', authenticateToken, reservaController.getReservasAlojamiento);
+
 // GET /api/reservas/mis-reservas/:id - Obtener detalle de una reserva específica del usuario autenticado
 router.get('/mis-reservas/:id', authenticateToken, reservaController.getMiReservaById);
 

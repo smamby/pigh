@@ -31,9 +31,9 @@ const Habitacion = {
 
           // Obtener reservas para esta habitación
           const [reservas] = await db.query(`
-            SELECT id, id_usuario, checkin, checkout, estado, precio_total, habitaciones 
+            SELECT id, id_usuario, checkin, checkout, estado
             FROM reservas
-            WHERE id_habitacion = ? AND estado IN ('activa', 'reservada', 'pagada')
+            WHERE id_habitacion = ? AND estado IN ('activa', 'reservada', 'pagada', 'pendiente')
           `, [habitacion.id_habitacion]);
 
           return {
