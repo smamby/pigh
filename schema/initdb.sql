@@ -432,6 +432,8 @@ CREATE TABLE reservas (
 
 select * from reservas;
 
+select * from reservas where id_alojamiento = 23;
+
 CREATE INDEX idx_reservas_habitacion_fechas ON reservas(id_habitacion, checkin, checkout);
 CREATE INDEX idx_habitaciones_alojamiento_tipo ON habitaciones(id_alojamiento, id_tipo_habitacion);
 SHOW INDEX FROM reservas;

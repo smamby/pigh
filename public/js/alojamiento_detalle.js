@@ -377,12 +377,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="opcion"><span>✔️</span>Incluye estacionamiento</div>
                     <div class="opcion"><span>✔️</span>Reembolsable</div>
                 </td>
-                <td class="select-habitaciones hab1">
-                    <select class="select-cant hab${index}" data-class="${h.id_tipo_habitacion}">
+                <td class="select-habitaciones hab${index}">
+                    <select class="select-cant hab${index}" id="ix-tipo-hab${index}" 
+                                                data-canthab='{"cant_hab":${sessionStorage.getItem('rooms')}}'
+                                                onchange="actualizarDataReserva(this)">
                         ${optionsHTML}
                     </select>
                 </td>
-                <td class="reservar-ya" data-class="${h.id_tipo_habitacion}" id="res-hab${index}">Reserva ya!</td>
+                <td class="reservar-ya" data-reserva='{"id-tipo":${h.id_tipo_habitacion}, 
+                                                     "index-row":${index}}' id="res-hab${index}">Reserva ya!</td>
             `
             tbHabitaciones.appendChild(row);
             const select = row.querySelector('.select-cant');
@@ -397,8 +400,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         document.querySelectorAll('td.reservar-ya').forEach((h, index) => {
             h.addEventListener('click', () => {
-                const tipoHabitacion = h.getAttribute('data-class');
-                console.log('Tipo habitacion elegida', tipoHabitacion);
+                const dataReservaBtn = JSON.parse(h.dataset.reserva);
+                const tipoHabitacion = dataReservaBtn["id-tipo"];
+                const indexRow = dataReservaBtn["index-row"];
+                const cantHabRes = document.getElementById(`ix-tipo-hab${indexRow}`);
+                console.log('Tipo habitacion elegida', tipoHabitacion, cantHabRes.value);
+
 
             });
         });
@@ -413,6 +420,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 celCosto.innerHTML += mensajeTask
             })
         })
+
+        // function actualizarDataReserva(selectElement) {
+        //     const cantidadSeleccionada = selectElement.value;
+        //     const dataCantHab = JSON.parse(selectElement.dataset.canthab);
+            
+        //     // Actualizamos la cantidad seleccionada
+        //     dataCantHab.cant_hab = cantidadSeleccionada;
+            
+        //     // Guardamos el nuevo JSON en el atributo data-reserva
+        //     selectElement.dataset.canthab = JSON.stringify(dataCantHab);
+        // }
        
 
 
@@ -612,3 +630,15 @@ document.getElementById('nav-logout').addEventListener('click', function (e) {
     // Redirige manualmente
     window.location.href = "../index.html";
 });
+
+// actualizar dataset del select.cantHab de fila seleccionada en tabla de disponibilidad
+function actualizarDataReserva(selectElement) {
+            const cantidadSeleccionada = selectElement.value;
+            const dataCantHab = JSON.parse(selectElement.dataset.canthab);
+            
+            // Actualizamos la cantidad seleccionada
+            dataCantHab.cant_hab = cantidadSeleccionada;
+            
+            // Guardamos el nuevo JSON en el atributo data-reserva
+            selectElement.dataset.canthab = JSON.stringify(dataCantHab);
+        }

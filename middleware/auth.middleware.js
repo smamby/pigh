@@ -24,6 +24,7 @@ const authenticateToken = (req, res, next) => {
       return res.status(403).json({ message: 'Error al verificar el token.', error: err.message });
     }
 
+    console.log('Payload decodificado por authenticateToken:', decodedTokenPayload);
     // El token es válido, adjuntar payload al request para uso posterior
     // El payload contiene { id, email, es_admin } que definimos al firmar el token
     req.user = decodedTokenPayload;

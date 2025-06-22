@@ -1,4 +1,4 @@
-// backend/controllers/reserva.controller.js
+// controllers/reserva.controller.js
 
 const Reserva = require('../models/reserva.model');
 const Alojamiento = require('../models/alojamiento.model'); // Para obtener datos del alojamiento
@@ -52,6 +52,7 @@ exports.createReserva = async (req, res) => {
 exports.getMisReservas = async (req, res) => {
   try {
     const usuario_id = req.user.id;
+    console.log('[[[ reserva.controller.getMisReservas. parametro id_usuario]]]', usuario_id)
     const reservas = await Reserva.findByUserId(usuario_id);
     res.status(200).json(reservas);
   } catch (error) {

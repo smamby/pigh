@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const reservaController = require('../controllers/reserva.controller');
+const reservaController = require('../controllers/reserva.controller.js');
 const { authenticateToken, isAdmin } = require('../middleware/auth.middleware');
 
 // --- Rutas para Usuarios Autenticados ---
@@ -11,7 +11,7 @@ const { authenticateToken, isAdmin } = require('../middleware/auth.middleware');
 router.post('/', authenticateToken, reservaController.createReserva);
 
 // GET /api/reservas/mis-reservas - Listar las reservas del usuario autenticado
-router.get('/mis-reservas', authenticateToken, reservaController.getMisReservas);
+router.get('/mis-reservas/', authenticateToken, reservaController.getMisReservas);
 
 // GET /api/reservas/mis-reservas/:id - Obtener detalle de una reserva específica del usuario autenticado
 router.get('/mis-reservas/:id', authenticateToken, reservaController.getMiReservaById);

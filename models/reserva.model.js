@@ -108,21 +108,42 @@ Reserva.create = async (nuevaReserva) => {
   }
 };
 
-// Obtener todas las reservas de un usuario específico
+// Obtener todas las reservas de un usuario específico por su id_usuario
 Reserva.findByUserId = async (usuarioId) => {
   try {
-    // Unir con la tabla alojamientos para obtener también el nombre del alojamiento
     const [rows] = await db.query(
-      `SELECT r.*, a.nombre AS nombre_alojamiento, a.ciudad, a.pais
-       FROM reservas r
-       JOIN alojamientos a ON r.alojamiento_id = a.id
-       WHERE r.usuario_id = ?
-       ORDER BY r.fecha_inicio DESC`,
+      `SELECT r.*, a.nombre_aloj AS nombre_alojamiento, a.ciudad, a.pais, h.numero_habitacion, th.nombre
+      FROM reservas r
+      JOIN alojamientos a ON r.id_alojamiento = a.id_alojamiento
+      JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
+      JOIN tipo_habitacion th ON th.id_tipo_habitacion = h.id_tipo_habitacion
+      WHERE r.id_usuario = ?
+      ORDER BY r.checkin DESC`,
       [usuarioId]
     );
     return rows;
   } catch (error) {
     console.error("Error al obtener reservas por usuario_id en BD:", error);
+    throw error;
+  }
+};
+
+// Obtener todas las reservas de un alojamiento específico por su id_alojamiento
+Reserva.findByAlojamientoId = async (alojamientoId) => {
+  try {
+    const [rows] = await db.query(
+      `SELECT r.*, a.nombre_aloj AS nombre_alojamiento, a.ciudad, a.pais, h.numero_habitacion, th.nombre
+      FROM reservas r
+      JOIN usuarios u ON r.id_alojamiento = a.id_alojamiento
+      JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
+      JOIN tipo_habitacion th ON th.id_tipo_habitacion = h.id_tipo_habitacion
+      WHERE a.id_alojamiento = ?
+      ORDER BY r.checkin DESC`,
+      [alojamientoId]
+    );
+    return rows;
+  } catch (error) {
+    console.error("Error al obtener reservas por alojamiento_id en BD:", error);
     throw error;
   }
 };
