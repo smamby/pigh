@@ -1,10 +1,16 @@
 // frontend/js/register.js
 document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.getElementById('logo');
     const registerForm = document.getElementById('register-form');
     const errorMessageDiv = document.getElementById('register-error-message');
     const successMessageDiv = document.getElementById('register-success-message');
     // Definir API_BASE_URL aquí también
     const API_BASE_URL = 'http://localhost:3001/api';
+
+    logo.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = "../index.html";
+    })
 
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {

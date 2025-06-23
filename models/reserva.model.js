@@ -287,15 +287,45 @@ Reserva.create = async (nuevaReserva) => {
 Reserva.findByUserId = async (usuarioId) => {
   try {
     const [rows] = await db.query(
-      `SELECT r.*, a.nombre_aloj AS nombre_alojamiento, a.ciudad, a.pais, h.numero_habitacion, th.nombre
-      FROM reservas r
-      JOIN alojamientos a ON r.id_alojamiento = a.id_alojamiento
-      JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
-      JOIN tipo_habitacion th ON th.id_tipo_habitacion = h.id_tipo_habitacion
-      WHERE r.id_usuario = ?
-      ORDER BY r.checkin DESC`,
+      // `SELECT r.*, a.nombre_aloj AS nombre_alojamiento, a.ciudad, a.pais, h.numero_habitacion, th.nombre
+      // FROM reservas r
+      // JOIN alojamientos a ON r.id_alojamiento = a.id_alojamiento
+      // JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
+      // JOIN tipo_habitacion th ON th.id_tipo_habitacion = h.id_tipo_habitacion
+      // WHERE r.id_usuario = ?
+      // ORDER BY r.checkin DESC`,
+      `SELECT 
+          r.id_usuario,
+          a.nombre_aloj AS nombre_alojamiento,
+          a.ciudad,
+          a.pais,
+          r.checkin,
+          r.checkout,
+          r.estado, 
+          h.precio,
+          COUNT(*) AS cantidad_habitaciones,
+          GROUP_CONCAT(DISTINCT th.nombre SEPARATOR ', ') AS categorias_habitacion,
+          GROUP_CONCAT(h.numero_habitacion SEPARATOR ', ') AS numeros_habitaciones,
+          GROUP_CONCAT(r.id SEPARATOR ',') AS ids_reservas
+        FROM 
+          reservas r
+        JOIN 
+          habitaciones h ON r.id_habitacion = h.id_habitacion
+        JOIN 
+          tipo_habitacion th ON h.id_tipo_habitacion = th.id_tipo_habitacion
+        JOIN 
+          alojamientos a ON h.id_alojamiento = a.id_alojamiento
+        WHERE 
+          r.id_usuario = ?
+        GROUP BY 
+          r.id_usuario, a.nombre_aloj, a.ciudad, a.pais, r.checkin, r.checkout, r.estado, h.precio
+        ORDER BY 
+          r.checkin DESC`,
       [usuarioId]
     );
+    console.log('Resultado completo desde DB:', rows); // Debe mostrar todos los campos
+    console.log('Primer registro:', rows[0]);
+    console.log('Campos del primer registro:', Object.keys(rows[0]));
     return rows;
   } catch (error) {
     console.error("Error al obtener reservas por usuario_id en BD:", error);

@@ -84,12 +84,12 @@ body {
     outline: none;
 }
 #nav-register.loged, #nav-login.loged, #nav-mis-reservas.unloged, 
-#nav-alojamiento.unloged, #nav-logout.unloged {
+#nav-alojamiento.unloged, #nav-logout.unloged, #nav-register-alojamiento.unloged{
     display: none;
 }
 
 #nav-register.unloged, #nav-login.unloged, #nav-mis-reservas.loged, 
-#nav-alojamiento.loged, #nav-logout.loged{
+#nav-alojamiento.loged, #nav-logout.loged, #nav-register-alojamiento.loged {
     display: visible;
 }
 /* #avatar-img.loged {

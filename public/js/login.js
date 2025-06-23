@@ -1,10 +1,14 @@
 // frontend/js/login.js
 document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.getElementById('logo');
     const loginForm = document.getElementById('login-form');
     const errorMessageDiv = document.getElementById('login-error-message');
     const successMessageDiv = document.getElementById('login-success-message'); // Referencia al nuevo div
     const API_BASE_URL = 'http://localhost:3001/api';
 
+    logo.addEventListener('click', (e) => {
+        window.location.href = "../index.html";
+    })
     // Función helper para mostrar mensajes en la UI
     function mostrarMensajeUI(elemento, mensajeTexto, tipoClase) {
         if (elemento) {

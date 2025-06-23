@@ -32,6 +32,7 @@ exports.getMisReservas = async (req, res) => {
   try {
     const id_usuario = req.user.id;
     const reservas = await Reserva.findByUserId(id_usuario);
+    //console.log('reservas model', reservas)
     res.status(200).json(reservas);
   } catch (error) {
     console.error('Error al obtener mis reservas:', error);

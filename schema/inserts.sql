@@ -489,7 +489,7 @@ VALUES
 (5, 124, 23, '2025-06-14', '2025-06-17', 2, 0, 'reservada', 480.00),
 (6, 125, 21, '2025-06-15', '2025-06-18', 2, 1, 'activa', 330.00);
 
-delete from reservas where id > 0;
+# delete from reservas where id > 0;
 
 select * from reservas
 where checkin > '2025-06-04' and checkout < '2025-06-08';
