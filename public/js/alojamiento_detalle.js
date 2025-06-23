@@ -516,24 +516,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
         })
 
-        // function actualizarDataReserva(selectElement) {
-        //     const cantidadSeleccionada = selectElement.value;
-        //     const dataCantHab = JSON.parse(selectElement.dataset.canthab);
-            
-        //     // Actualizamos la cantidad seleccionada
-        //     dataCantHab.cant_hab = cantidadSeleccionada;
-            
-        //     // Guardamos el nuevo JSON en el atributo data-reserva
-        //     selectElement.dataset.canthab = JSON.stringify(dataCantHab);
-        // }
-       
-
-
         
 
         // Galería y side info al mismo nivel y largo
-
-
         const galeriaYSideHTML = `
             <div id="galery">
                 <div style="flex:3; min-width:0;">
@@ -554,7 +539,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <div>${puntajePromedio}</div>
                     </div>
                     <div class="box-comentarios">
-                        <span id="texto-placeholder" >
+                        <span id="texto-placeholder">
                             ${comentarioHTML }
                         </span>
                     </div>

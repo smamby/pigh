@@ -350,6 +350,7 @@ SET plazas = 2;
 ALTER TABLE habitaciones
 MODIFY COLUMN estado ENUM('habilitada', 'mantenimiento', 'clausurada') NOT NULL DEFAULT 'habilitada';
 
+select * from habitaciones;
 
 SET SQL_SAFE_UPDATES = 1;
 

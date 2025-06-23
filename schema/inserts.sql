@@ -138,129 +138,143 @@ ALTER TABLE `tipo_habitacion`
 CHANGE COLUMN `capacidad_adultos` `plazas` TINYINT NOT NULL DEFAULT 2;
 
 select * from reservas;
+select * from habitaciones;
+
+UPDATE `habitaciones` SET 
+  `precio` = 170.00
+WHERE `id_habitacion` = 161;
 
 -- Alojamiento 1: Hotel Patios de Córdoba (España)
-INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `notas`) VALUES
-('101', 1, 'habilitada', 1, 'Vista al patio interior, piso bajo'),
-('201', 2, 'habilitada', 1, 'Vista a la calle, cama king size'),
+INSERT INTO `habitaciones` (`numero_habitacion`, `id_tipo_habitacion`, `estado`, `id_alojamiento`, `plazas`, `precio`, `notas`) VALUES
+('101', 1, 'habilitada', 1, 'Vista al patio interior, piso bajo', 2, 95.00),
+('201', 2, 'habilitada', 1, 'Vista a la calle, cama king size', 2, 145.00),
 -- Alojamiento 2: Gran Hotel Córdoba Argentina
-('501', 3, 'habilitada', 2, 'Suite con jacuzzi, piso alto'),
-('302', 4, 'habilitada', 2, 'Habitación familiar, conexión para niños'),
+('501', 3, 'habilitada', 2, 'Suite con jacuzzi, piso alto', 2, 190.00),
+('302', 4, 'habilitada', 2, 'Habitación familiar, conexión para niños', 2, 150.00),
 -- Alojamiento 3: Rosario Plaza Hotel (Argentina)
-('12A', 1, 'habilitada', 3, 'Vista al río Paraná'),
-('15B', 2, 'habilitada', 3, 'Habitación deluxe, minibar incluido'),
+('12A', 1, 'habilitada', 3, 'Vista al río Paraná', 2, 110.00),
+('15B', 2, 'habilitada', 3, 'Habitación deluxe, minibar incluido', 2, 165.00),
 -- Alojamiento 4: Hotel Rosario Colombia
-('102', 1, 'habilitada', 4, 'Vista a la piscina'),
-('205', 5, 'habilitada', 4, 'Habitación accesible, cerca del ascensor'),
+('102', 1, 'habilitada', 4, 'Vista a la piscina', 2, 75.00),
+('205', 5, 'habilitada', 4, 'Habitación accesible, cerca del ascensor', 2, 135.00),
 -- Alojamiento 5: Hotel Valencia Palace (España)
-('301', 3, 'habilitada', 5, 'Suite con terraza privada'),
-('412', 6, 'habilitada', 5, 'Habitación económica, vista interior'),
+('301', 3, 'habilitada', 5, 'Suite con terraza privada', 2, 210.00),
+('412', 6, 'habilitada', 5, 'Habitación económica, vista interior', 2, 130.00),
 -- Alojamiento 6: Valencia Suites (Venezuela)
-('S1', 3, 'habilitada', 6, 'Suite principal con sala de estar'),
-('S5', 7, 'habilitada', 6, 'Suite presidencial, servicio VIP'),
+('S1', 3, 'habilitada', 6, 'Suite principal con sala de estar', 2, 145.00),
+('S5', 7, 'habilitada', 6, 'Suite presidencial, servicio VIP', 2, 245.00),
 -- Alojamiento 7: Hotel Lima Perú
-('OC1', 2, 'habilitada', 7, 'Vista al océano Pacífico'),
-('IC3', 1, 'habilitada', 7, 'Habitación estándar, vista interior'),
+('OC1', 2, 'habilitada', 7, 'Vista al océano Pacífico', 2, 165.00),
+('IC3', 1, 'habilitada', 7, 'Habitación estándar, vista interior', 2, 120.00),
 -- Alojamiento 8: Lima Inn Ohio (EEUU)
-('10', 6, 'habilitada', 8, 'Habitación individual, wifi rápido'),
-('21', 1, 'habilitada', 8, 'Habitación doble estándar'),
+('10', 6, 'habilitada', 8, 'Habitación individual, wifi rápido', 2, 65.00),
+('21', 1, 'habilitada', 8, 'Habitación doble estándar', 2, 125.00),
 -- Alojamiento 9: Parador de Granada (España)
-('AL1', 3, 'habilitada', 9, 'Suite con vistas directas a la Alhambra'),
-('CL2', 2, 'habilitada', 9, 'Habitación deluxe, estilo árabe'),
+('AL1', 3, 'habilitada', 9, 'Suite con vistas directas a la Alhambra', 2, 180.00),
+('CL2', 2, 'habilitada', 9, 'Habitación deluxe, estilo árabe', 2, 210.00),
 -- Alojamiento 10: Granada Hotel Nicaragua
-('G1', 2, 'habilitada', 10, 'Vista al lago Cocibolca'),
-('G5', 8, 'habilitada', 10, 'Habitación con jacuzzi privado'),
+('G1', 2, 'habilitada', 10, 'Vista al lago Cocibolca', 2, 70.00),
+('G5', 8, 'habilitada', 10, 'Habitación con jacuzzi privado', 2, 90.00),
 -- Alojamiento 11: Hotel Medellín Colombia
-('POB101', 2, 'habilitada', 11, 'Vista al barrio El Poblado'),
-('POB205', 4, 'habilitada', 11, 'Habitación familiar, piso alto'),
+('POB101', 2, 'habilitada', 11, 'Vista al barrio El Poblado', 2, 90.00),
+('POB205', 4, 'habilitada', 11, 'Habitación familiar, piso alto', 2, 130.00),
 -- Alojamiento 12: Medellín Rural House (España)
-('C1', 9, 'habilitada', 12, 'Casa completa, 3 dormitorios'),
-('C2', 10, 'habilitada', 12, 'Dormitorio colectivo, 6 camas'),
+('C1', 9, 'habilitada', 12, 'Casa completa, 3 dormitorios', 2, 155.00),
+('C2', 10, 'habilitada', 12, 'Dormitorio colectivo, 6 camas', 2, 55.00),
 -- Alojamiento 13: Hotel Toledo España
-('T101', 2, 'habilitada', 13, 'Vista a la catedral'),
-('T202', 3, 'habilitada', 13, 'Suite en antigua celda monacal'),
+('T101', 2, 'habilitada', 13, 'Vista a la catedral', 2, 115.00),
+('T202', 3, 'habilitada', 13, 'Suite en antigua celda monacal', 2, 125.00),
 -- Alojamiento 14: Toledo Grand Hotel (EEUU)
-('OH1', 1, 'habilitada', 14, 'Habitación estándar doble'),
-('OH5', 2, 'habilitada', 14, 'Habitación ejecutiva, escritorio amplio'),
+('OH1', 1, 'habilitada', 14, 'Habitación estándar doble', 2, 99.00),
+('OH5', 2, 'habilitada', 14, 'Habitación ejecutiva, escritorio amplio', 2, 130.00),
 -- Alojamiento 15: Hotel Málaga Palacio (España)
-('MP101', 2, 'habilitada', 15, 'Vista al puerto deportivo'),
-('MP301', 3, 'habilitada', 15, 'Suite con balcón panorámico'),
+('MP101', 2, 'habilitada', 15, 'Vista al puerto deportivo', 2, 125.00),
+('MP301', 3, 'habilitada', 15, 'Suite con balcón panorámico', 2, 145.00),
 -- Alojamiento 16: Málaga Hostel Colombia
-('D1', 10, 'habilitada', 16, 'Dormitorio femenino, 4 camas'),
-('D2', 10, 'habilitada', 16, 'Dormitorio mixto, 6 camas'),
+('D1', 10, 'habilitada', 16, 'Dormitorio femenino, 4 camas', 2, 25.00),
+('D2', 10, 'habilitada', 16, 'Dormitorio mixto, 6 camas', 2, 40.00),
 -- Alojamiento 17: Hotel Salamanca Plaza (España)
-('SP1', 2, 'habilitada', 17, 'Vista a la Plaza Mayor'),
-('SP3', 1, 'habilitada', 17, 'Habitación clásica, decoración tradicional'),
+('SP1', 2, 'habilitada', 17, 'Vista a la Plaza Mayor', 2, 125.00),
+('SP3', 1, 'habilitada', 17, 'Habitación clásica, decoración tradicional', 2, 105.00),
 -- Alojamiento 18: Salamanca Grand México
-('SG101', 1, 'habilitada', 18, 'Habitación estándar para ejecutivos'),
-('SG201', 2, 'habilitada', 18, 'Habitación deluxe, zona de trabajo'),
+('SG101', 1, 'habilitada', 18, 'Habitación estándar para ejecutivos', 2, 80.00),
+('SG201', 2, 'habilitada', 18, 'Habitación deluxe, zona de trabajo', 2, 110.00),
 -- Alojamiento 19: Hotel Burgos Centro (España)
-('BC1', 1, 'habilitada', 19, 'Vista lateral a la catedral'),
-('BC5', 2, 'habilitada', 19, 'Habitación superior, cama king'),
+('BC1', 1, 'habilitada', 19, 'Vista lateral a la catedral', 2, 88.00),
+('BC5', 2, 'habilitada', 19, 'Habitación superior, cama king', 2, 110.00),
 -- Alojamiento 20: Burgos Hostel Colombia
-('BH1', 10, 'habilitada', 20, 'Dormitorio con hamacas'),
-('BH2', 10, 'habilitada', 20, 'Dormitorio con literas'),
+('BH1', 10, 'habilitada', 20, 'Dormitorio con hamacas', 2, 30.00),
+('BH2', 10, 'habilitada', 20, 'Dormitorio con literas', 2, 40.00),
 -- Alojamiento 21: Hotel Santa Cruz Tenerife (España)
-('T101', 2, 'habilitada', 21, 'Vista al océano Atlántico, balcón privado'),
-('T205', 3, 'reservada', 21, 'Suite con jacuzzi, piscina en azotea'),
+('T101', 2, 'habilitada', 21, 'Vista al océano Atlántico, balcón privado', 2, 110.00),
+('T205', 3, 'reservada', 21, 'Suite con jacuzzi, piscina en azotea', 2, 125.00),
 -- Alojamiento 22: Santa Cruz Inn Bolivia
-('B1', 1, 'habilitada', 22, 'Habitación económica, ventilador de techo'),
-('B5', 6, 'habilitada', 22, 'Habitación superior, aire acondicionado'),
+('B1', 1, 'habilitada', 22, 'Habitación económica, ventilador de techo', 2, 45.00),
+('B5', 6, 'habilitada', 22, 'Habitación superior, aire acondicionado', 2, 70.00),
 -- Alojamiento 23: Santa Cruz Beach Hotel (EEUU)
-('SB101', 2, 2, 160.00, 'habilitada', 23, 'Primera línea de playa, salida directa'),
-('SB302', 8, 2, 190.00,'habilitada', 23, 'Suite con fogata privada en terraza'),
-('SB355', 3, 2, 280.00, 'habilitada', 23, 'Sala de trabajo independiente, minibar premium'),
+('SB101', 2, 'habilitada', 23, 'Primera línea de playa, salida directa', 2, 160.00),
+('SB302', 8, 'habilitada', 23, 'Suite con fogata privada en terraza', 2, 190.00),
+('SB355', 3, 'habilitada', 23, 'Sala de trabajo independiente, minibar premium', 2, 280.00),
+('SB102', 2, 'habilitada', 23, 'Primera línea de playa, salida directa', 2, 160.00),
+('SB303', 8, 'habilitada', 23, 'Suite con fogata privada en terraza', 2, 190.00),
+('SB356', 3, 'habilitada', 23, 'Sala de trabajo independiente, minibar premium', 2, 280.00),
+('SB103', 2, 'habilitada', 23, 'Primera línea de playa, salida directa', 2, 160.00),
+('SB304', 8, 'habilitada', 23, 'Suite con fogata privada en terraza', 2, 190.00),
+('SB357', 3, 'habilitada', 23, 'Sala de trabajo independiente, minibar premium', 2, 280.00),
+('SB104', 2, 'habilitada', 23, 'Primera línea de playa, salida directa', 2, 160.00),
+('SB305', 8, 'habilitada', 23, 'Suite con fogata privada en terraza', 2, 190.00),
+('SB358', 3, 'habilitada', 23, 'Sala de trabajo independiente, minibar premium', 2, 280.00),
 -- Alojamiento 24: Hotel San José Costa Rica
-('CR101', 2, 'habilitada', 24, 'Vista al jardín tropical'),
-('CR201', 4, 'habilitada', 24, 'Habitación familiar, hamacas en balcón'),
+('CR101', 2, 'habilitada', 24, 'Vista al jardín tropical', 2, 95.00),
+('CR201', 4, 'habilitada', 24, 'Habitación familiar, hamacas en balcón', 2, 110.00),
 -- Alojamiento 25: San José Inn California (EEUU)
-('SJ101', 7, 'habilitada', 25, 'Habitación tecnológica, escritorio ejecutivo'),
-('SJ202', 1, 'habilitada', 25, 'Habitación estándar, conexión VPN premium'),
+('SJ101', 7, 'habilitada', 25, 'Habitación tecnológica, escritorio ejecutivo', 2, 155.00),
+('SJ202', 1, 'habilitada', 25, 'Habitación estándar, conexión VPN premium', 2, 135.00),
 -- Alojamiento 26: Hotel Palencia España
-('PL1', 1, 'habilitada', 26, 'Vista a la calle Mayor, bicicleta incluida'),
-('PL3', 2, 'habilitada', 26, 'Habitación deluxe, cama king size'),
+('PL1', 1, 'habilitada', 26, 'Vista a la calle Mayor, bicicleta incluida', 2, 75.00),
+('PL3', 2, 'habilitada', 26, 'Habitación deluxe, cama king size', 2, 95.00),
 -- Alojamiento 27: Palencia Suites México
-('MX1', 3, 'habilitada', 27, 'Suite con decoración yucateca'),
-('MX5', 3, 'habilitada', 27, 'Suite con excursión a cenote incluida'),
+('MX1', 3, 'habilitada', 27, 'Suite con decoración yucateca', 2, 65.00),
+('MX5', 3, 'habilitada', 27, 'Suite con excursión a cenote incluida', 2, 75.00),
 -- Alojamiento 28: Hotel León España
-('LN1', 2, 'habilitada', 28, 'Vista a la catedral gótica'),
-('LN3', 5, 'habilitada', 28, 'Habitación temática leonesa, menú degustación'),
+('LN1', 2, 'habilitada', 28, 'Vista a la catedral gótica', 2, 110.00),
+('LN3', 5, 'habilitada', 28, 'Habitación temática leonesa, menú degustación', 2, 140.00),
 -- Alojamiento 29: León Plaza México
-('LM1', 2, 'habilitada', 29, 'Habitación ejecutiva, zona de trabajo'),
-('LM4', 9, 'habilitada', 29, 'Suite con taller de artesanías en piel'),
+('LM1', 2, 'habilitada', 29, 'Habitación ejecutiva, zona de trabajo', 2, 85.00),
+('LM4', 9, 'habilitada', 29, 'Suite con taller de artesanías en piel', 2, 110.00),
 -- Alojamiento 30: Hotel León Nicaragua
-('NI1', 1, 'habilitada', 30, 'Habitación colonial, patio interior'),
-('NI3', 2, 'habilitada', 30, 'Habitación con clases de español incluidas'),
+('NI1', 1, 'habilitada', 30, 'Habitación colonial, patio interior', 2, 55.00),
+('NI3', 2, 'habilitada', 30, 'Habitación con clases de español incluidas', 2, 70.00),
 -- Alojamiento 31: Hotel Sevilla España
-('SV1', 2, 'habilitada', 31, 'Vista al barrio de Santa Cruz'),
-('SV3', 3, 'habilitada', 31, 'Suite con espectáculo flamenco privado'),
+('SV1', 2, 'habilitada', 31, 'Vista al barrio de Santa Cruz', 2, 140.00),
+('SV3', 3, 'habilitada', 31, 'Suite con espectáculo flamenco privado', 2, 150.00),
 -- Alojamiento 32: Sevilla Hostal Colombia
-('SH1', 10, 'habilitada', 32, 'Dormitorio con terraza comunitaria'),
-('SH2', 10, 'habilitada', 32, 'Dormitorio con actividades culturales'),
+('SH1', 10, 'habilitada', 32, 'Dormitorio con terraza comunitaria', 2, 40.00),
+('SH2', 10, 'habilitada', 32, 'Dormitorio con actividades culturales', 2, 50.00),
 -- Alojamiento 33: Gran Hotel Córdoba Center (España)
-('GC101', 2, 'habilitada', 33, 'Vista panorámica de la ciudad'),
-('GC301', 3, 'habilitada', 33, 'Suite con acceso a piscina exterior'),
+('GC101', 2, 'habilitada', 33, 'Vista panorámica de la ciudad', 2, 120.00),
+('GC301', 3, 'habilitada', 33, 'Suite con acceso a piscina exterior', 2, 130.00),
 -- Alojamiento 34: Hostal Los Arcos de Córdoba (España)
-('CA1', 1, 'habilitada', 34, 'Habitación sencilla cerca de la Mezquita'),
-('CA3', 1, 'habilitada', 34, 'Habitación doble, estilo andaluz'),
+('CA1', 1, 'habilitada', 34, 'Habitación sencilla cerca de la Mezquita', 2, 45.00),
+('CA3', 1, 'habilitada', 34, 'Habitación doble, estilo andaluz', 2, 65.00),
 -- Alojamiento 35: Hotel Sevilla Palace (España)
-('SP101', 3, 'habilitada', 35, 'Suite de lujo con spa privado'),
-('SP201', 2, 'habilitada', 35, 'Habitación deluxe, plaza Nueva vista'),
+('SP101', 3, 'habilitada', 35, 'Suite de lujo con spa privado', 2, 150.00),
+('SP201', 2, 'habilitada', 35, 'Habitación deluxe, plaza Nueva vista', 2, 170.00),
 -- Alojamiento 36: Hostal Santa Cruz Sevilla (España)
-('SC1', 1, 'habilitada', 36, 'Habitación con desayuno incluido'),
-('SC3', 1, 'habilitada', 36, 'Habitación estilo tradicional sevillano'),
+('SC1', 1, 'habilitada', 36, 'Habitación con desayuno incluido', 2, 75.00),
+('SC3', 1, 'habilitada', 36, 'Habitación estilo tradicional sevillano', 2, 65.00),
 -- Alojamiento 37: Hotel Ribera de Triana (España)
-('RT1', 2, 'habilitada', 37, 'Vista al río Guadalquivir'),
-('RT3', 2, 'habilitada', 37, 'Habitación con parking reservado'),
+('RT1', 2, 'habilitada', 37, 'Vista al río Guadalquivir', 2, 110.00),
+('RT3', 2, 'habilitada', 37, 'Habitación con parking reservado', 2, 140.00),
 -- Alojamiento 38: Gran Hotel Granada (España)
-('GR1', 3, 'habilitada', 38, 'Suite con vistas directas a la Alhambra'),
-('GR3', 2, 'habilitada', 38, 'Habitación deluxe, terraza privada'),
+('GR1', 3, 'habilitada', 38, 'Suite con vistas directas a la Alhambra', 2, 130.00),
+('GR3', 2, 'habilitada', 38, 'Habitación deluxe, terraza privada', 2, 150.00),
 -- Alojamiento 39: Hostal Darro Granada (España)
-('DR1', 1, 'habilitada', 39, 'Habitación no fumadores, ambiente familiar'),
-('DR3', 1, 'habilitada', 39, 'Habitación con vistas al río Darro'),
+('DR1', 1, 'habilitada', 39, 'Habitación no fumadores, ambiente familiar', 2, 55.00),
+('DR3', 1, 'habilitada', 39, 'Habitación con vistas al río Darro', 2, 75.00),
 -- Alojamiento 40: Hotel Albaicín Premium (España)
-('AL1', 3, 'habilitada', 40, 'Suite premium con vistas al Albaicín'),
-('AL3', 2, 'habilitada', 40, 'Habitación con restaurante gourmet');
+('AL1', 3, 'habilitada', 40, 'Suite premium con vistas al Albaicín', 2, 140.00),
+('AL3', 2, 'habilitada', 40, 'Habitación con restaurante gourmet', 2, 170.00);
 
 
 select * from habitaciones;
@@ -482,7 +496,7 @@ where checkin > '2025-06-04' and checkout < '2025-06-08';
 
 select * from habitaciones where id_alojamiento = 21 or id_alojamiento = 22 or id_alojamiento = 23;
 select * from alojamientos where id_alojamiento = 21 or id_alojamiento = 22 or id_alojamiento = 23;
-select * from habitaciones where id_tipo_habitacion = 2 && id_alojamiento = 23;
+select precio from habitaciones where id_alojamiento = 23;
 select * from habitaciones where id_habitacion = 130 && id_alojamiento = 25;
 
 SELECT 

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navNode = document.querySelector('header nav');
 
     const API_BASE_URL = 'http://localhost:3001/api'; // Tu URL base
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
     function setupLogoutLink() {
         if (token && navNode) {
@@ -84,9 +84,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if(reservasListNode) reservasListNode.innerHTML = ''; // Limpiar "Cargando..."
         }
         // Opcional: redirigir a login después de un momento
-        // setTimeout(() => { window.location.href = 'login.html'; }, 3000);
+        setTimeout(() => { window.location.href = '../index.html'; }, 3000);
         return; 
     }
+
+    document.getElementById('nav-logout').addEventListener('click', function (e) {
+        e.preventDefault(); // Evita que navegue inmediatamente
+
+        // Borra datos del localStorage
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('user');
+
+        // Redirige manualmente
+        window.location.href = "../index.html";
+    });
 
     async function fetchMisReservas() {
         if (mensajeReservasNode) {
