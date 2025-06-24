@@ -1,4 +1,35 @@
-document.addEventListener('DOMContentLoaded', function () {
+const navlogout = document.getElementById("nav-logout")
+const navavatar = document.getElementById("avatar-img")
+
+document.getElementById('logo').addEventListener('click', (e) => {
+    e.preventDefault()
+    window.location.href = '../index.html';
+})
+
+
+
+    document.getElementById('nav-logout').addEventListener('click', function (e) {
+        e.preventDefault(); // Evita que navegue inmediatamente
+
+        // Borra datos del localStorage
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('user');
+
+        // Redirige manualmente
+        window.location.href = "../index.html";
+    })
+    
+    if (sessionStorage.getItem('user') !== null) {
+    
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const userName = document.getElementById('username');
+        userName.textContent = `${user.nombre} ${user.apellido}`;
+        navavatar.src = '../assets/pic/avatar1.png'
+        
+        console.log(user.nombre + " loged");
+    }
+    
+
 
     // --- LÓGICA PARA AÑADIR/QUITAR TIPOS DE HABITACIÓN ---
     const addRoomBtn = document.getElementById('add-room-type-btn');
@@ -12,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         { nombre: 'Habitación Estándar Doble', capacidad_adultos: 2, capacidad_menores: 0, precio_base: 80.00, cantidad_total: 1, descripcion: 'Habitación física 101. Vista al patio interior, piso bajo.' },
         { nombre: 'Habitación Deluxe King', capacidad_adultos: 2, capacidad_menores: 1, precio_base: 120.00, cantidad_total: 1, descripcion: 'Habitación física 201. Vista a la calle, cama king size.' }
     ];
+
 
     // Función para añadir un nuevo bloque de tipo de habitación, con datos opcionales para pre-rellenar
     function addRoomType(data = null) {
@@ -125,5 +157,4 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             reader.readAsDataURL(file); // Leer el archivo como una URL de datos para la previsualización
         });
-    }
-});
+    };

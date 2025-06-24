@@ -1,7 +1,90 @@
 /* Estilos personalizados para complementar Tailwind */
 body {
     font-family: 'Inter', sans-serif;
+    margin: 0;
+    background-color: #f3f4f6; /* bg-gray-100 */
 }
+
+.container {
+    max-width: 1200px;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem; /* px-4 */
+}
+.header {
+    background-color: #ffffff; /* bg-white */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+    padding: 1rem 16rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.logo-image {
+    width: 16rem; /* w-8 */
+        /* h-8 */
+    margin-right: 0.5rem; /* mr-2 */
+}
+
+.leng_icon {
+    width: 2rem; /* w-6 */
+    height: 2rem; /* h-6 */
+    margin-right: 0.25rem; /* mr-1 */
+}
+
+.nav-links {
+    display: none; /* hidden */
+    align-items: center;
+    gap: 1.5rem; /* space-x-6 */
+}
+
+.nav-link {
+    color: #4b5563; /* text-gray-600 */
+    transition: color 0.2s ease-in-out; /* transition */
+}
+
+.nav-link:hover {
+    color: #2563eb; /* hover:text-blue-600 */
+}
+
+.currency-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem; /* space-x-1 */
+    color: #4b5563; /* text-gray-600 */
+}
+.hideloging {
+    display: flex;
+    align-items: center;
+}
+
+#avatar-img {
+    width: 3rem; /* w-8 */
+    height: 3rem; /* h-8 */
+    border-radius: 50%; /* rounded-full */
+    margin-right: 0.5rem; /* mr-2 */
+}
+
+
+/* #nav-register.loged, #nav-login.loged, #nav-mis-reservas.loged, 
+#nav-alojamiento.loged, #nav-logout.unloged, #nav-register-alojamiento.loged{
+    display: none;
+}
+
+#nav-register.unloged, #nav-login.unloged, #nav-mis-reservas.loged, 
+#nav-alojamiento.loged, #nav-logout.loged, #nav-register-alojamiento.loged {
+    display: visible;
+} */
 /* Estilo para el contenedor de arrastrar y soltar imágenes */
 .drag-area {
     border: 2px dashed #cbd5e1;
