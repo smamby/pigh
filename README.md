@@ -147,7 +147,7 @@ PIGH-ALOJAMIENTOV2/
 
 ## ✅ Verificación de la Instalación
 
-1. Acceder a `http://localhost:3001`
+1. Acceder a ``
 2. Verificar la conexión a la base de datos MySQL
 3. Comprobar la carga correcta de archivos estáticos
 4. Realizar pruebas básicas de funcionalidad

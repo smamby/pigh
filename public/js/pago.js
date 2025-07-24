@@ -31,7 +31,7 @@ const params = new URLSearchParams(window.location.search);
                     console.log('Pago completado por', details.payer.name.given_name);
 
                     // Registrar la reserva en tu backend
-                    fetch('http://localhost:3001/api/reservas', {
+                    fetch('/api/reservas', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

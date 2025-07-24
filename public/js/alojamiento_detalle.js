@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const API_BASE_URL = 'http://localhost:3001/api';
+    const API_BASE_URL = '/api';
     const contenedor = document.getElementById('subdiv-content');
     const urlParams = new URLSearchParams(window.location.search);
     const alojamientoId = sessionStorage.getItem('alojamientoId');
@@ -33,15 +33,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (e) {
             puntajes = [];
         }
-        
+
         // Renderizar lista de comentarios para la sección de comentarios
         const puntaje = puntajes[Math.floor(Math.random() * puntajes.length)];
         const comentarioHTML = puntaje
             ? `★ <b>${puntaje.puntuacion}</b> — ${puntaje.comentario}<br><b>${puntaje.nombre} ${puntaje.apellido}</b>`
             : 'Sin comentarios aún.';
 
-        const textScore = alojamiento.promedio_puntaje >= 8.6 ? 'Excelente' : 
-                            alojamiento.promedio_puntaje >= 7.6 ? 'Muy Bueno' : 
+        const textScore = alojamiento.promedio_puntaje >= 8.6 ? 'Excelente' :
+                            alojamiento.promedio_puntaje >= 7.6 ? 'Muy Bueno' :
                             alojamiento.promedio_puntaje >= 6.6 ? 'Bueno' :
                             alojamiento.promedio_puntaje >= 5.6 ? 'Aceptable' :
                             'Regular';
@@ -61,14 +61,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         //variables de busqueda guardadas de huspedes y rooms
         document.getElementById('destinationSelect').value = sessionStorage.getItem('destination') || '';
         let AdultsInput = sessionStorage.getItem('adults');
-        let ChildrenInput = sessionStorage.getItem('children');         
+        let ChildrenInput = sessionStorage.getItem('children');
         let RoomsInput = sessionStorage.getItem('rooms');
         let checkinInput = document.getElementById('checkinInput');
         let checkoutInput = document.getElementById('checkoutInput');
-        let modifCheckinInput = document.getElementById('modifCheckinInput');        
+        let modifCheckinInput = document.getElementById('modifCheckinInput');
         let modifCheckoutInput = document.getElementById('modifCheckoutInput');
 
-        // logica de calendario        
+        // logica de calendario
         const today = new Date().toISOString().split('T')[0];
         checkinInput.min = today;
         modifCheckinInput.min = today
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 checkoutInput.value = minCheckout;
                 modifCheckoutInput.value = minCheckout;
                 }
-                sessionStorage.setItem('checkin', checkinInput.value)    
+                sessionStorage.setItem('checkin', checkinInput.value)
                 sessionStorage.setItem('checkout', checkoutInput.value)
             } else {
                 // Si se borra el valor de checkin, deshabilita checkout
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 modifCheckoutInput.value = minCheckout;
                 checkoutInput.value = minCheckout;
                 }
-                sessionStorage.setItem('checkin', modifCheckinInput.value)    
+                sessionStorage.setItem('checkin', modifCheckinInput.value)
                 sessionStorage.setItem('checkout', modifCheckoutInput.value)
             } else {
                 // Si se borra el valor de checkin, deshabilita checkout
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         tipoAloj.textContent = tipoAlojamiento;
         paisAloj.textContent = alojamiento.pais;
         ciudadAloj.textContent = alojamiento.ciudad;
-        nombreAloj.textContent += alojamiento.nombre;        
+        nombreAloj.textContent += alojamiento.nombre;
 
         // Busqueda desde breadcrumb
         inicio.addEventListener('click', () => {
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
 
         async function busquedaTabulada(queryString) {
-            const response = await fetch(`http://localhost:3001/api/alojamientos?${queryString}`, {
+            const response = await fetch(`/api/alojamientos?${queryString}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log('Alojamientos de este mismo tipo:', data[0]);
             console.log('queryString:', queryString);
             window.location.href = `../index.html`;
-        }        
+        }
         tipoAloj.addEventListener('click', async () => {
             searchParams = {
                 checkin: checkinInput.value,
@@ -205,9 +205,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 children: ChildrenInput,
                 rooms: RoomsInput
             };
-            let queryString = new URLSearchParams({ 
+            let queryString = new URLSearchParams({
                 tipo_alojamiento: alojamiento.tipo_alojamiento,
-                ...searchParams 
+                ...searchParams
             }).toString();
             sessionStorage.setItem('tipoAlojamiento', tipoAlojamiento);
             sessionStorage.setItem('idTipoAlojamiento', alojamiento.tipo_alojamiento);
@@ -222,9 +222,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 children: ChildrenInput,
                 rooms: RoomsInput
             };
-            let queryString = new URLSearchParams({ 
-                pais: alojamiento.pais, 
-                ...searchParams 
+            let queryString = new URLSearchParams({
+                pais: alojamiento.pais,
+                ...searchParams
             }).toString();
             sessionStorage.setItem('alojamientoPais', alojamiento.pais);
             sessionStorage.setItem('tipoBusqueda', 'paisAlojamiento');
@@ -238,9 +238,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 children: ChildrenInput,
                 rooms: RoomsInput
             };
-            let queryString = new URLSearchParams({ 
-                destination: alojamiento.ciudad, 
-                ...searchParams 
+            let queryString = new URLSearchParams({
+                destination: alojamiento.ciudad,
+                ...searchParams
             }).toString();
             // let queryString = new URLSearchParams({
             //     ciudad: alojamiento.ciudad,
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             busquedaTabulada(queryString);
         });
 
-        const resServices = await fetch(`http://localhost:3001/api/caracteristicas/search/${alojamientoId}`, {
+        const resServices = await fetch(`/api/caracteristicas/search/${alojamientoId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const services = await resServices.json();
         console.log('servicios:', services);
 
-        const resHabitaciones = await fetch(`http://localhost:3001/api/habitaciones/alojamiento/${alojamientoId}`, {
+        const resHabitaciones = await fetch(`/api/habitaciones/alojamiento/${alojamientoId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const fechaCheckin = new Date(sessionStorage.getItem('checkin'));
         const fechaCheckout = new Date(sessionStorage.getItem('checkout'));
         sessionStorage.setItem('days', Math.ceil((new Date(fechaCheckout) - new Date(fechaCheckin)) / (1000 * 60 * 60 * 24)))
-        
+
         let cantXTipo = {};
         let habitacionesDisponibles = [];
 
@@ -298,8 +298,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const reservaCheckout = new Date(reserva.checkout);
 
                 console.log('fechaCheckin', fechaCheckin);
-                console.log('fechaCheckout',fechaCheckout);       
-                console.log('reservaCheckin',reservaCheckin)    
+                console.log('fechaCheckout',fechaCheckout);
+                console.log('reservaCheckin',reservaCheckin)
                 console.log('reservaCheckout',reservaCheckout)
 
                 if (
@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 habitacionesDisponibles.push(h);
             } else {
                 cantXTipo[h.id_tipo_habitacion] -= 1; //habReservadas;
-            }            
+            }
         });
 
 
@@ -333,15 +333,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('habitaciones:', habitaciones);
         console.log('cantidades', cantXTipo)
 
-        
+
         const tbHabitaciones = document.getElementById('tbody-habitaciones');
         tbHabitaciones.innerHTML = '';
-        
+
         function crearOptions(cantidad) {
             let optSelect = ``;
             for (let i=0; i <= cantidad; i++) {
                 optSelect += `<option value="${i}">${i}</option>`
-                
+
             };
             return optSelect;
         };
@@ -355,14 +355,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             console.log(cantXTipo[h.id_tipo_habitacion]);
             let optionsHTML = crearOptions(cantXTipo[h.id_tipo_habitacion])
-                
+
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td class="especificaciones">
                     <div class="hab-name hab1">${h.tipo_habitacion_nombre}</div>
-                    <div class="comodidades hab1">${h.camas_detalle} 🛏️🛏️</div> 
+                    <div class="comodidades hab1">${h.camas_detalle} 🛏️🛏️</div>
                     <div class="comodidades hab1">${h.tipo_habitacion_descripcion}</div>
-                    <div class="comodidades-detalle hab1">                        
+                    <div class="comodidades-detalle hab1">
                         <span class="caracteristica-item" title="Metros cuadrados">📏 ${h.tamanio_m2} m&sup2</span>
                         ${caract}
                     </div>
@@ -379,20 +379,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="opcion"><span>✔️</span>Reembolsable</div>
                 </td>
                 <td class="select-habitaciones hab${index}">
-                    <select class="select-cant hab${index}" id="ix-tipo-hab${index}" 
+                    <select class="select-cant hab${index}" id="ix-tipo-hab${index}"
                                                 data-canthab='{"cant_hab":${sessionStorage.getItem('rooms')}}'
                                                 onchange="actualizarDataReserva(this)">
                         ${optionsHTML}
                     </select>
                 </td>
-                <td class="reservar-ya" data-reserva='{"id-tipo":${h.id_tipo_habitacion}, 
+                <td class="reservar-ya" data-reserva='{"id-tipo":${h.id_tipo_habitacion},
                                                      "index-row":${index}}' id="res-hab${index}">Reserva ya!</td>
             `
             tbHabitaciones.appendChild(row);
             const select = row.querySelector('.select-cant');
             let roomsSel = parseInt(sessionStorage.getItem('rooms'));
             if (cantXTipo[h.id_tipo_habitacion] >= roomsSel)  {
-                select.value = roomsSel; 
+                select.value = roomsSel;
             } else {
                 select.value = cantXTipo[h.id_tipo_habitacion]
                 alert(`No hay ${roomsSel} habitaciones disponibles para todas las opciones de habitaciones`)
@@ -426,14 +426,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                     });
                     return;
                 }
-                
+
                 console.log('Tipo habitacion elegida', tipoHabitacion, cantHabRes.value);
                 if (!sessionStorage.getItem('user')) {
                     console.log("LOGEARSE");
                     // const modalLogin = document.getElementById('loginModal');
                     // const closeLoginBtn = document.getElementById('closeModalBtnLogin');
                     const modalLogin = document.getElementById('loginModal');
-                    modalLogin.style.display = 'grid';                    
+                    modalLogin.style.display = 'grid';
                     return
                 }
                 modalLogin.style.display = 'none';
@@ -441,27 +441,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                 let checkoutRes = sessionStorage.getItem('checkout');
                 const user = JSON.parse(sessionStorage.getItem('user'));
 
-                const resultReserva = await fetch('http://localhost:3001/api/reservas/', {
+                const resultReserva = await fetch('/api/reservas/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                     },
-                    body: JSON.stringify({                         
+                    body: JSON.stringify({
                         id_usuario: user['id_usuario'],
                         id_alojamiento: sessionStorage.getItem('alojamientoId'),
-                        id_tipo_habitacion: tipoHabitacion, 
-                        checkin: checkinRes, 
-                        checkout: checkoutRes, 
-                        adultos: Number(sessionStorage.getItem('adults')), 
+                        id_tipo_habitacion: tipoHabitacion,
+                        checkin: checkinRes,
+                        checkout: checkoutRes,
+                        adultos: Number(sessionStorage.getItem('adults')),
                         menores: Number(sessionStorage.getItem('clildren')),
                         days: Math.ceil((new Date(checkoutRes) - new Date(checkinRes)) / (1000 * 60 * 60 * 24)),
                         estado : 'reservada',
                         cantidadBuscada: cantHabRes.value
-                    })                    
+                    })
                 });
                 const respuestaReserva = await resultReserva.json();
-                
+
                 if (!respuestaReserva.reserva) {
                     Swal.fire({
                         title: '❌ No hay disponibilidad',
@@ -502,9 +502,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 buttonsStyling: true,
                 confirmButtonAriaLabel: 'OK'
                 });
-            })            
+            })
         })
-        
+
         document.querySelectorAll('.select-cant').forEach((option, index) => {
             option.addEventListener('change', () => {
                 console.log('select change', option.value, index)
@@ -516,7 +516,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
         })
 
-        
+
 
         // Galería y side info al mismo nivel y largo
         const galeriaYSideHTML = `
@@ -558,14 +558,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Botón reservar arriba, hace scroll a la tabla de disponibilidad
         const reservarBtn = `
-            <button onclick="document.getElementById('disponibilidad').scrollIntoView({behavior:'smooth'});" 
+            <button onclick="document.getElementById('disponibilidad').scrollIntoView({behavior:'smooth'});"
                 style="background:#16B0DA; color:#fff; border:none; border-radius:8px; padding:0.7em 2em; font-weight:bold; font-size:1em; cursor:pointer; margin-left:2em;">
                 Reservar
             </button>
         `;
 
         // Render principal
-        contenedor.innerHTML = `            
+        contenedor.innerHTML = `
             <div class="hotel-card">
                 <div id="name-address" style="">
                     <div id="name">
@@ -612,11 +612,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const guestsDisplayText = document.getElementById('guestsDisplay');
         guestsDisplayText.textContent = `${AdultsInput} Adultos, ${ChildrenInput} Niños, ${RoomsInput} Habitaciones`;
         const modifGuestsDisplayText = document.getElementById('modifGuestsDisplay');
-        const modifAdultsInput = sessionStorage.getItem('adults'); 
-        const modifChildrenInput = sessionStorage.getItem('children'); 
-        const modifRoomsInput = sessionStorage.getItem('rooms'); 
+        const modifAdultsInput = sessionStorage.getItem('adults');
+        const modifChildrenInput = sessionStorage.getItem('children');
+        const modifRoomsInput = sessionStorage.getItem('rooms');
         modifGuestsDisplayText.textContent = `${modifAdultsInput} Adultos, ${modifChildrenInput} Niños, ${modifRoomsInput} Habitaciones`;
-        
+
         //  Lógica del popup de Huéspedes ---
         const guestsDisplay = document.getElementById('guestsDisplay');
         const guestsModal = document.getElementById('guestsModal');
@@ -628,7 +628,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const adultsHiddenInput = document.getElementById('adultsInput');
         const childrenHiddenInput = document.getElementById('childrenInput');
         const roomsHiddenInput = document.getElementById('roomsInput');
-        
+
         guestsDisplay.addEventListener('click', () => {
             // Set modal inputs to current hidden input values
             modalAdultsInput.value = AdultsInput;
@@ -643,16 +643,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             modalRoomsInput.value = RoomsInput;
             guestsModal.style.display = 'flex'; // Show the modal
         });
-        
+
         closeModalBtn.addEventListener('click', () => {
             guestsModal.style.display = 'none'; // Hide the modal
         });
-        
+
         saveGuestsBtn.addEventListener('click', () => {
             AdultsInput = parseInt(modalAdultsInput.value);
             ChildrenInput = parseInt(modalChildrenInput.value);
             RoomsInput = parseInt(modalRoomsInput.value);
-        
+
             // Update hidden inputs
             adultsHiddenInput.value = AdultsInput;
             childrenHiddenInput.value = ChildrenInput;
@@ -662,13 +662,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             sessionStorage.setItem('children', ChildrenInput)
             sessionStorage.setItem('rooms', RoomsInput)
             console.log('save guest btn')
-        
+
             // Update the display text
             guestsDisplay.textContent = `${AdultsInput} adultos, ${ChildrenInput} menores, ${RoomsInput} habitación${RoomsInput !== 1 ? 'es' : ''}`;
             modifGuestsDisplayText.textContent = `${AdultsInput} Adultos, ${ChildrenInput} Niños, ${RoomsInput} Habitaciones`;
-            guestsModal.style.display = 'none'; 
+            guestsModal.style.display = 'none';
         });
-        
+
         // Close modal if clicking outside
         guestsModal.addEventListener('click', (event) => {
             if (event.target === guestsModal) {
@@ -680,7 +680,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         contenedor.innerHTML = '<p class="error">No se pudo cargar el detalle del alojamiento.</p>';
         console.error('Error al cargar detalle:', error);
     }
-    
+
 });
 
 const btnLogin = document.getElementById('nav-login');
@@ -696,7 +696,7 @@ modalLogin.addEventListener('click', (event) => {
     }
 });
 closeLoginBtn.addEventListener('click', () => {
-    modalLogin.style.display = 'none'; 
+    modalLogin.style.display = 'none';
 });
 
 
@@ -715,10 +715,10 @@ document.getElementById('nav-logout').addEventListener('click', function (e) {
 function actualizarDataReserva(selectElement) {
             const cantidadSeleccionada = selectElement.value;
             const dataCantHab = JSON.parse(selectElement.dataset.canthab);
-            
+
             // Actualizamos la cantidad seleccionada
             dataCantHab.cant_hab = cantidadSeleccionada;
-            
+
             // Guardamos el nuevo JSON en el atributo data-reserva
             selectElement.dataset.canthab = JSON.stringify(dataCantHab);
         }

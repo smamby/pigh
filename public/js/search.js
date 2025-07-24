@@ -161,7 +161,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
                             alojamiento.promedio_puntaje >= 5.6 ? 'Aceptable' :
                             'Regular';
 
-        const resIdTipo = await fetch(`http://localhost:3001/api/tipo_alojamientos/${IDtipoAlojam}`, {
+        const resIdTipo = await fetch(`/api/tipo_alojamientos/${IDtipoAlojam}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -170,7 +170,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
         const tipoAlojamiento = await resIdTipo.json();
         console.log('[[Response data]]:', tipoAlojamiento.nombre, IDtipoAlojam);
 
-        const resImgAloj = await fetch(`http://localhost:3001/api/img_alojamientos/${IdAlojamiento}`, {
+        const resImgAloj = await fetch(`/api/img_alojamientos/${IdAlojamiento}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -180,7 +180,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
         console.log('Response data img aloj:', imgAlojamiento);
         console.log('Response data img aloj URL:', imgAlojamiento[0].url_imagen);
 
-        const resServices = await fetch(`http://localhost:3001/api/caracteristicas/search/${IdAlojamiento}`, {
+        const resServices = await fetch(`/api/caracteristicas/search/${IdAlojamiento}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

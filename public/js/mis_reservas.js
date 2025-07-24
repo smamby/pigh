@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mensajeReservasNode = document.getElementById('mensaje-reservas');
     const navNode = document.querySelector('header nav');
 
-    const API_BASE_URL = 'http://localhost:3001/api'; // Tu URL base
+    const API_BASE_URL = '/api'; // Tu URL base
     const token = sessionStorage.getItem('token');
 
     function setupLogoutLink() {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 //     navNode.appendChild(misReservasLink);
                 //  }
             }
-            
+
             // Añadir "Cerrar Sesión" si no está
             if (!document.getElementById('nav-logout')) {
                 const logoutLink = document.createElement('a');
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    
+
     setupLogoutLink();
 
     if (!token) {
@@ -86,13 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // Opcional: redirigir a login después de un momento
         setTimeout(() => { window.location.href = '../index.html'; }, 3000);
-        return; 
+        return;
     }
 
     document.getElementById('nav-logout').addEventListener('click', function (e) {
         e.preventDefault(); // Evita que navegue inmediatamente
 
-        // Borra datos del 
+        // Borra datos del
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('user');
 
@@ -144,13 +144,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     mensajeReservasNode.style.display = 'block';
                     return;
                 }
-                
+
                 mensajeReservasNode.style.display = 'none'; // Ocultar mensajes si hay reservas
 
                 reservas.forEach(reserva => {
                     const reservaCard = document.createElement('div');
                     reservaCard.className = 'reserva-card';
-                    
+
                     // AJUSTE: Usar los nombres de campo de tu backend
                     // Tu backend devuelve: nombre_alojamiento, fecha_inicio, fecha_fin, precio_total, estado
                     const fechaDesde = new Date(reserva.checkin).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
@@ -160,19 +160,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     const precioTotal = reserva.cantidad_habitaciones * days * precioPorNoche;
                     console.log('precio', precioTotal, days);
                     reservaCard.innerHTML = `
-                    
+
                         <div class="reserva-header">
                             <h3 class="reserva-titulo">${reserva.nombre_alojamiento}</h3>
                             <span class="reserva-estado ${reserva.estado.toLowerCase()}">${reserva.estado}</span>
                         </div>
-                        
+
                         <div class="reserva-body">
                             <div class="reserva-ubicacion">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span class="reserva-ciudad">${reserva.ciudad || 'N/D'}</span>,
                                 <span class="reserva-pais">${reserva.pais || 'N/D'}</span>
                             </div>
-                            
+
                             <div class="reserva-fechas">
                                 <div class="fecha-item">
                                     <i class="far fa-calendar-check"></i>
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <span class="fecha-valor">${fechaHasta}</span>
                                 </div>
                             </div>
-                            
+
                             <div class="reserva-habitaciones">
                                 <div class="habitacion-item">
                                     <i class="fas fa-door-open"></i>
@@ -198,25 +198,25 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <span class="habitacion-valor">${days}</span>
                                 </div>
                             </div>
-                            
+
                             <div class="reserva-precio">
                                 <i class="fas fa-tag"></i>
                                 <span class="precio-label">Precio total:</span>
                                 <span class="precio-valor">$${parseFloat(precioTotal).toFixed(2)}</span>
                             </div>
                         </div>
-                        
+
                         <div class="reserva-footer">
                             <small class="reserva-id">ID Reserva: ${reserva.ids_reservas}</small>
-                            
+
                         </div>
-                    
+
                     `;
                     reservasListNode.appendChild(reservaCard);
                 });
             }
-            
-            
+
+
         } catch (error) {
             console.error('Error fetching reservas:', error);
             if (mensajeReservasNode) {

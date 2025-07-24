@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessageDiv = document.getElementById('register-error-message');
     const successMessageDiv = document.getElementById('register-success-message');
     // Definir API_BASE_URL aquí también
-    const API_BASE_URL = 'http://localhost:3001/api';
+    const API_BASE_URL = '/api';
 
     logo.addEventListener('click', (e) => {
         e.preventDefault();
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
                     }
                     registerForm.reset(); // Limpiar el formulario
-                    
+
                     // Opcionalmente, redirigir a login después de unos segundos
                     setTimeout(() => {
                         // Asumiendo que login.html está en el mismo directorio /pages/

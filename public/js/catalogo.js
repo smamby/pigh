@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filtroTipoInput = document.getElementById('filtro-tipo');
     const aplicarFiltrosButton = document.getElementById('aplicar-filtros');
 
-    const API_BASE_URL = 'http://localhost:3001/api';
+    const API_BASE_URL = '/api';
 
     function getToken() {
         return localStorage.getItem('token');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Usamos clases específicas para popups para no colisionar con .error global
             elementoMensaje.className = tipo === 'exito' ? 'mensaje-exito-popup' : 'mensaje-error-popup';
             elementoMensaje.style.display = 'block';
-            
+
             // Ocultar mensajes de éxito después de un tiempo
             if (tipo === 'exito') {
                  setTimeout(() => {
@@ -68,10 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Los mensajes de error permanecen hasta nueva acción o cierre manual (no implementado)
         } else {
             console.warn(`Elemento para mensajes con ID '${elementoId}' no encontrado. Fallback a alert.`);
-            alert(mensaje); 
+            alert(mensaje);
         }
     }
-    
+
     /**
      * Procesa la solicitud de reserva.
      * @returns {Promise<boolean>} true si la reserva fue exitosa, false en caso contrario.
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 mostrarMensajeEnElemento(`¡Reserva creada exitosamente! ID: ${result.reserva.id}, Estado: ${result.reserva.estado}, Total: $${parseFloat(result.reserva.precio_total).toFixed(2)}`, 'exito', mensajeElementoId);
-                return true; 
+                return true;
             } else {
                 mostrarMensajeEnElemento(`Error al crear reserva: ${result.message || response.statusText || 'Error desconocido del servidor'}`, 'error', mensajeElementoId);
                 return false;
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // function renderAlojamientos(alojamientos) {
     //     if (!alojamientosContainer) return;
-    //     alojamientosContainer.innerHTML = ''; 
+    //     alojamientosContainer.innerHTML = '';
 
     //     if (!alojamientos || alojamientos.length === 0) {
     //         alojamientosContainer.innerHTML = '<p>No se encontraron alojamientos con los criterios seleccionados.</p>';
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //             <div class="acciones-card">
     //                 <a href="alojamiento.html?id=${alojamiento.id}" class="btn btn-ver-detalles">Ver Detalles</a>
     //                 ${alojamiento.disponible ? `<button class="btn btn-reservar" data-id="${alojamiento.id}">Reservar</button>` : ''}
-                    
+
     //                 <div id="form-reserva-tarjeta-${alojamiento.id}" class="form-reserva-popup" style="display:none;">
     //                     <h4>Reservar: ${alojamiento.nombre}</h4>
     //                     <div>
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //                 </div>
     //             </div>
     //         `;
-            
+
     //         const btnReservar = card.querySelector('.btn-reservar');
     //         const formPopup = card.querySelector(`#form-reserva-tarjeta-${alojamiento.id}`);
     //         const mensajeElementoPopup = card.querySelector(`#mensaje-form-tarjeta-${alojamiento.id}`);
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //                     if (popup.id !== formPopup.id) popup.style.display = 'none';
     //                 });
     //                 formPopup.style.display = formPopup.style.display === 'none' ? 'block' : 'none';
-    //                 if (mensajeElementoPopup) { 
+    //                 if (mensajeElementoPopup) {
     //                     mensajeElementoPopup.style.display = 'none';
     //                     mensajeElementoPopup.textContent = '';
     //                 }
@@ -221,14 +221,14 @@ document.addEventListener('DOMContentLoaded', () => {
     //                 const fechaInicio = card.querySelector(`#fecha-inicio-tarjeta-${alojamientoId}`).value;
     //                 const fechaFin = card.querySelector(`#fecha-fin-tarjeta-${alojamientoId}`).value;
     //                 const mensajeId = `mensaje-form-tarjeta-${alojamientoId}`;
-                    
+
     //                 const exito = await procesarReserva(alojamientoId, fechaInicio, fechaFin, mensajeId);
     //                 if (exito && formPopup) {
-    //                      setTimeout(() => formPopup.style.display = 'none', 4000); 
+    //                      setTimeout(() => formPopup.style.display = 'none', 4000);
     //                 }
     //             });
     //         }
-            
+
     //         const btnCancelarPopup = card.querySelector('.btn-cancelar-popup');
     //         if (btnCancelarPopup && formPopup) {
     //             btnCancelarPopup.addEventListener('click', () => {
@@ -266,7 +266,7 @@ async function fetchAndRenderAlojamientoIndividual() {
         alojamientoIndividualContainer.innerHTML = '<p class="error">No se pudo cargar el detalle del alojamiento.</p>';
     }
 }
-    
+
 
 function renderAlojamientoIndividual(alojamiento) {
     if (!alojamientoIndividualContainer) return;
@@ -346,7 +346,7 @@ function renderAlojamientoIndividual(alojamiento) {
                 const fechaInicio = alojamientoIndividualContainer.querySelector(`#fecha-inicio-detalle-${alojamientoId}`).value;
                 const fechaFin = alojamientoIndividualContainer.querySelector(`#fecha-fin-detalle-${alojamientoId}`).value;
                 const mensajeId = `mensaje-form-detalle-${alojamientoId}`;
-                
+
                 const exito = await procesarReserva(alojamientoId, fechaInicio, fechaFin, mensajeId);
                 if (exito && formPopupDetalle && btnReservarGrande) {
                      setTimeout(() => {
@@ -356,7 +356,7 @@ function renderAlojamientoIndividual(alojamiento) {
                 }
             });
         }
-        
+
         const btnCancelarPopupDetalle = formPopupDetalle ? formPopupDetalle.querySelector('.btn-cancelar-popup') : null;
         if(btnCancelarPopupDetalle && formPopupDetalle && btnReservarGrande) {
             btnCancelarPopupDetalle.addEventListener('click', () => {
@@ -381,7 +381,7 @@ function renderAlojamientoIndividual(alojamiento) {
                 if (filtroCiudadInput.value) filtros.ciudad = filtroCiudadInput.value.trim();
                 if (filtroPaisInput.value) filtros.pais = filtroPaisInput.value.trim();
                 if (filtroTipoInput.value) filtros.tipo_alojamiento = filtroTipoInput.value.trim();
-                
+
                 fetchAlojamientos(filtros).then(renderAlojamientos).catch(error => {
                     console.error("Error al cargar alojamientos filtrados:", error.message);
                      if (alojamientosContainer) {

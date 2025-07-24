@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const errorMessageDiv = document.getElementById('login-error-message');
     const successMessageDiv = document.getElementById('login-success-message'); // Referencia al nuevo div
-    const API_BASE_URL = 'http://localhost:3001/api';
+    const API_BASE_URL = '/api';
 
     logo.addEventListener('click', (e) => {
         window.location.href = "../index.html";
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             // Ocultar mensajes previos
             if (errorMessageDiv) errorMessageDiv.style.display = 'none';
             if (successMessageDiv) successMessageDiv.style.display = 'none';
@@ -56,11 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (data.usuario) {
                         sessionStorage.setItem('user', JSON.stringify(data.usuario));
                     }
-                    
+
                     // Mostrar mensaje de éxito en el div
                     mostrarMensajeUI(successMessageDiv, 'Inicio de sesión exitoso. Redirigiendo...', 'success-message');
-                    
-                    
+
+
                     // Redirigir después de un breve momento para que el usuario vea el mensaje
                     setTimeout(() => {
                         //window.location.href = '../index.html';
@@ -87,8 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             console.log(user.nombre + " loged");
                             modalLogin.style.display = 'none';
                         }
-                    }, 1000); // 1,3 segundos de espera                    
-                    
+                    }, 1000); // 1,3 segundos de espera
+
                 } else {
                     mostrarMensajeUI(errorMessageDiv, data.message || `Error: ${response.status}`, 'error-message');
                 }
