@@ -349,7 +349,7 @@ destinationSelect.addEventListener('input', async () => {
     if (query.length < 2 || query === lastQuery) return;
     lastQuery = query;
     try {
-        const response = await fetch(`http://localhost:3001/api/alojamientos/destinos?ciudad=${query}`);
+        const response = await fetch(`/api/alojamientos/destinos?ciudad=${query}`);
         const destinations = await response.json(); // Assuming the API returns JSON
         console.log('Destinos [search]:', destinations);
 
