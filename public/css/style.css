@@ -6,6 +6,7 @@ body {
     background-color: #f4f4f4;
     color: #333;
     padding-bottom: 100px;
+    min-width: 1220px;
 }
 
 header {
@@ -180,7 +181,7 @@ input[type="date"] { /* Estilo general para input date */
 }
 
 .error { /* Clase general para errores de carga, etc. */
-    color: #d9534f; 
+    color: #d9534f;
     font-weight: bold;
     text-align: center;
     padding: 10px;
