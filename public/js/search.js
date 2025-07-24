@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('search-form');
     let searchResultsGrid = document.getElementById('searchResultsGrid');
 
+    const hostname = 'https://pigh.onrender.com';
+
 
     // --- 0) Renderizar busqueda recurente desde alojamiento ---
     if (sessionStorage.getItem('storedSearchResults')) {
@@ -20,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const browser = document.querySelector('.browse-section');
         busqueda.style.display = 'block'; // Mostrar la sección de resultados
         browser.style.display = 'none'; // Ocultar la sección de exploración
-        
+
         const estadoBusqueda = document.querySelector('.hero-background');
         const container = document.querySelector('.container.hero-content');
         const searchForm = document.querySelector('.search-form-container');
@@ -28,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         container.classList.add('busqueda');
         searchForm.classList.add('busqueda');
         searchForm.classList.remove('achicar');
-        
+
         window.scrollTo({
             top: 0,
             behavior: "smooth"
@@ -42,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         const hotelesUnicos = Array.from(unHotelPorId.values());
-        console.log('Cargando resultados de búsqueda desde sessionStorage', 
+        console.log('Cargando resultados de búsqueda desde sessionStorage',
                     hotelesUnicos);
         let adults = sessionStorage.getItem('adults');
         let children = sessionStorage.getItem('children');
@@ -50,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let days = Math.ceil((new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24));
         renderSearchResults(hotelesUnicos, adults, children, rooms, days);
         sessionStorage.removeItem('storedSearchResults');
-    } 
+    }
 
     // --- 1) Sumit del buscador ---
     searchForm.addEventListener('submit', async (event) => {
@@ -62,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const adults = parseInt(document.getElementById('adultsInput').value) || 1;
         const children = parseInt(document.getElementById('childrenInput').value) || 0;
         const rooms = parseInt(document.getElementById('roomsInput').value) || 1;
-    
+
         // Basic validation
         if (!destination || !checkin || !checkout) {
             alert('Por favor, completa todos los campos de búsqueda.');
@@ -82,13 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Parámetros de búsqueda:', queryString);
 
         try {
-            const response = await fetch(`http://localhost:3001/api/alojamientos?${queryString}`, {
+            const response = await fetch(`/api/alojamientos?${queryString}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 },
             });
-            const data = await response.json(); 
+            const data = await response.json();
             console.log('Response data:', data);
             const busqueda = document.querySelector('.search-results-section');
             const browser = document.querySelector('.browse-section');
@@ -131,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Error searching accommodations:', error);
             // Render mock data even if API call fails
-            
+
             //renderSearchResults(mockAccommodations);
         }
     });
@@ -153,8 +155,8 @@ function renderSearchResults(results, adults, children, rooms, days) {
         const IDtipoAlojam = alojamiento.id_tipo_alojamiento;
         const IdAlojamiento = alojamiento.id_alojamiento;
         const totalPrice = alojamiento.precio * days * rooms;
-        const textScore = alojamiento.promedio_puntaje >= 8.6 ? 'Excelente' : 
-                            alojamiento.promedio_puntaje >= 7.6 ? 'Muy Bueno' : 
+        const textScore = alojamiento.promedio_puntaje >= 8.6 ? 'Excelente' :
+                            alojamiento.promedio_puntaje >= 7.6 ? 'Muy Bueno' :
                             alojamiento.promedio_puntaje >= 6.6 ? 'Bueno' :
                             alojamiento.promedio_puntaje >= 5.6 ? 'Aceptable' :
                             'Regular';
@@ -206,7 +208,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
                                 </div>
                                 <p class="accommodation-card__location">${alojamiento.ciudad}, ${alojamiento.pais}</p>
                                 <div class="accommodation-card__amenities">
-                                    ${services.map(service => 
+                                    ${services.map(service =>
                                         `<span class="amenity-tag">${service.caracteristica_nombre}</span>`
                                     ).join('')}
                                 </div>
@@ -224,7 +226,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
                                 <div class="reservar-button">
                                     <a href="/pages/alojamiento.html?id=${IdAlojamiento}" class="btn btn-primary">Reservar</a>
                                 </div>
-                            </div>                        
+                            </div>
                         </div>
                     </div>
             `;
@@ -238,7 +240,7 @@ function renderSearchResults(results, adults, children, rooms, days) {
                 sessionStorage.removeItem('tipoBusqueda');
                 sessionStorage.setItem('alojamientoId', id);
                 sessionStorage.setItem('adults', adults);
-                sessionStorage.setItem('children', children);   
+                sessionStorage.setItem('children', children);
                 sessionStorage.setItem('rooms', rooms);
                 sessionStorage.setItem('days', days);
                 sessionStorage.setItem('checkin', document.getElementById('checkin').value);
@@ -246,8 +248,8 @@ function renderSearchResults(results, adults, children, rooms, days) {
                 sessionStorage.setItem('destination', document.getElementById('destinationSelect').value);
                 sessionStorage.setItem('tipoAlojamiento', tipoAlojamiento.nombre);
                 sessionStorage.setItem('idTipoAlojamiento', alojamiento.id_tipo_alojamiento);
-                console.log('debugging', id, adults, children, rooms, days, 
-                    alojamiento.id_tipo_alojamiento, tipoAlojamiento.nombre, 
+                console.log('debugging', id, adults, children, rooms, days,
+                    alojamiento.id_tipo_alojamiento, tipoAlojamiento.nombre,
                     alojamiento.ciudad, alojamiento.pais);
                 window.location.href = `/pages/alojamiento.html?id=${id}`;
             });
@@ -360,7 +362,7 @@ destinationSelect.addEventListener('input', async () => {
             option.className = 'opt-ciudad';
             option.id =   `ciudad-${destination}`;
             datalist.appendChild(option);
-            
+
             option.addEventListener('click', () => {
                 console.log('click en ciudadInput', option.value);
                 datalist.classList.remove('expandido'); // Hide the datalist
